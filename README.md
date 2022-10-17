@@ -1,9 +1,9 @@
 <p align="center">
   <a href="https://plausible.io/">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="./.github/plausible_logo_dark.webp">
-      <source media="(prefers-color-scheme: light)" srcset="./.github/plausible_logo.webp">
-      <img alt="Plausible logo" src="./.github/plausible_logo.webp">
+      <source media="(prefers-color-scheme: dark)" width="151.5" height="40" srcset="./.github/plausible_logo_dark.webp">
+      <source media="(prefers-color-scheme: light)" width="151.5" height="40" srcset="./.github/plausible_logo.webp">
+      <img alt="Plausible logo" width="151.5" height="40" src="./.github/plausible_logo.webp">
     </picture>
   </a>
 </p>
