@@ -21,7 +21,7 @@ This module provides a minimal [Plausible tracker](https://github.com/plausible/
 ## Features
 
 - 🌻 No configuration necessary
-- 📯 Track events and page views with [composables](#composables)
+- 📯 Track events and page views manually with [composables](#composables)
 - 🧺 Sensible default options
 - 🦾 SSR-ready
 
