@@ -1,10 +1,6 @@
 <p align="center">
   <a href="https://plausible.io/">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" width="151.5" height="40" srcset="./.github/plausible_logo_dark.webp">
-      <source media="(prefers-color-scheme: light)" width="151.5" height="40" srcset="./.github/plausible_logo.webp">
-      <img alt="Plausible logo" width="151.5" height="40" src="./.github/plausible_logo.webp">
-    </picture>
+    <img src="./.github/plausible-logo.svg" alt="Plausible logo" width="128" height="128">
   </a>
 </p>
 
