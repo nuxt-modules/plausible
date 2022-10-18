@@ -22,6 +22,7 @@ This module provides a minimal [Plausible tracker](https://github.com/plausible/
 
 - 🌻 No configuration necessary
 - 📯 Track events and page views manually with [composables](#composables)
+- 📂 `.env` file support by [automatically replaced public runtime config values](https://v3.nuxtjs.org/api/configuration/nuxt-config#runtimeconfig)
 - 🧺 Sensible default options
 - 🦾 SSR-ready
 
@@ -94,26 +95,10 @@ export default defineNuxtConfig({
 
 #### Via Public Runtime Config
 
-Alternatively, leveraging automatically replaced public runtime config values by matching `.env` variables at runtime:
-
-```ts
-export default defineNuxtConfig({
-  modules: ['nuxt-plausible'],
-
-  runtimeConfig: {
-    public: {
-      plausible: {
-        // `NUXT_PUBLIC_PLAUSIBLE_DOMAIN` will overwrite this empty string
-        domain: '',
-      },
-    },
-  },
-})
-```
-
-Finally, set the following environment variables in your project's `.env` file:
+Alternatively, leveraging [automatically replaced public runtime config values](https://v3.nuxtjs.org/api/configuration/nuxt-config#runtimeconfig) by matching `.env` variables at runtime, set your desired option in your project's `.env` file:
 
 ```bash
+# Sets the `plausible` public runtime config value for the key `domain`
 NUXT_PUBLIC_PLAUSIBLE_DOMAIN=example.com
 ```
 
