@@ -22,7 +22,7 @@ This module provides a minimal [Plausible tracker](https://github.com/plausible/
 
 - 🌻 No configuration necessary
 - 📯 Track events and page views manually with [composables](#composables)
-- 📂 `.env` file support by [automatically replaced public runtime config values](https://v3.nuxtjs.org/api/configuration/nuxt-config#runtimeconfig)
+- 📂 [`.env` file support](#configuration)
 - 🧺 Sensible default options
 - 🦾 SSR-ready
 
