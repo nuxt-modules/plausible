@@ -49,6 +49,8 @@ export default defineNuxtConfig({
 
 Done! Plausible will now run in your application's client.
 
+> ℹ️ By default, `nuxt-plausible` will use `window.location.hostname` for the Plausible `domain` configuration key, which will suit most users.
+
 ## Configuration
 
 All [supported module options](#module-options) can be set by either the module options key `plausible`, or the public runtime config key with the same name.
@@ -60,7 +62,6 @@ export default defineNuxtConfig({
   // Configure using the module options
   plausible: {
     domain: 'example.com',
-    autoOutboundTracking: true,
   },
 
   // **Or** the public runtime config instead
@@ -68,32 +69,11 @@ export default defineNuxtConfig({
     public: {
       plausible: {
         domain: 'example.com',
-        autoOutboundTracking: true,
       },
     },
   },
 })
 ```
-
-### Custom Domain
-
-> ℹ️ By default, `nuxt-plausible` will use `window.location.hostname` as the Plausible `domain`, which will suit most users.
-
-#### Via Module Options
-
-If you prefer to use a custom domain, you can either set it using the `plausible` module options:
-
-```ts
-export default defineNuxtConfig({
-  modules: ['nuxt-plausible'],
-
-  plausible: {
-    domain: 'example.com',
-  },
-})
-```
-
-#### Via Public Runtime Config
 
 Alternatively, leveraging [automatically replaced public runtime config values](https://v3.nuxtjs.org/api/configuration/nuxt-config#runtimeconfig) by matching `.env` variables at runtime, set your desired option in your project's `.env` file:
 
@@ -123,7 +103,7 @@ As with other composables in the Nuxt 3 ecosystem, the following ones are availa
 
 Track a custom event. Track your defined goals by passing the goal's name as the argument `eventName`.
 
-**Types**
+**Type Declarations**
 
 ```ts
 function useTrackEvent(
@@ -149,7 +129,7 @@ Manually track a page view.
 
 Pass optional event data to be sent with the `eventData` argument. Defaults to the current page's data merged with the default options provided during the Plausible initialization.
 
-**Types**
+**Type Declarations**
 
 ```ts
 function useTrackPageview(

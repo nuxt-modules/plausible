@@ -26,7 +26,7 @@ export interface ModuleOptions {
    *
    * @default window.location.hostname
    */
-  domain?: Location['hostname']
+  domain?: string
 
   /**
    * The API host where the events will be sent to
