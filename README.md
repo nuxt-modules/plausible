@@ -148,6 +148,16 @@ function useTrackEvent(
 ): void
 ```
 
+**Example**
+
+```ts
+// Tracks the `signup` goal
+useTrackEvent('signup')
+
+// Tracks the `Download` goal passing a `method` property.
+useTrackEvent('Download', { props: { method: 'HTTP' } })
+```
+
 ### `useTrackPageview`
 
 Manually track a page view.
