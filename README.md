@@ -1,16 +1,4 @@
-<p align="center">
-  <a href="https://plausible.io/">
-    <img src="./.github/plausible-logo.svg" alt="Plausible logo" width="128" height="128">
-  </a>
-</p>
-
-<h3 align="center">nuxt-plausible</h3>
-
-<p align="center">
-  Nuxt 3 module to natively integrate Plausible analytics
-  <br>
-  <a href="https://plausible.io/"><strong>Visit Plausible »</strong></a>
-</p>
+![Nuxt Plausible module](./.github/og.png)
 
 # nuxt-plausible
 
@@ -149,6 +137,10 @@ function useTrackPageview(
 ## Similar Packages
 
 - [vue-plausible](https://github.com/moritzsternemann/vue-plausible), without first-class Nuxt 3 and composables.
+
+## Credits
+
+- [SVGBackgrounds.com](https://www.svgbackgrounds.com) for the OpenGraph image background pattern.
 
 ## License
 
