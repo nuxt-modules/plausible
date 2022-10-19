@@ -643,7 +643,7 @@ packages:
       consola: 2.15.3
       create-require: 1.1.1
       defu: 6.1.0
-      destr: 1.1.1
+      destr: 1.2.0
       dotenv: 16.0.3
       fs-extra: 10.1.0
       git-url-parse: 13.1.0
@@ -1513,7 +1513,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.21.4
-      caniuse-lite: 1.0.30001421
+      caniuse-lite: 1.0.30001422
       fraction.js: 4.2.0
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -1583,7 +1583,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001421
+      caniuse-lite: 1.0.30001422
       electron-to-chromium: 1.4.284
       node-releases: 2.0.6
       update-browserslist-db: 1.0.10_browserslist@4.21.4
@@ -1683,13 +1683,13 @@ packages:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
     dependencies:
       browserslist: 4.21.4
-      caniuse-lite: 1.0.30001421
+      caniuse-lite: 1.0.30001422
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
     dev: true
 
-  /caniuse-lite/1.0.30001421:
-    resolution: {integrity: sha512-Sw4eLbgUJAEhjLs1Fa+mk45sidp1wRn5y6GtDpHGBaNJ9OCDJaVh2tIaWWUnGfuXfKf1JCBaIarak3FkVAvEeA==}
+  /caniuse-lite/1.0.30001422:
+    resolution: {integrity: sha512-hSesn02u1QacQHhaxl/kNMZwqVG35Sz/8DgvmgedxSH8z9UUpcDYSPYgsj3x5dQNRcNp6BwpSfQfVzYUTm+fog==}
 
   /chalk/2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
@@ -2112,8 +2112,8 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /destr/1.1.1:
-    resolution: {integrity: sha512-QqkneF8LrYmwATMdnuD2MLI3GHQIcBnG6qFC2q9bSH430VTCDAVjcspPmUaKhPGtAtPAftIUFqY1obQYQuwmbg==}
+  /destr/1.2.0:
+    resolution: {integrity: sha512-JG+cG4ZPB1L27sl2C2URg8MIOmIUtTbE5wEx02BpmrTCqg/hXxFKXsYsnODl5PdpqNRaS1KQGUQ56V8jk8XpYQ==}
 
   /destroy/1.2.0:
     resolution: {integrity: sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==}
@@ -3498,7 +3498,7 @@ packages:
     resolution: {integrity: sha512-U7ZD/Te+LBS1IpUvsZRe+E+ZiA3zQS0u43DMrZ+raiVObeYe0G5F4Kr/g6Fn2fH92Np0ROkij/wEhkAMbUsBdQ==}
     dependencies:
       cookie-es: 0.5.0
-      destr: 1.1.1
+      destr: 1.2.0
       radix3: 0.2.1
       ufo: 0.8.6
     dev: true
@@ -4394,7 +4394,7 @@ packages:
       consola: 2.15.3
       cookie-es: 0.5.0
       defu: 6.1.0
-      destr: 1.1.1
+      destr: 1.2.0
       dot-prop: 7.2.0
       esbuild: 0.15.11
       escape-string-regexp: 5.0.0
@@ -4563,7 +4563,7 @@ packages:
       chokidar: 3.5.3
       cookie-es: 0.5.0
       defu: 6.1.0
-      destr: 1.1.1
+      destr: 1.2.0
       escape-string-regexp: 5.0.0
       fs-extra: 10.1.0
       globby: 13.1.2
@@ -4649,7 +4649,7 @@ packages:
   /ohmyfetch/0.4.20:
     resolution: {integrity: sha512-+c3/l+X91owrT1reTos1R13rb2j8NGZpKi0bRWwrnxIHlr1FZ8NzghIsNBKpUvk9nsnFoNK4phw+nTnXrcALzA==}
     dependencies:
-      destr: 1.1.1
+      destr: 1.2.0
       node-fetch-native: 0.1.8
       ufo: 0.8.6
       undici: 5.11.0
@@ -5253,7 +5253,7 @@ packages:
     resolution: {integrity: sha512-zbe8+HR2X28eZepAwohuKkebbEsA67h0DO9I7g12QrHa2CQopR9gztOLPIPXXGTvcxeUjAN4wZ+b29t3m/u05g==}
     dependencies:
       defu: 6.1.0
-      destr: 1.1.1
+      destr: 1.2.0
       flat: 5.0.2
 
   /read-cache/1.0.0:
@@ -6109,7 +6109,7 @@ packages:
     dependencies:
       anymatch: 3.1.2
       chokidar: 3.5.3
-      destr: 1.1.1
+      destr: 1.2.0
       h3: 0.8.4
       ioredis: 5.2.3
       listhen: 0.3.4
