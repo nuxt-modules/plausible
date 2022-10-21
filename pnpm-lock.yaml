@@ -7,7 +7,6 @@ importers:
       '@antfu/eslint-config': ^0.27.0
       '@nuxt/kit': ^3.0.0-rc.12
       '@nuxt/module-builder': ^0.2.0
-      '@types/node': 18.8.0
       bumpp: ^8.2.1
       defu: ^6.1.0
       eslint: ^8.25.0
@@ -25,7 +24,6 @@ importers:
     devDependencies:
       '@antfu/eslint-config': 0.27.0_z4bbprzjrhnsfa24uvmcbu7f5q
       '@nuxt/module-builder': 0.2.0
-      '@types/node': 18.8.0
       bumpp: 8.2.1
       eslint: 8.25.0
       nuxt: 3.0.0-rc.12_z4bbprzjrhnsfa24uvmcbu7f5q

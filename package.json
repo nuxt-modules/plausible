@@ -2,7 +2,7 @@
   "name": "nuxt-plausible",
   "type": "module",
   "version": "0.1.1",
-  "packageManager": "pnpm@7.13.5",
+  "packageManager": "pnpm@7.13.6",
   "description": "Nuxt 3 module to natively integrate Plausible analytics",
   "author": "Johann Schopplich <pkg@johannschopplich.com>",
   "license": "MIT",
@@ -50,7 +50,6 @@
   "devDependencies": {
     "@antfu/eslint-config": "^0.27.0",
     "@nuxt/module-builder": "^0.2.0",
-    "@types/node": "18.8.0",
     "bumpp": "^8.2.1",
     "eslint": "^8.25.0",
     "nuxt": "^3.0.0-rc.12",
