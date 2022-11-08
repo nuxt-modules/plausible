@@ -2,7 +2,7 @@
   "name": "nuxt-plausible",
   "type": "module",
   "version": "0.1.1",
-  "packageManager": "pnpm@7.13.6",
+  "packageManager": "pnpm@7.14.2",
   "description": "Nuxt 3 module to natively integrate Plausible analytics",
   "author": "Johann Schopplich <pkg@johannschopplich.com>",
   "license": "MIT",
@@ -42,19 +42,19 @@
     "prepare": "nuxi prepare playground"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.0.0-rc.12",
+    "@nuxt/kit": "^3.0.0-rc.13",
     "defu": "^6.1.0",
     "pathe": "^0.3.9",
     "plausible-tracker": "^0.3.8"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.27.0",
+    "@antfu/eslint-config": "^0.29.4",
     "@nuxt/module-builder": "^0.2.0",
     "bumpp": "^8.2.1",
-    "eslint": "^8.25.0",
-    "nuxt": "^3.0.0-rc.12",
+    "eslint": "^8.27.0",
+    "nuxt": "^3.0.0-rc.13",
     "nuxt-plausible": "workspace:*",
     "typescript": "^4.8.4",
-    "vue-tsc": "^1.0.8"
+    "vue-tsc": "^1.0.9"
   }
 }
