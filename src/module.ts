@@ -61,8 +61,8 @@ export default defineNuxtModule<ModuleOptions>({
     name: 'nuxt-plausible',
     configKey: 'plausible',
     compatibility: {
-      nuxt: '^3',
-    },
+      nuxt: '^3'
+    }
   },
   defaults: {
     hashMode: false,
@@ -70,13 +70,13 @@ export default defineNuxtModule<ModuleOptions>({
     domain: '',
     apiHost: 'https://plausible.io',
     autoPageviews: true,
-    autoOutboundTracking: false,
+    autoOutboundTracking: false
   },
-  async setup(options, nuxt) {
+  setup (options, nuxt) {
     // Add module options to public runtime config
     nuxt.options.runtimeConfig.public.plausible = defu(
       nuxt.options.runtimeConfig.public.plausible,
-      options,
+      options
     )
 
     // Transpile runtime
@@ -87,7 +87,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     addPlugin({
       src: join(runtimeDir, 'plugin.client'),
-      mode: 'client',
+      mode: 'client'
     })
-  },
+  }
 })

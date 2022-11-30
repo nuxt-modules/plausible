@@ -6,18 +6,20 @@ export default defineNuxtPlugin(() => {
 
   const plausible = Plausible({
     ...options,
-    domain: options.domain || window.location.hostname,
+    domain: options.domain || window.location.hostname
   })
 
-  if (options.autoPageviews)
+  if (options.autoPageviews) {
     plausible.enableAutoPageviews()
+  }
 
-  if (options.autoOutboundTracking)
+  if (options.autoOutboundTracking) {
     plausible.enableAutoOutboundTracking()
+  }
 
   return {
     provide: {
-      plausible,
-    },
+      plausible
+    }
   }
 })

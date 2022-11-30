@@ -14,9 +14,10 @@ import { useNuxtApp } from '#imports'
  * // Tracks the `Download` goal passing a `method` property.
  * useTrackEvent('Download', { props: { method: 'HTTP' } })
  */
-export function useTrackEvent(
+export function useTrackEvent (
   ...args: Parameters<ReturnType<typeof Plausible>['trackEvent']>
 ) {
-  if (process.client)
+  if (process.client) {
     useNuxtApp().$plausible.trackEvent(...args)
+  }
 }
