@@ -31,7 +31,7 @@ Add `@nuxtjs/plausible` to your Nuxt config:
 ```ts
 // `nuxt.config.ts`
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/plausible'],
+  modules: ['@nuxtjs/plausible']
 })
 ```
 
@@ -49,17 +49,17 @@ export default defineNuxtConfig({
 
   // Configure using the module options
   plausible: {
-    domain: 'example.com',
+    domain: 'example.com'
   },
 
   // **Or** the public runtime config instead
   runtimeConfig: {
     public: {
       plausible: {
-        domain: 'example.com',
-      },
-    },
-  },
+        domain: 'example.com'
+      }
+    }
+  }
 })
 ```
 
@@ -97,7 +97,7 @@ Track a custom event. Track your defined goals by passing the goal's name as the
 function useTrackEvent(
   eventName: string,
   options?: EventOptions,
-  eventData?: PlausibleOptions,
+  eventData?: PlausibleOptions
 ): void
 ```
 
@@ -122,7 +122,7 @@ Pass optional event data to be sent with the `eventData` argument. Defaults to t
 ```ts
 function useTrackPageview(
   eventData?: PlausibleOptions,
-  options?: EventOptions,
+  options?: EventOptions
 ): void
 ```
 
