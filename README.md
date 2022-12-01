@@ -1,8 +1,8 @@
 ![Nuxt Plausible module](./.github/og.png)
 
-# nuxt-plausible
+# Nuxt Plausible
 
-[![npm version](https://img.shields.io/npm/v/nuxt-plausible?color=a1b858&label=)](https://www.npmjs.com/package/nuxt-plausible)
+[![npm version](https://img.shields.io/npm/v/@nuxtjs/plausible?color=a1b858&label=)](https://www.npmjs.com/package/@nuxtjs/plausible)
 
 This module provides a minimal [Plausible tracker](https://github.com/plausible/plausible-tracker) integration with Nuxt.
 
@@ -18,26 +18,26 @@ This module provides a minimal [Plausible tracker](https://github.com/plausible/
 
 ```bash
 # pnpm
-pnpm add -D nuxt-plausible
+pnpm add -D @nuxtjs/plausible
 
 # npm
-npm i -D nuxt-plausible
+npm i -D @nuxtjs/plausible
 ```
 
 ## Basic Usage
 
-Add `nuxt-plausible` to your Nuxt config:
+Add `@nuxtjs/plausible` to your Nuxt config:
 
 ```ts
 // `nuxt.config.ts`
 export default defineNuxtConfig({
-  modules: ['nuxt-plausible'],
+  modules: ['@nuxtjs/plausible'],
 })
 ```
 
 Done! Plausible will now run in your application's client.
 
-> ℹ️ By default, `nuxt-plausible` will use `window.location.hostname` for the Plausible `domain` configuration key, which will suit most users.
+> ℹ️ By default, `@nuxtjs/plausible` will use `window.location.hostname` for the Plausible `domain` configuration key, which will suit most users.
 
 ## Configuration
 
@@ -45,7 +45,7 @@ All [supported module options](#module-options) can be set by either the module 
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['nuxt-plausible'],
+  modules: ['@nuxtjs/plausible'],
 
   // Configure using the module options
   plausible: {
@@ -63,7 +63,7 @@ export default defineNuxtConfig({
 })
 ```
 
-Alternatively, leveraging [automatically replaced public runtime config values](https://v3.nuxtjs.org/api/configuration/nuxt-config#runtimeconfig) by matching `.env` variables at runtime, set your desired option in your project's `.env` file:
+Alternatively, leveraging [automatically replaced public runtime config values](https://nuxt.com/docs/api/configuration/nuxt-config#runtimeconfig) by matching `.env` variables at runtime, set your desired option in your project's `.env` file:
 
 ```bash
 # Sets the `plausible` public runtime config value for the key `domain`

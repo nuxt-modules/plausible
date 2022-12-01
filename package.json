@@ -1,17 +1,17 @@
 {
-  "name": "nuxt-plausible",
+  "name": "@nuxtjs/plausible",
   "type": "module",
   "version": "0.1.2",
-  "packageManager": "pnpm@7.16.1",
+  "packageManager": "pnpm@7.17.1",
   "description": "Nuxt 3 module to natively integrate Plausible analytics",
   "author": "Johann Schopplich <pkg@johannschopplich.com>",
   "license": "MIT",
-  "homepage": "https://github.com/johannschopplich/nuxt-plausible#readme",
+  "homepage": "https://github.com/nuxt-modules/plausible#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/johannschopplich/nuxt-plausible.git"
+    "url": "git+https://github.com/nuxt-modules/plausible.git"
   },
-  "bugs": "https://github.com/johannschopplich/nuxt-plausible/issues",
+  "bugs": "https://github.com/nuxt-modules/plausible/issues",
   "keywords": [
     "nuxt",
     "nuxt3",
