@@ -2,6 +2,7 @@ import { fileURLToPath } from 'node:url'
 import { join } from 'pathe'
 import { defu } from 'defu'
 import { addImportsDir, addPlugin, defineNuxtModule } from '@nuxt/kit'
+import { name, version } from '../package.json'
 
 export interface ModuleOptions {
   /**
@@ -58,7 +59,8 @@ export interface ModuleOptions {
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: 'nuxt-plausible',
+    name,
+    version,
     configKey: 'plausible',
     compatibility: {
       nuxt: '^3'

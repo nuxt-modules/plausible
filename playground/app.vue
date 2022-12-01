@@ -4,7 +4,7 @@ const { plausible } = useRuntimeConfig().public
 
 <template>
   <div>
-    <h1>nuxt-plausible</h1>
+    <h1>@nuxtjs/plausible</h1>
     <strong>Options</strong>
     <pre>{{ JSON.stringify(plausible, null, 2) }}</pre>
   </div>
