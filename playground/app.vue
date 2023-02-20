@@ -1,11 +1,40 @@
 <script setup lang="ts">
 const { plausible } = useRuntimeConfig().public
+
+function trackEvent() {
+  useTrackEvent('playground')
+}
+
+function trackPageview() {
+  useTrackPageview()
+}
 </script>
 
 <template>
-  <div>
+  <Head>
+    <Title>@leanera/nuxt-i18n</Title>
+    <Link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"
+    />
+  </Head>
+
+  <header>
     <h1>@nuxtjs/plausible</h1>
-    <strong>Options</strong>
+  </header>
+
+  <h3>Configurtion</h3>
+  <details>
+    <summary>Public Runtime Options</summary>
     <pre>{{ JSON.stringify(plausible, null, 2) }}</pre>
-  </div>
+  </details>
+
+  <h3>Composables</h3>
+  <button @click="trackEvent">
+    useTrackEvent
+  </button>
+  &nbsp;
+  <button @click="trackPageview">
+    useTrackPageview
+  </button>
 </template>
