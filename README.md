@@ -26,7 +26,7 @@ npm i -D @nuxtjs/plausible
 
 ## Basic Usage
 
-Add `@nuxtjs/plausible` to your Nuxt config:
+Add `@nuxtjs/plausible` to the `modules` section of your Nuxt configuration:
 
 ```ts
 // `nuxt.config.ts`
@@ -83,9 +83,9 @@ NUXT_PUBLIC_PLAUSIBLE_DOMAIN=example.com
 
 ## Composables
 
-As with other composables in the Nuxt 3 ecosystem, the following ones are available without the need of importing them.
+As with other composables in the Nuxt 3 ecosystem, they are auto-imported and can be used in your application's components.
 
-> ℹ️ Since the Plausible instance is available in the client only, calling the tracking composables will have no effect. They will exit gracefully on the server.
+> ℹ️ Since the Plausible instance is available in the client only, executing the composables on the server will have no effect.
 
 ### `useTrackEvent`
 

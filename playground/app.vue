@@ -23,7 +23,7 @@ function trackPageview() {
     <h1>@nuxtjs/plausible</h1>
   </header>
 
-  <h3>Configurtion</h3>
+  <h3>Configuration</h3>
   <details>
     <summary>Public Runtime Options</summary>
     <pre>{{ JSON.stringify(plausible, null, 2) }}</pre>
