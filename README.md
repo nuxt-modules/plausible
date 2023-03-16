@@ -4,7 +4,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@nuxtjs/plausible?color=a1b858&label=)](https://www.npmjs.com/package/@nuxtjs/plausible)
 
-This module provides a minimal [Plausible tracker](https://github.com/plausible/plausible-tracker) integration with Nuxt.
+> [Nuxt 3](https://nuxt.com) module to integrate the [Plausible tracker](https://github.com/plausible/plausible-tracker).
 
 ## Features
 
