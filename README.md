@@ -41,33 +41,42 @@ Done! Plausible will now run in your application's client.
 
 ## Configuration
 
-All [supported module options](#module-options) can be set by either the module options key `plausible`, or the public runtime config key with the same name.
+All [supported module options](#module-options) can be configured using the `plausible` key in your Nuxt configuration:
 
 ```ts
 export default defineNuxtConfig({
   modules: ['@nuxtjs/plausible'],
 
-  // Configure using the module options
   plausible: {
     domain: 'example.com'
-  },
-
-  // **Or** the public runtime config instead
-  runtimeConfig: {
-    public: {
-      plausible: {
-        domain: 'example.com'
-      }
-    }
   }
 })
 ```
 
-Alternatively, leveraging [automatically replaced public runtime config values](https://nuxt.com/docs/api/configuration/nuxt-config#runtimeconfig) by matching `.env` variables at runtime, set your desired option in your project's `.env` file:
+### Runtime Config
+
+Alternatively, leveraging [automatically replaced public runtime config values](https://nuxt.com/docs/api/configuration/nuxt-config#runtimeconfig) by matching environment variables at runtime, set your desired option in your project's `.env` file:
 
 ```bash
 # Sets the `plausible` public runtime config value for the key `domain`
 NUXT_PUBLIC_PLAUSIBLE_DOMAIN=example.com
+```
+
+And then use the `plausible` runtime config key in your Nuxt configuration:
+
+```ts
+export default defineNuxtConfig({
+  modules: ['@nuxtjs/plausible'],
+
+  runtimeConfig: {
+    public: {
+      plausible: {
+        // Will be replaced with the value of `NUXT_PUBLIC_PLAUSIBLE_DOMAIN`
+        domain: ''
+      }
+    }
+  }
+})
 ```
 
 ## Module Options
