@@ -58,26 +58,11 @@ export default defineNuxtConfig({
 Alternatively, leveraging [automatically replaced public runtime config values](https://nuxt.com/docs/api/configuration/nuxt-config#runtimeconfig) by matching environment variables at runtime, set your desired option in your project's `.env` file:
 
 ```bash
-# Sets the `plausible` public runtime config value for the key `domain`
+# Sets the `plausible.domain` option to `example.com`
 NUXT_PUBLIC_PLAUSIBLE_DOMAIN=example.com
 ```
 
-And then use the `plausible` runtime config key in your Nuxt configuration:
-
-```ts
-export default defineNuxtConfig({
-  modules: ['@nuxtjs/plausible'],
-
-  runtimeConfig: {
-    public: {
-      plausible: {
-        // Will be replaced with the value of `NUXT_PUBLIC_PLAUSIBLE_DOMAIN`
-        domain: ''
-      }
-    }
-  }
-})
-```
+With this setup, you can omit the `plausible` key in your Nuxt configuration.
 
 ## Module Options
 
