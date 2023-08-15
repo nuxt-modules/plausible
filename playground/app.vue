@@ -30,11 +30,7 @@ function trackPageview() {
   </details>
 
   <h3>Composables</h3>
-  <button @click="trackEvent">
-    useTrackEvent
-  </button>
+  <button @click="trackEvent">useTrackEvent</button>
   &nbsp;
-  <button @click="trackPageview">
-    useTrackPageview
-  </button>
+  <button @click="trackPageview">useTrackPageview</button>
 </template>

@@ -31,7 +31,7 @@ Add `@nuxtjs/plausible` to the `modules` section of your Nuxt configuration:
 ```ts
 // `nuxt.config.ts`
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/plausible']
+  modules: ['@nuxtjs/plausible'],
 })
 ```
 
@@ -48,8 +48,8 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/plausible'],
 
   plausible: {
-    domain: 'example.com'
-  }
+    domain: 'example.com',
+  },
 })
 ```
 
@@ -66,14 +66,14 @@ With this setup, you can omit the `plausible` key in your Nuxt configuration.
 
 ## Module Options
 
-| Option | Type | Default | Description |
-| --- | --- | --- | --- |
-| `hashMode` | `boolean` | `false` | Whether page views shall be tracked when the URL hash changes. Enable this if your Nuxt app has the `hashMode` router option enabled. |
-| `trackLocalhost` | `boolean` | `false` | Whether events shall be tracked when running the site locally. | 
-| `domain` | `string` | `'window.location.hostname'` | The domain to bind tracking event to. |
-| `apiHost` | `string` | `https://plausible.io` | The API host where the events will be sent to. | 
-| `autoPageviews` | `boolean` | `true` | Track the current page and all further pages automatically. Disable this if you want to manually manage pageview tracking. |
-| `autoOutboundTracking` | `boolean` | `false` | Track all outbound link clicks automatically. If enabled, a [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) automagically detects link nodes throughout the application and binds `click` events to them. |
+| Option                 | Type      | Default                      | Description                                                                                                                                                                                                                                     |
+| ---------------------- | --------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `hashMode`             | `boolean` | `false`                      | Whether page views shall be tracked when the URL hash changes. Enable this if your Nuxt app has the `hashMode` router option enabled.                                                                                                           |
+| `trackLocalhost`       | `boolean` | `false`                      | Whether events shall be tracked when running the site locally.                                                                                                                                                                                  |
+| `domain`               | `string`  | `'window.location.hostname'` | The domain to bind tracking event to.                                                                                                                                                                                                           |
+| `apiHost`              | `string`  | `https://plausible.io`       | The API host where the events will be sent to.                                                                                                                                                                                                  |
+| `autoPageviews`        | `boolean` | `true`                       | Track the current page and all further pages automatically. Disable this if you want to manually manage pageview tracking.                                                                                                                      |
+| `autoOutboundTracking` | `boolean` | `false`                      | Track all outbound link clicks automatically. If enabled, a [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) automagically detects link nodes throughout the application and binds `click` events to them. |
 
 ## Composables
 
@@ -91,7 +91,7 @@ Track a custom event. Track your defined goals by passing the goal's name as the
 function useTrackEvent(
   eventName: string,
   options?: EventOptions,
-  eventData?: PlausibleOptions
+  eventData?: PlausibleOptions,
 ): void
 ```
 
@@ -116,7 +116,7 @@ Pass optional event data to be sent with the `eventData` argument. Defaults to t
 ```ts
 function useTrackPageview(
   eventData?: PlausibleOptions,
-  options?: EventOptions
+  options?: EventOptions,
 ): void
 ```
 

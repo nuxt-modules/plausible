@@ -10,7 +10,7 @@ import { useNuxtApp } from '#imports'
  * @example
  * useTrackPageview()
  */
-export function useTrackPageview (
+export function useTrackPageview(
   ...args: Parameters<ReturnType<typeof Plausible>['trackPageview']>
 ) {
   if (process.client) {

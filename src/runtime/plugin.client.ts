@@ -6,7 +6,7 @@ export default defineNuxtPlugin(() => {
 
   const plausible = Plausible({
     ...options,
-    domain: options.domain || window.location.hostname
+    domain: options.domain || window.location.hostname,
   })
 
   if (options.autoPageviews) {
@@ -19,7 +19,7 @@ export default defineNuxtPlugin(() => {
 
   return {
     provide: {
-      plausible
-    }
+      plausible,
+    },
   }
 })
