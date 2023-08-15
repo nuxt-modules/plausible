@@ -1,5 +1,5 @@
-import type Plausible from 'plausible-tracker'
 import { useNuxtApp } from '#imports'
+import type Plausible from 'plausible-tracker'
 
 /**
  * Manually track a page view
