@@ -1,5 +1,3 @@
-import { fileURLToPath } from 'node:url'
-import { join } from 'pathe'
 import { defu } from 'defu'
 import {
   addImportsDir,
@@ -89,12 +87,12 @@ export default defineNuxtModule<ModuleOptions>({
     )
 
     // Transpile runtime
-    nuxt.options.build.transpile.push(resolve('./runtime'))
+    nuxt.options.build.transpile.push(resolve('runtime'))
 
-    addImportsDir(resolve('./runtime/composables'))
+    addImportsDir(resolve('runtime/composables'))
 
     addPlugin({
-      src: resolve('./runtime/plugin.client'),
+      src: resolve('runtime/plugin.client'),
       mode: 'client',
     })
   },
