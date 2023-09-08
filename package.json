@@ -1,7 +1,7 @@
 {
   "name": "@nuxtjs/plausible",
   "type": "module",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "packageManager": "pnpm@8.7.4",
   "description": "Nuxt 3 module to natively integrate Plausible analytics",
   "author": "Johann Schopplich <pkg@johannschopplich.com>",
