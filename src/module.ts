@@ -1,9 +1,9 @@
 import { defu } from 'defu'
 import {
-  addImportsDir,
+  addImports,
   addPlugin,
-  defineNuxtModule,
   createResolver,
+  defineNuxtModule,
 } from '@nuxt/kit'
 import { name, version } from '../package.json'
 
@@ -89,7 +89,13 @@ export default defineNuxtModule<ModuleOptions>({
     // Transpile runtime
     nuxt.options.build.transpile.push(resolve('runtime'))
 
-    addImportsDir(resolve('runtime/composables'))
+    addImports(
+      ['useTrackEvent', 'useTrackPageview'].map((name) => ({
+        name,
+        as: name,
+        from: resolve(`runtime/composables/${name}`),
+      })),
+    )
 
     addPlugin({
       src: resolve('runtime/plugin.client'),
