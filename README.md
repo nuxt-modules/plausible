@@ -132,10 +132,6 @@ function useTrackPageview(
 
 - [vue-plausible](https://github.com/moritzsternemann/vue-plausible), without first-class Nuxt 3 and composables.
 
-## Credits
-
-- [SVGBackgrounds.com](https://www.svgbackgrounds.com) for the OpenGraph image background pattern.
-
 ## License
 
 [MIT](./LICENSE) License © 2022-2023 [Johann Schopplich](https://github.com/johannschopplich)
