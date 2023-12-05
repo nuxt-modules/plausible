@@ -3,7 +3,7 @@ import { defineNuxtPlugin, useRuntimeConfig } from '#imports'
 import type { ModuleOptions } from '../module'
 
 export default defineNuxtPlugin(() => {
-  const options = useRuntimeConfig().public.plausible as ModuleOptions
+  const options = useRuntimeConfig().public.plausible as Required<ModuleOptions>
 
   const plausible = Plausible({
     ...options,
