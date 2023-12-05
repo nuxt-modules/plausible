@@ -82,7 +82,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Add module options to public runtime config
     nuxt.options.runtimeConfig.public.plausible = defu(
-      nuxt.options.runtimeConfig.public.plausible,
+      nuxt.options.runtimeConfig.public.plausible as ModuleOptions,
       options,
     )
 
