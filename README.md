@@ -4,7 +4,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@nuxtjs/plausible?color=a1b858&label=)](https://www.npmjs.com/package/@nuxtjs/plausible)
 
-> [Nuxt 3](https://nuxt.com) module to integrate the [Plausible tracker](https://github.com/plausible/plausible-tracker).
+[Nuxt 3](https://nuxt.com) module to integrate the [Plausible tracker](https://github.com/plausible/plausible-tracker).
 
 ## Features
 
@@ -37,7 +37,8 @@ export default defineNuxtConfig({
 
 Done! Plausible will now run in your application's client.
 
-> ℹ️ By default, `@nuxtjs/plausible` will use `window.location.hostname` for the Plausible `domain` configuration key, which will suit most users.
+> [!TIP]
+> By default, `@nuxtjs/plausible` will use `window.location.hostname` for the Plausible `domain` configuration key, which will suit most users.
 
 ## Configuration
 

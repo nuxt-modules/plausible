@@ -14,6 +14,8 @@ export function useTrackPageview(
   ...args: Parameters<ReturnType<typeof Plausible>['trackPageview']>
 ) {
   if (process.client) {
-    useNuxtApp().$plausible.trackPageview(...args)
+    ;(useNuxtApp().$plausible as ReturnType<typeof Plausible>).trackPageview(
+      ...args,
+    )
   }
 }

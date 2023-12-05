@@ -18,6 +18,8 @@ export function useTrackEvent(
   ...args: Parameters<ReturnType<typeof Plausible>['trackEvent']>
 ) {
   if (process.client) {
-    useNuxtApp().$plausible.trackEvent(...args)
+    ;(useNuxtApp().$plausible as ReturnType<typeof Plausible>).trackEvent(
+      ...args,
+    )
   }
 }
