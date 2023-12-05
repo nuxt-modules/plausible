@@ -1,8 +1,9 @@
 import Plausible from 'plausible-tracker'
 import { defineNuxtPlugin, useRuntimeConfig } from '#imports'
+import type { ModuleOptions } from '../module'
 
 export default defineNuxtPlugin(() => {
-  const { plausible: options } = useRuntimeConfig().public
+  const options = useRuntimeConfig().public.plausible as ModuleOptions
 
   const plausible = Plausible({
     ...options,
