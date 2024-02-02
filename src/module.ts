@@ -104,12 +104,12 @@ export default defineNuxtModule<ModuleOptions>({
     const { resolve } = createResolver(import.meta.url)
 
     // Add module options to public runtime config
-    const options = nuxt.options.runtimeConfig.public.plausible = defu(
+    nuxt.options.runtimeConfig.public.plausible = defu(
       nuxt.options.runtimeConfig.public.plausible as Required<ModuleOptions>,
       userOptions,
     )
 
-    if (!options.enabled) {
+    if (!userOptions.enabled) {
       return
     }
 
