@@ -100,16 +100,16 @@ export default defineNuxtModule<ModuleOptions>({
     blackListedDomains: ['localhost'],
     logIgnored: false,
   },
-  setup(userOptions, nuxt) {
+  setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
 
     // Add module options to public runtime config
     nuxt.options.runtimeConfig.public.plausible = defu(
       nuxt.options.runtimeConfig.public.plausible as Required<ModuleOptions>,
-      userOptions,
+      options,
     )
 
-    if (!userOptions.enabled) {
+    if (!options.enabled) {
       return
     }
 
@@ -135,14 +135,14 @@ export default defineNuxtModule<ModuleOptions>({
      * Use user options to install the plugin even if runtime config does not enable it. This allow users to enable the plugin later on.
      */
 
-    if (userOptions.autoPageviews) {
+    if (options.autoPageviews) {
       addPlugin({
         src: resolve('runtime/plugin-auto-pageviews.client'),
         mode: 'client',
       })
     }
 
-    if (userOptions.autoOutboundTracking) {
+    if (options.autoOutboundTracking) {
       addPlugin({
         src: resolve('runtime/plugin-auto-outbound-tracking.client'),
         mode: 'client',
