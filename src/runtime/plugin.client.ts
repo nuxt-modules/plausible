@@ -1,26 +1,20 @@
-import Plausible from 'plausible-tracker'
 import { defineNuxtPlugin, useRuntimeConfig } from '#imports'
+import {  type PlausibleOptions, createPlausibleTracker } from '@barbapapazes/plausible-tracker'
 import type { ModuleOptions } from '../module'
 
-export default defineNuxtPlugin(() => {
+export default defineNuxtPlugin({
+  name: 'plausible',
+  setup: () => {
   const options = useRuntimeConfig().public.plausible as Required<ModuleOptions>
 
-  const plausible = Plausible({
+  const plausible = createPlausibleTracker({
     ...options,
     domain: options.domain || window.location.hostname,
   })
-
-  if (options.autoPageviews) {
-    plausible.enableAutoPageviews()
-  }
-
-  if (options.autoOutboundTracking) {
-    plausible.enableAutoOutboundTracking()
-  }
 
   return {
     provide: {
       plausible,
     },
   }
-})
+}})
