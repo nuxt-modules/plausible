@@ -127,6 +127,7 @@ export default defineNuxtModule<ModuleOptions>({
     addPlugin({
       src: resolve('runtime/plugin.client'),
       mode: 'client',
+      order: 1,
     })
 
     /**
@@ -139,6 +140,7 @@ export default defineNuxtModule<ModuleOptions>({
       addPlugin({
         src: resolve('runtime/plugin-auto-pageviews.client'),
         mode: 'client',
+        order: 2,
       })
     }
 
@@ -146,6 +148,7 @@ export default defineNuxtModule<ModuleOptions>({
       addPlugin({
         src: resolve('runtime/plugin-auto-outbound-tracking.client'),
         mode: 'client',
+        order: 3,
       })
     }
   },

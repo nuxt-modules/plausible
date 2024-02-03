@@ -5,7 +5,6 @@ import { useAutoPageviews } from "@barbapapazes/plausible-tracker/extensions/aut
 
 export default defineNuxtPlugin({
   name: 'plausible-auto-pageviews',
-  dependsOn: ['plausible'],
   setup() {
     const options = useRuntimeConfig().public.plausible as Required<ModuleOptions>
 

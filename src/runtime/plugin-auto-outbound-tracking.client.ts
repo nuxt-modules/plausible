@@ -5,7 +5,6 @@ import { useAutoOutboundTracking } from "@barbapapazes/plausible-tracker/extensi
 
 export default defineNuxtPlugin({
   name: 'plausible-auto-outbound-tracking',
-  dependsOn: ['plausible'],
   setup() {
     const options = useRuntimeConfig().public.plausible as Required<ModuleOptions>
 
