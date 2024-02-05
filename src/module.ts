@@ -9,6 +9,12 @@ import { name, version } from '../package.json'
 
 export interface ModuleOptions {
   /**
+   * Whether the tracker shall be enabled
+   *
+   * @default true
+   */
+  enabled?: boolean
+  /**
    * Whether page views shall be tracked when the URL hash changes
    *
    * @remarks
@@ -24,6 +30,13 @@ export interface ModuleOptions {
    * @default false
    */
   trackLocalhost?: boolean
+
+  /**
+   * Hostnames to ignore
+   *
+   * @default ['localhost']
+   */
+  blackListedDomains?: string[]
 
   /**
    * The domain to bind tracking event to
@@ -58,6 +71,13 @@ export interface ModuleOptions {
    * @default false
    */
   autoOutboundTracking?: boolean
+
+  /**
+   * Log events to the console when ignored
+   *
+   * @default false
+   */
+  logIgnored?: boolean
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -70,12 +90,15 @@ export default defineNuxtModule<ModuleOptions>({
     },
   },
   defaults: {
+    enabled: true,
     hashMode: false,
     trackLocalhost: false,
     domain: '',
     apiHost: 'https://plausible.io',
     autoPageviews: true,
     autoOutboundTracking: false,
+    blackListedDomains: ['localhost'],
+    logIgnored: false,
   },
   setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
@@ -85,6 +108,10 @@ export default defineNuxtModule<ModuleOptions>({
       nuxt.options.runtimeConfig.public.plausible as Required<ModuleOptions>,
       options,
     )
+
+    if (!options.enabled) {
+      return
+    }
 
     // Transpile runtime
     nuxt.options.build.transpile.push(resolve('runtime'))
@@ -100,6 +127,29 @@ export default defineNuxtModule<ModuleOptions>({
     addPlugin({
       src: resolve('runtime/plugin.client'),
       mode: 'client',
+      order: 1,
     })
+
+    /**
+     * Split plugins to reduce bundle size.
+     *
+     * Use user options to install the plugin even if runtime config does not enable it. This allow users to enable the plugin later on.
+     */
+
+    if (options.autoPageviews) {
+      addPlugin({
+        src: resolve('runtime/plugin-auto-pageviews.client'),
+        mode: 'client',
+        order: 2,
+      })
+    }
+
+    if (options.autoOutboundTracking) {
+      addPlugin({
+        src: resolve('runtime/plugin-auto-outbound-tracking.client'),
+        mode: 'client',
+        order: 3,
+      })
+    }
   },
 })

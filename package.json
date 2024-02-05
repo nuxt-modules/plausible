@@ -43,10 +43,10 @@
     "release": "bumpp --commit --push --tag"
   },
   "dependencies": {
+    "@barbapapazes/plausible-tracker": "^0.2.2",
     "@nuxt/kit": "^3.8.2",
     "defu": "^6.1.3",
-    "pathe": "^1.1.1",
-    "plausible-tracker": "^0.3.8"
+    "pathe": "^1.1.1"
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^0.2.0",

@@ -1,5 +1,5 @@
 import { useNuxtApp } from '#imports'
-import type Plausible from 'plausible-tracker'
+import type { EventName, EventOptions, Plausible } from '@barbapapazes/plausible-tracker'
 
 /**
  * Tracks a custom event
@@ -15,11 +15,12 @@ import type Plausible from 'plausible-tracker'
  * useTrackEvent('Download', { props: { method: 'HTTP' } })
  */
 export function useTrackEvent(
-  ...args: Parameters<ReturnType<typeof Plausible>['trackEvent']>
+  eventName: EventName,
+  options?: EventOptions,
 ) {
-  if (process.client) {
-    ;(useNuxtApp().$plausible as ReturnType<typeof Plausible>).trackEvent(
-      ...args,
+  if (import.meta.client) {
+    ;(useNuxtApp().$plausible as Plausible).trackEvent(
+      eventName, options,
     )
   }
 }
