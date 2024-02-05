@@ -13,10 +13,10 @@
   },
   "bugs": "https://github.com/nuxt-modules/plausible/issues",
   "keywords": [
+    "analytics",
     "nuxt",
     "nuxt3",
-    "plausible",
-    "analytics"
+    "plausible"
   ],
   "exports": {
     ".": {
@@ -45,8 +45,7 @@
   "dependencies": {
     "@barbapapazes/plausible-tracker": "^0.3.1",
     "@nuxt/kit": "^3.10.0",
-    "defu": "^6.1.4",
-    "pathe": "^1.1.2"
+    "defu": "^6.1.4"
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^0.2.0",

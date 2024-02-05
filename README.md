@@ -4,7 +4,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@nuxtjs/plausible?color=a1b858&label=)](https://www.npmjs.com/package/@nuxtjs/plausible)
 
-[Nuxt 3](https://nuxt.com) module to integrate the [Plausible tracker](https://github.com/plausible/plausible-tracker).
+Native integration of [Plausible Analytics](https://plausible.io/sites) for [Nuxt](https://nuxt.com).
 
 ## Features
 
@@ -38,7 +38,7 @@ export default defineNuxtConfig({
 Done! Plausible will now run in your application's client.
 
 > [!TIP]
-> By default, `@nuxtjs/plausible` will use `window.location.hostname` for the Plausible `domain` configuration key, which will suit most users.
+> By default, `@nuxtjs/plausible` will use `window.location.hostname` for the Plausible `domain` configuration key, which should suit most users.
 
 ## Configuration
 
@@ -132,6 +132,10 @@ function useTrackPageview(
 ## Similar Packages
 
 - [vue-plausible](https://github.com/moritzsternemann/vue-plausible), without first-class Nuxt 3 and composables.
+
+## Credits
+
+- [@Barbapapazes](https://github.com/Barbapapazes) for his [Plausible tracker rewrite](https://github.com/Barbapapazes/plausible-tracker)
 
 ## License
 

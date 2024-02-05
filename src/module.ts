@@ -9,71 +9,72 @@ import { name, version } from '../package.json'
 
 export interface ModuleOptions {
   /**
-   * Whether the tracker shall be enabled
+   * Whether the tracker shall be enabled.
    *
    * @default true
    */
   enabled?: boolean
+
   /**
-   * Whether page views shall be tracked when the URL hash changes
+   * Whether page views shall be tracked when the URL hash changes.
    *
    * @remarks
-   * Enable this if your Nuxt app has the `hashMode` router option enabled
+   * Enable this if your Nuxt app has the `hashMode` router option enabled.
    *
    * @default false
    */
   hashMode?: boolean
 
   /**
-   * Whether events shall be tracked when running the site locally
+   * Whether events shall be tracked when running the site locally.
    *
    * @default false
    */
   trackLocalhost?: boolean
 
   /**
-   * Hostnames to ignore
+   * Hostnames to ignore.
    *
    * @default ['localhost']
    */
   blackListedDomains?: string[]
 
   /**
-   * The domain to bind tracking event to
+   * The domain to bind tracking event to.
    *
    * @default window.location.hostname
    */
   domain?: string
 
   /**
-   * The API host where the events will be sent to
+   * The API host where the events will be sent to.
    *
    * @default 'https://plausible.io'
    */
   apiHost?: string
 
   /**
-   * Track the current page and all further pages automatically
+   * Track the current page and all further pages automatically.
    *
    * @remarks
-   * Disable this if you want to manually manage pageview tracking
+   * Disable this if you want to manually manage pageview tracking.
    *
    * @default true
    */
   autoPageviews?: boolean
 
   /**
-   * Track all outbound link clicks automatically
+   * Track all outbound link clicks automatically.
    *
    * @remarks
-   * If enabled, a [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) automagically detects link nodes throughout the application and binds `click` events to them
+   * If enabled, a [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) automagically detects link nodes throughout the application and binds `click` events to them.
    *
    * @default false
    */
   autoOutboundTracking?: boolean
 
   /**
-   * Log events to the console when ignored
+   * Log events to the console if they are ignored.
    *
    * @default false
    */
@@ -130,11 +131,7 @@ export default defineNuxtModule<ModuleOptions>({
       order: 1,
     })
 
-    /**
-     * Split plugins to reduce bundle size.
-     *
-     * Use user options to install the plugin even if runtime config does not enable it. This allow users to enable the plugin later on.
-     */
+    // Split plugins to reduce bundle size
 
     if (options.autoPageviews) {
       addPlugin({
