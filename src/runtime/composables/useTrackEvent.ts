@@ -9,7 +9,7 @@ import type {
  * Tracks a custom event
  *
  * @remarks
- * Track your defined goals by passing the goal's name as the argument `eventName`
+ * Track your defined goals by passing the goal's name as the argument `eventName`.
  *
  * @example
  * // Tracks the `signup` goal
