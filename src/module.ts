@@ -4,6 +4,7 @@ import {
   addPlugin,
   createResolver,
   defineNuxtModule,
+  useLogger,
 } from '@nuxt/kit'
 import { name, version } from '../package.json'
 
@@ -28,16 +29,17 @@ export interface ModuleOptions {
   /**
    * Whether events shall be tracked when running the site locally.
    *
+   * @deprecated Please use `ignoredHostnames` instead.
    * @default false
    */
   trackLocalhost?: boolean
 
   /**
-   * Hostnames to ignore.
+   * Hostnames to ignore when tracking events.
    *
    * @default ['localhost']
    */
-  blackListedDomains?: string[]
+  ignoredHostnames?: string[]
 
   /**
    * The domain to bind tracking event to.
@@ -78,7 +80,7 @@ export interface ModuleOptions {
    *
    * @default false
    */
-  logIgnored?: boolean
+  logIgnoredEvents?: boolean
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -98,11 +100,25 @@ export default defineNuxtModule<ModuleOptions>({
     apiHost: 'https://plausible.io',
     autoPageviews: true,
     autoOutboundTracking: false,
-    blackListedDomains: ['localhost'],
-    logIgnored: false,
+    ignoredHostnames: ['localhost'],
+    logIgnoredEvents: false,
   },
   setup(options, nuxt) {
+    const logger = useLogger('plausible')
     const { resolve } = createResolver(import.meta.url)
+
+    // Dedupe `ignoredHostnames` items
+    options.ignoredHostnames = Array.from(new Set(options.ignoredHostnames))
+
+    // Migrate `trackLocalhost` to `ignoredHostnames`
+    if (options.trackLocalhost) {
+      logger.warn(
+        'The `trackLocalhost` option has been deprecated. Please use `ignoredHostnames` instead.',
+      )
+      options.ignoredHostnames = options.ignoredHostnames.filter(
+        (domain) => domain !== 'localhost',
+      )
+    }
 
     // Add module options to public runtime config
     nuxt.options.runtimeConfig.public.plausible = defu(

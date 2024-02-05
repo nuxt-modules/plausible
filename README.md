@@ -67,14 +67,16 @@ With this setup, you can omit the `plausible` key in your Nuxt configuration.
 
 ## Module Options
 
-| Option                 | Type      | Default                      | Description                                                                                                                                                                                                                                     |
-| ---------------------- | --------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `hashMode`             | `boolean` | `false`                      | Whether page views shall be tracked when the URL hash changes. Enable this if your Nuxt app has the `hashMode` router option enabled.                                                                                                           |
-| `trackLocalhost`       | `boolean` | `false`                      | Whether events shall be tracked when running the site locally.                                                                                                                                                                                  |
-| `domain`               | `string`  | `'window.location.hostname'` | The domain to bind tracking event to.                                                                                                                                                                                                           |
-| `apiHost`              | `string`  | `https://plausible.io`       | The API host where the events will be sent to.                                                                                                                                                                                                  |
-| `autoPageviews`        | `boolean` | `true`                       | Track the current page and all further pages automatically. Disable this if you want to manually manage pageview tracking.                                                                                                                      |
-| `autoOutboundTracking` | `boolean` | `false`                      | Track all outbound link clicks automatically. If enabled, a [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) automagically detects link nodes throughout the application and binds `click` events to them. |
+| Option                 | Type       | Default                      | Description                                                                                                                                                                                                                                     |
+| ---------------------- | ---------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `enabled`              | `boolean`  | `true`                       | Whether the tracker shall be enabled.                                                                                                                                                                                                           |
+| `hashMode`             | `boolean`  | `false`                      | Whether page views shall be tracked when the URL hash changes. Enable this if your Nuxt app has the `hashMode` router option enabled.                                                                                                           |
+| `ignoredHostnames`     | `string[]` | `undefined`                  | Hostnames to ignore when tracking events.                                                                                                                                                                                                       |
+| `domain`               | `string`   | `'window.location.hostname'` | The domain to bind tracking event to.                                                                                                                                                                                                           |
+| `apiHost`              | `string`   | `https://plausible.io`       | The API host where the events will be sent to.                                                                                                                                                                                                  |
+| `autoPageviews`        | `boolean`  | `true`                       | Track the current page and all further pages automatically. Disable this if you want to manually manage pageview tracking.                                                                                                                      |
+| `autoOutboundTracking` | `boolean`  | `false`                      | Track all outbound link clicks automatically. If enabled, a [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) automagically detects link nodes throughout the application and binds `click` events to them. |
+| `logIgnoredEvents`     | `boolean`  | `false`                      | Log events to the console if they are ignored.                                                                                                                                                                                                  |
 
 ## Composables
 
@@ -128,10 +130,6 @@ function useTrackPageview(
 3. Install dependencies using `pnpm install`
 4. Run `pnpm run dev:prepare`
 5. Start development server using `pnpm run dev`
-
-## Similar Packages
-
-- [vue-plausible](https://github.com/moritzsternemann/vue-plausible), without first-class Nuxt 3 and composables.
 
 ## Credits
 
