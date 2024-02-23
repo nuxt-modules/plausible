@@ -95,12 +95,12 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {
     enabled: true,
     hashMode: false,
-    trackLocalhost: false,
     domain: '',
+    ignoredHostnames: ['localhost'],
+    trackLocalhost: false,
     apiHost: 'https://plausible.io',
     autoPageviews: true,
     autoOutboundTracking: false,
-    ignoredHostnames: ['localhost'],
     logIgnoredEvents: false,
   },
   setup(options, nuxt) {
@@ -144,7 +144,6 @@ export default defineNuxtModule<ModuleOptions>({
     addPlugin({
       src: resolve('runtime/plugin.client'),
       mode: 'client',
-      order: 1,
     })
 
     // Split plugins to reduce bundle size
@@ -153,7 +152,7 @@ export default defineNuxtModule<ModuleOptions>({
       addPlugin({
         src: resolve('runtime/plugin-auto-pageviews.client'),
         mode: 'client',
-        order: 2,
+        order: 1,
       })
     }
 
@@ -161,7 +160,7 @@ export default defineNuxtModule<ModuleOptions>({
       addPlugin({
         src: resolve('runtime/plugin-auto-outbound-tracking.client'),
         mode: 'client',
-        order: 3,
+        order: 2,
       })
     }
   },

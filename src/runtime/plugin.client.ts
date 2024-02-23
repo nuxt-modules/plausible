@@ -14,7 +14,6 @@ export default defineNuxtPlugin({
 
     const plausible = createPlausibleTracker({
       ...options,
-      blackListedDomains: options.ignoredHostnames,
       logIgnored: options.logIgnoredEvents,
       domain: options.domain || window.location.hostname,
     })

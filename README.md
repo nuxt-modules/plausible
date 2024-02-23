@@ -38,7 +38,7 @@ export default defineNuxtConfig({
 Done! Plausible will now run in your application's client.
 
 > [!TIP]
-> By default, `@nuxtjs/plausible` will use `window.location.hostname` for the Plausible `domain` configuration key, which should suit most users.
+> By default, `@nuxtjs/plausible` will use `window.location.hostname` for the Plausible `domain` configuration key, which should suit most use-cases. If you need to customize the domain, you can do so in the [module options](#module-options).
 
 ## Configuration
 
@@ -49,7 +49,8 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/plausible'],
 
   plausible: {
-    domain: 'example.com',
+    // Prevent tracking on localhost
+    ignoredHostnames: ['localhost'],
   },
 })
 ```
@@ -71,8 +72,8 @@ With this setup, you can omit the `plausible` key in your Nuxt configuration.
 | ---------------------- | ---------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `enabled`              | `boolean`  | `true`                       | Whether the tracker shall be enabled.                                                                                                                                                                                                           |
 | `hashMode`             | `boolean`  | `false`                      | Whether page views shall be tracked when the URL hash changes. Enable this if your Nuxt app has the `hashMode` router option enabled.                                                                                                           |
-| `ignoredHostnames`     | `string[]` | `undefined`                  | Hostnames to ignore when tracking events.                                                                                                                                                                                                       |
 | `domain`               | `string`   | `'window.location.hostname'` | The domain to bind tracking event to.                                                                                                                                                                                                           |
+| `ignoredHostnames`     | `string[]` | `['localhost']`              | Hostnames to ignore when tracking events.                                                                                                                                                                                                       |
 | `apiHost`              | `string`   | `https://plausible.io`       | The API host where the events will be sent to.                                                                                                                                                                                                  |
 | `autoPageviews`        | `boolean`  | `true`                       | Track the current page and all further pages automatically. Disable this if you want to manually manage pageview tracking.                                                                                                                      |
 | `autoOutboundTracking` | `boolean`  | `false`                      | Track all outbound link clicks automatically. If enabled, a [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) automagically detects link nodes throughout the application and binds `click` events to them. |
@@ -80,9 +81,10 @@ With this setup, you can omit the `plausible` key in your Nuxt configuration.
 
 ## Composables
 
-As with other composables in the Nuxt 3 ecosystem, they are auto-imported and can be used in your application's components.
+As with other composables in the Nuxt ecosystem, they are auto-imported and can be used in your application's components.
 
-> ℹ️ Since the Plausible instance is available in the client only, executing the composables on the server will have no effect.
+> [!INFO]
+> Since the Plausible instance is available in the client only, executing the composables on the server will have no effect.
 
 ### `useTrackEvent`
 
