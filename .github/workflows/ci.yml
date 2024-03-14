@@ -14,52 +14,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: corepack enable
+      - uses: pnpm/action-setup@v3
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
-
-      - name: Install
-        run: pnpm install
-
-      - name: Build type stubs
-        run: pnpm dev:prepare
-
-      - name: Lint
-        run: pnpm run format:check
+          node-version: 20
+      - run: pnpm install
+      - run: pnpm run dev:prepare
+      - run: pnpm run format:check
 
   lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: corepack enable
+      - uses: pnpm/action-setup@v3
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
-
-      - name: Install
-        run: pnpm install
-
-      - name: Build type stubs
-        run: pnpm dev:prepare
-
-      - name: Lint
-        run: pnpm run lint
+          node-version: 20
+      - run: pnpm install
+      - run: pnpm run dev:prepare
+      - run: pnpm run lint
 
   typecheck:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: corepack enable
+      - uses: pnpm/action-setup@v3
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
-
-      - name: Install
-        run: pnpm install
-
-      - name: Build type stubs
-        run: pnpm dev:prepare
-
-      - name: Typecheck
-        run: pnpm run test:types
+          node-version: 20
+      - run: pnpm install
+      - run: pnpm run dev:prepare
+      - run: pnpm run test:types
