@@ -83,7 +83,7 @@ With this setup, you can omit the `plausible` key in your Nuxt configuration.
 
 As with other composables in the Nuxt ecosystem, they are auto-imported and can be used in your application's components.
 
-> [!INFO]
+> [!NOTE]
 > Since the Plausible instance is available in the client only, executing the composables on the server will have no effect.
 
 ### `useTrackEvent`
