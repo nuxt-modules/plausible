@@ -17,7 +17,7 @@ import type Plausible from 'plausible-tracker'
 export function useTrackEvent(
   ...args: Parameters<ReturnType<typeof Plausible>['trackEvent']>
 ) {
-  if (process.client) {
+  if (import.meta.client) {
     useNuxtApp().$plausible.trackEvent(...args)
   }
 }
