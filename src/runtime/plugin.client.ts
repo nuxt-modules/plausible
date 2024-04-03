@@ -4,7 +4,7 @@ import type { ModuleOptions } from '../module'
 
 export default defineNuxtPlugin({
   name: 'plausible',
-  setup: () => {
+  setup() {
     const options = useRuntimeConfig().public
       .plausible as Required<ModuleOptions>
 
