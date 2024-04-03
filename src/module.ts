@@ -126,10 +126,6 @@ export default defineNuxtModule<ModuleOptions>({
       options,
     )
 
-    if (!options.enabled) {
-      return
-    }
-
     // Transpile runtime
     nuxt.options.build.transpile.push(resolve('runtime'))
 

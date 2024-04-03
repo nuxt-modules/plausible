@@ -21,6 +21,6 @@ import type {
 export function useTrackEvent(eventName: EventName, options?: EventOptions) {
   if (import.meta.client) {
     // eslint-disable-next-line no-extra-semi
-    ;(useNuxtApp().$plausible as Plausible).trackEvent(eventName, options)
+    ;(useNuxtApp().$plausible as Plausible)?.trackEvent(eventName, options)
   }
 }

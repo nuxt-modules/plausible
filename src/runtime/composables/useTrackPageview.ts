@@ -13,6 +13,6 @@ import type { EventOptions, Plausible } from '@barbapapazes/plausible-tracker'
 export function useTrackPageview(options?: EventOptions) {
   if (import.meta.client) {
     // eslint-disable-next-line no-extra-semi
-    ;(useNuxtApp().$plausible as Plausible).trackPageview(options)
+    ;(useNuxtApp().$plausible as Plausible)?.trackPageview(options)
   }
 }
