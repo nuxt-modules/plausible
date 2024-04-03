@@ -5,9 +5,4 @@ export default defineNuxtConfig({
     autoPageviews: false,
     autoOutboundTracking: false,
   },
-
-  typescript: {
-    typeCheck: 'build',
-    shim: false,
-  },
 })
