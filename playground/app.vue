@@ -37,11 +37,17 @@ function pushRoute() {
   </details>
 
   <h3>Composables</h3>
-  <button @click="trackEvent">useTrackEvent</button>
+  <button @click="trackEvent">
+    useTrackEvent
+  </button>
   &nbsp;
-  <button @click="trackPageview">useTrackPageview</button>
+  <button @click="trackPageview">
+    useTrackPageview
+  </button>
   &nbsp;
-  <button @click="pushRoute">navigateTo</button>
+  <button @click="pushRoute">
+    navigateTo
+  </button>
 
   <h3>Links</h3>
   <ul>
@@ -51,7 +57,10 @@ function pushRoute() {
       </a>
     </li>
     <li>
-      <a href="https://github.com/nuxt-modules/plausible" target="_blank">
+      <a
+        href="https://github.com/nuxt-modules/plausible"
+        target="_blank"
+      >
         Plausible (another tab)
       </a>
     </li>

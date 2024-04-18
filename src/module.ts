@@ -116,7 +116,7 @@ export default defineNuxtModule<ModuleOptions>({
         'The `trackLocalhost` option has been deprecated. Please use `ignoredHostnames` instead.',
       )
       options.ignoredHostnames = options.ignoredHostnames.filter(
-        (domain) => domain !== 'localhost',
+        domain => domain !== 'localhost',
       )
     }
 
@@ -130,7 +130,7 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.build.transpile.push(resolve('runtime'))
 
     addImports(
-      ['useTrackEvent', 'useTrackPageview'].map((name) => ({
+      ['useTrackEvent', 'useTrackPageview'].map(name => ({
         name,
         as: name,
         from: resolve(`runtime/composables/${name}`),
