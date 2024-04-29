@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@barbapapazes/plausible-tracker':
-        specifier: ^0.4.0
-        version: 0.4.0
+        specifier: ^0.5.0
+        version: 0.5.0
       '@nuxt/kit':
         specifier: ^3.11.2
         version: 3.11.2(rollup@3.29.4)
@@ -419,8 +419,8 @@ packages:
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
 
-  /@barbapapazes/plausible-tracker@0.4.0:
-    resolution: {integrity: sha512-4hhXK62ORb4feJfjnIILXRnb6xfejHM6yvGCid6MwNdKiQyj6YLW0M779zXLH5IBS4mQObmrNul2HUleeavSKw==}
+  /@barbapapazes/plausible-tracker@0.5.0:
+    resolution: {integrity: sha512-sgfoOIrfP+tuhlR3ugPMTAEJnhqITXijBGyaWD48xfTP0h5y5AkfQPfiQoQdALyK4jR3m5TaNbwkPH4gtKsDAQ==}
     dev: false
 
   /@cloudflare/kv-asset-handler@0.3.1:
@@ -1546,6 +1546,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -5450,6 +5451,10 @@ packages:
     resolution: {integrity: sha512-oLxFY2gd2IqnjcYyOXD8XGCftpGtZP2AbHbOkthDkvRywH5ayNtPVy9YlOPcHckXzbLTCHpkb7FB+yuxKV13pQ==}
     engines: {node: ^18 || >=20}
     hasBin: true
+    dev: true
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
     dev: true
 
   /natural-compare@1.4.0:
