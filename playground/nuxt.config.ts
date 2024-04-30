@@ -1,5 +1,5 @@
 export default defineNuxtConfig({
-  modules: ['../src/module.ts'],
+  modules: ['@nuxtjs/plausible'],
 
   plausible: {
     autoPageviews: false,
