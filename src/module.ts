@@ -42,6 +42,13 @@ export interface ModuleOptions {
   ignoredHostnames?: string[]
 
   /**
+   * Ignore also if is a subdomain of `ignoredHostnames`.
+   *
+   * @default false
+   */
+  ignoreSubDomains?: boolean
+
+  /**
    * The domain to bind tracking event to.
    *
    * @default window.location.hostname
@@ -97,6 +104,7 @@ export default defineNuxtModule<ModuleOptions>({
     hashMode: false,
     domain: '',
     ignoredHostnames: ['localhost'],
+    ignoreSubDomains: false,
     trackLocalhost: false,
     apiHost: 'https://plausible.io',
     autoPageviews: true,
