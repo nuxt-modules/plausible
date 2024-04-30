@@ -42,7 +42,7 @@ export interface ModuleOptions {
   ignoredHostnames?: string[]
 
   /**
-   * Ignore also if is a subdomain of `ignoredHostnames`.
+   * Ignore the hostname if it is a subdomain of `ignoredHostnames`.
    *
    * @default false
    */
