@@ -1,5 +1,5 @@
 import { useNuxtApp } from '#imports'
-import type Plausible from 'plausible-tracker'
+import type { EventOptions, Plausible } from '@barbapapazes/plausible-tracker'
 
 /**
  * Manually track a page view
@@ -10,10 +10,9 @@ import type Plausible from 'plausible-tracker'
  * @example
  * useTrackPageview()
  */
-export function useTrackPageview(
-  ...args: Parameters<ReturnType<typeof Plausible>['trackPageview']>
-) {
-  if (process.client) {
-    useNuxtApp().$plausible.trackPageview(...args)
+export function useTrackPageview(options?: EventOptions) {
+  if (import.meta.client) {
+    // eslint-disable-next-line no-extra-semi
+    ;(useNuxtApp().$plausible as Plausible)?.trackPageview(options)
   }
 }

@@ -1,13 +1,8 @@
 export default defineNuxtConfig({
-  modules: ['../src/module.ts'],
+  modules: ['@nuxtjs/plausible'],
 
-  typescript: {
-    typeCheck: 'build',
-    shim: false,
-    tsConfig: {
-      compilerOptions: {
-        moduleResolution: 'bundler',
-      },
-    },
+  plausible: {
+    autoPageviews: false,
+    autoOutboundTracking: false,
   },
 })

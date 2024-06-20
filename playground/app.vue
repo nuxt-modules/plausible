@@ -2,11 +2,18 @@
 const { plausible } = useRuntimeConfig().public
 
 function trackEvent() {
-  useTrackEvent('playground')
+  useTrackEvent('playground', {
+    props: { action: 'click' },
+    callback: () => console.log('Event tracked'),
+  })
 }
 
 function trackPageview() {
   useTrackPageview()
+}
+
+function pushRoute() {
+  navigateTo('/about')
 }
 </script>
 
@@ -30,7 +37,32 @@ function trackPageview() {
   </details>
 
   <h3>Composables</h3>
-  <button @click="trackEvent">useTrackEvent</button>
+  <button @click="trackEvent">
+    useTrackEvent
+  </button>
   &nbsp;
-  <button @click="trackPageview">useTrackPageview</button>
+  <button @click="trackPageview">
+    useTrackPageview
+  </button>
+  &nbsp;
+  <button @click="pushRoute">
+    navigateTo
+  </button>
+
+  <h3>Links</h3>
+  <ul>
+    <li>
+      <a href="https://github.com/nuxt-modules/plausible">
+        Plausible (same page)
+      </a>
+    </li>
+    <li>
+      <a
+        href="https://github.com/nuxt-modules/plausible"
+        target="_blank"
+      >
+        Plausible (another tab)
+      </a>
+    </li>
+  </ul>
 </template>
