@@ -96,7 +96,7 @@ export default defineNuxtModule<ModuleOptions>({
     version,
     configKey: 'plausible',
     compatibility: {
-      nuxt: '^3.7',
+      nuxt: '>=3',
     },
   },
   defaults: {
