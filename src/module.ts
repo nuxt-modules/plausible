@@ -8,6 +8,8 @@ import {
 } from '@nuxt/kit'
 import { name, version } from '../package.json'
 
+const DEFAULT_HOSTNAMES = ['localhost']
+
 export interface ModuleOptions {
   /**
    * Whether the tracker shall be enabled.
@@ -103,7 +105,7 @@ export default defineNuxtModule<ModuleOptions>({
     enabled: true,
     hashMode: false,
     domain: '',
-    ignoredHostnames: ['localhost'],
+    ignoredHostnames: [],
     ignoreSubDomains: false,
     trackLocalhost: false,
     apiHost: 'https://plausible.io',
@@ -118,11 +120,14 @@ export default defineNuxtModule<ModuleOptions>({
     // Dedupe `ignoredHostnames` items
     options.ignoredHostnames = Array.from(new Set(options.ignoredHostnames))
 
+    // Add default hostnames if `ignoredHostnames` is empty
+    if (options.ignoredHostnames.length === 0) {
+      options.ignoredHostnames = DEFAULT_HOSTNAMES
+    }
+
     // Migrate `trackLocalhost` to `ignoredHostnames`
     if (options.trackLocalhost) {
-      logger.warn(
-        'The `trackLocalhost` option has been deprecated. Please use `ignoredHostnames` instead.',
-      )
+      logger.warn('The `trackLocalhost` option has been deprecated. Please use `ignoredHostnames` instead.')
       options.ignoredHostnames = options.ignoredHostnames.filter(
         domain => domain !== 'localhost',
       )
