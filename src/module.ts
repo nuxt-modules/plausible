@@ -105,7 +105,7 @@ export default defineNuxtModule<ModuleOptions>({
     enabled: true,
     hashMode: false,
     domain: '',
-    ignoredHostnames: [],
+    ignoredHostnames: undefined,
     ignoreSubDomains: false,
     trackLocalhost: false,
     apiHost: 'https://plausible.io',
@@ -117,13 +117,11 @@ export default defineNuxtModule<ModuleOptions>({
     const logger = useLogger('plausible')
     const { resolve } = createResolver(import.meta.url)
 
+    // Set default hostnames if `ignoredHostnames` is not set
+    options.ignoredHostnames ??= [...DEFAULT_HOSTNAMES]
+
     // Dedupe `ignoredHostnames` items
     options.ignoredHostnames = Array.from(new Set(options.ignoredHostnames))
-
-    // Add default hostnames if `ignoredHostnames` is empty
-    if (options.ignoredHostnames.length === 0) {
-      options.ignoredHostnames = DEFAULT_HOSTNAMES
-    }
 
     // Migrate `trackLocalhost` to `ignoredHostnames`
     if (options.trackLocalhost) {

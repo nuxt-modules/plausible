@@ -51,6 +51,9 @@ export default defineNuxtConfig({
 })
 ```
 
+> [!TIP]
+> To allow tracking events on localhost, set the `ignoredHostnames` option to an empty array.
+
 ### Runtime Config
 
 Alternatively, leveraging [automatically replaced public runtime config values](https://nuxt.com/docs/api/configuration/nuxt-config#runtimeconfig) by matching environment variables at runtime, set your desired option in your project's `.env` file:
