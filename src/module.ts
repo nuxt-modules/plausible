@@ -107,7 +107,7 @@ export default defineNuxtModule<ModuleOptions>({
     domain: '',
     ignoredHostnames: undefined,
     ignoreSubDomains: false,
-    trackLocalhost: false,
+    trackLocalhost: undefined,
     apiHost: 'https://plausible.io',
     autoPageviews: true,
     autoOutboundTracking: false,
@@ -123,9 +123,11 @@ export default defineNuxtModule<ModuleOptions>({
     // Dedupe `ignoredHostnames` items
     options.ignoredHostnames = Array.from(new Set(options.ignoredHostnames))
 
-    // Migrate `trackLocalhost` to `ignoredHostnames`
-    if (options.trackLocalhost) {
+    if (options.trackLocalhost !== undefined) {
       logger.warn('The `trackLocalhost` option has been deprecated. Please use `ignoredHostnames` instead.')
+    }
+    // Migrate `trackLocalhost` to `ignoredHostnames`
+    else if (options.trackLocalhost) {
       options.ignoredHostnames = options.ignoredHostnames.filter(
         domain => domain !== 'localhost',
       )
