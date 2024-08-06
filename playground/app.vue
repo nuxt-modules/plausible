@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { navigateTo, useRuntimeConfig, useTrackEvent, useTrackPageview } from '#imports'
+
 const { plausible } = useRuntimeConfig().public
 
 function trackEvent() {

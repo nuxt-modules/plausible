@@ -1,9 +1,9 @@
-import { useNuxtApp } from '#imports'
 import type {
   EventName,
   EventOptions,
   Plausible,
 } from '@barbapapazes/plausible-tracker'
+import { useNuxtApp } from '#imports'
 
 /**
  * Tracks a custom event
@@ -20,7 +20,6 @@ import type {
  */
 export function useTrackEvent(eventName: EventName, options?: EventOptions) {
   if (import.meta.client) {
-    // eslint-disable-next-line no-extra-semi
     ;(useNuxtApp().$plausible as Plausible)?.trackEvent(eventName, options)
   }
 }

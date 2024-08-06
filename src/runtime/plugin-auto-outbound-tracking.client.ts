@@ -1,7 +1,8 @@
-import { defineNuxtPlugin, useNuxtApp, useRuntimeConfig } from '#imports'
+import { defineNuxtPlugin } from 'nuxt/app'
 import type { Plausible } from '@barbapapazes/plausible-tracker'
-import type { ModuleOptions } from '../module'
 import { useAutoOutboundTracking } from '@barbapapazes/plausible-tracker/extensions/auto-outbound-tracking'
+import type { ModuleOptions } from '../module'
+import { useNuxtApp, useRuntimeConfig } from '#imports'
 
 export default defineNuxtPlugin({
   name: 'plausible:auto-outbound-tracking',
