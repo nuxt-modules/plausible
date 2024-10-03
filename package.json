@@ -41,7 +41,7 @@
     "release": "bumpp"
   },
   "dependencies": {
-    "@barbapapazes/plausible-tracker": "^0.5.2",
+    "@barbapapazes/plausible-tracker": "^0.5.3",
     "@nuxt/kit": "^3.12.4",
     "defu": "^6.1.4"
   },
