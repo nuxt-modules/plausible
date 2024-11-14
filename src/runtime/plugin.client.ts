@@ -17,6 +17,7 @@ export default defineNuxtPlugin({
       ...options,
       logIgnored: options.logIgnoredEvents,
       domain: options.domain || window.location.hostname,
+      apiHost: options.proxy ? window.location.origin : options.apiHost,
     })
 
     return {

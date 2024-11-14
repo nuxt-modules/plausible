@@ -78,6 +78,8 @@ With this setup, you can omit the `plausible` key in your Nuxt configuration.
 | `autoPageviews`        | `boolean`  | `true`                       | Track the current page and all further pages automatically. Disable this if you want to manually manage pageview tracking.                                                                                                                      |
 | `autoOutboundTracking` | `boolean`  | `false`                      | Track all outbound link clicks automatically. If enabled, a [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) automagically detects link nodes throughout the application and binds `click` events to them. |
 | `logIgnoredEvents`     | `boolean`  | `false`                      | Log events to the console if they are ignored.                                                                                                                                                                                                  |
+| `proxy`                | `boolean`  | `false`                      | Whether to proxy the event endpoint through the current origin.                                                                                                                                                                                 |
+| `proxyBaseURL`         | `string`   | `'/api/event'`               | The base URL to proxy the event endpoint through.                                                                                                                                                                                               |
 
 ## Composables
 

@@ -2,6 +2,7 @@ import { defu } from 'defu'
 import {
   addImports,
   addPlugin,
+  addServerHandler,
   createResolver,
   defineNuxtModule,
   useLogger,
@@ -90,6 +91,20 @@ export interface ModuleOptions {
    * @default false
    */
   logIgnoredEvents?: boolean
+
+  /**
+   * Whether to proxy the event endpoint through the current origin.
+   *
+   * @default false
+   */
+  proxy?: boolean
+
+  /**
+   * The base URL to proxy the event endpoint through.
+   *
+   * @default '/api/event'
+   */
+  proxyBaseURL?: string
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -112,6 +127,8 @@ export default defineNuxtModule<ModuleOptions>({
     autoPageviews: true,
     autoOutboundTracking: false,
     logIgnoredEvents: false,
+    proxy: false,
+    proxyBaseURL: '/api/event',
   },
   setup(options, nuxt) {
     const logger = useLogger('plausible')
@@ -141,6 +158,23 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Transpile runtime
     nuxt.options.build.transpile.push(resolve('runtime'))
+
+    if (nuxt.options.runtimeConfig.public.plausible.proxy) {
+      const proxyBaseURL = nuxt.options.runtimeConfig.public.plausible.proxyBaseURL
+
+      const hasUserProvidedProxyBaseURL
+        = nuxt.options.serverHandlers.find(handler => handler.route?.startsWith(proxyBaseURL))
+        || nuxt.options.devServerHandlers.find(handler => handler.route?.startsWith(proxyBaseURL))
+      if (hasUserProvidedProxyBaseURL) {
+        throw new Error(`The route ${proxyBaseURL} is already in use. Please use the 'proxyBaseURL' option to change the base URL of the proxy endpoint.`)
+      }
+
+      addServerHandler({
+        route: proxyBaseURL,
+        handler: resolve('./runtime/server/api/event.post'),
+        method: 'post',
+      })
+    }
 
     addImports(
       ['useTrackEvent', 'useTrackPageview'].map(name => ({
