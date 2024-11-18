@@ -10,6 +10,7 @@ Native integration of [Plausible Analytics](https://plausible.io/sites) for [Nux
 
 - 🌻 No configuration necessary
 - 📯 Track events and page views manually with [composables](#composables)
+- 🔀 Optional API proxy to avoid ad-blockers
 - 📂 [`.env` file support](#configuration)
 - 🧺 Sensible default options
 - 🦾 SSR-ready
@@ -64,6 +65,25 @@ NUXT_PUBLIC_PLAUSIBLE_DOMAIN=example.com
 ```
 
 With this setup, you can omit the `plausible` key in your Nuxt configuration.
+
+### Proxy Configuration
+
+The module provides a proxy API feature that allows you to route Plausible events through your Nitro server instead of sending them directly to Plausible's servers. This is useful if you want to prevent ad blockers from blocking requests to Plausible's domain. When proxy is enabled, the tracker will automatically route requests through the current origin.
+
+To enable the proxy API, set the `proxy` option to `true`:
+
+```ts
+export default defineNuxtConfig({
+  modules: ['@nuxtjs/plausible'],
+
+  plausible: {
+    proxy: true,
+  },
+})
+```
+
+> [!NOTE]
+> When enabled, all Plausible events will be sent to your server first, which then forwards them to Plausible's API. The default proxy endpoint is `/api/event`, but you can customize it using the `proxyBaseURL` option.
 
 ## Module Options
 
