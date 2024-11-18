@@ -100,9 +100,9 @@ export interface ModuleOptions {
   proxy?: boolean
 
   /**
-   * The base URL to proxy the event endpoint through.
+   * The base URL to proxy the Plausible event endpoint through.
    *
-   * @default '/api/event'
+   * @default '/api/__plausible_event__'
    */
   proxyBaseURL?: string
 }
@@ -128,7 +128,7 @@ export default defineNuxtModule<ModuleOptions>({
     autoOutboundTracking: false,
     logIgnoredEvents: false,
     proxy: false,
-    proxyBaseURL: '/api/event',
+    proxyBaseURL: '/api/__plausible_event__',
   },
   setup(options, nuxt) {
     const logger = useLogger('plausible')
@@ -160,7 +160,7 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.build.transpile.push(resolve('runtime'))
 
     if (nuxt.options.runtimeConfig.public.plausible.proxy) {
-      const proxyBaseURL = nuxt.options.runtimeConfig.public.plausible.proxyBaseURL
+      const { proxyBaseURL } = nuxt.options.runtimeConfig.public.plausible
 
       const hasUserProvidedProxyBaseURL
         = nuxt.options.serverHandlers.find(handler => handler.route?.startsWith(proxyBaseURL))
@@ -171,7 +171,7 @@ export default defineNuxtModule<ModuleOptions>({
 
       addServerHandler({
         route: proxyBaseURL,
-        handler: resolve('runtime/server/api/event.post'),
+        handler: resolve('runtime/server/event-handler'),
         method: 'post',
       })
     }

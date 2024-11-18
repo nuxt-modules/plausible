@@ -83,7 +83,7 @@ export default defineNuxtConfig({
 ```
 
 > [!NOTE]
-> When enabled, all Plausible events will be sent to your server first, which then forwards them to Plausible's API. The default proxy endpoint is `/api/event`, but you can customize it using the `proxyBaseURL` option.
+> When enabled, all Plausible events will be sent to your server first, which then forwards them to Plausible's API. The default proxy endpoint is `/api/__plausible_event__`, but you can customize the path using the `proxyBaseURL` module option.
 
 ## Module Options
 
@@ -99,7 +99,7 @@ export default defineNuxtConfig({
 | `autoOutboundTracking` | `boolean`  | `false`                      | Track all outbound link clicks automatically. If enabled, a [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) automagically detects link nodes throughout the application and binds `click` events to them. |
 | `logIgnoredEvents`     | `boolean`  | `false`                      | Log events to the console if they are ignored.                                                                                                                                                                                                  |
 | `proxy`                | `boolean`  | `false`                      | Whether to proxy the event endpoint through the current origin.                                                                                                                                                                                 |
-| `proxyBaseURL`         | `string`   | `'/api/event'`               | The base URL to proxy the event endpoint through.                                                                                                                                                                                               |
+| `proxyBaseURL`         | `string`   | `'/api/__plausible_event__'` | The base URL to proxy the event endpoint through.                                                                                                                                                                                               |
 
 ## Composables
 
