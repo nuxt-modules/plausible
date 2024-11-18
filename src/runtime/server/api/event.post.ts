@@ -1,14 +1,13 @@
-import { createError, defineEventHandler, getHeaders, getRequestIP, readBody } from 'h3'
-import { ofetch } from 'ofetch'
-import { withoutTrailingSlash } from 'ufo'
+import { joinURL } from 'ufo'
+import { createError, defineEventHandler, getRequestHeader, getRequestIP, readBody } from 'h3'
 import type { ModuleOptions } from '../../../module'
 import { useRuntimeConfig } from '#imports'
 
 export default defineEventHandler(async (event) => {
-  try {
-    const config = useRuntimeConfig(event)
-    const options = config.public.plausible as Required<ModuleOptions>
+  const config = useRuntimeConfig(event)
+  const options = config.public.plausible as Required<ModuleOptions>
 
+  try {
     if (!options?.apiHost) {
       throw createError({
         statusCode: 500,
@@ -16,19 +15,18 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    const target = `${withoutTrailingSlash(options.apiHost)}/api/event`
-
+    const target = joinURL(options.apiHost, 'api/event')
     const body = await readBody(event)
 
     const headers = new Headers({
       'Content-Type': 'application/json',
       ...Object.fromEntries([
-        ['User-Agent', getHeaders(event)['user-agent']],
+        ['User-Agent', getRequestHeader(event, 'user-agent')],
         ['X-Forwarded-For', getRequestIP(event, { xForwardedFor: true })],
       ].filter(([_, value]) => value != null)),
     })
 
-    const result = await ofetch(target, {
+    const result = await globalThis.$fetch(target, {
       method: 'POST',
       headers: headers,
       body,

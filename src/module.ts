@@ -166,12 +166,12 @@ export default defineNuxtModule<ModuleOptions>({
         = nuxt.options.serverHandlers.find(handler => handler.route?.startsWith(proxyBaseURL))
         || nuxt.options.devServerHandlers.find(handler => handler.route?.startsWith(proxyBaseURL))
       if (hasUserProvidedProxyBaseURL) {
-        throw new Error(`The route ${proxyBaseURL} is already in use. Please use the 'proxyBaseURL' option to change the base URL of the proxy endpoint.`)
+        throw new Error(`The route \`${proxyBaseURL}\` is already in use. Please use the \`proxyBaseURL\` option to change the base URL of the proxy endpoint.`)
       }
 
       addServerHandler({
         route: proxyBaseURL,
-        handler: resolve('./runtime/server/api/event.post'),
+        handler: resolve('runtime/server/api/event.post'),
         method: 'post',
       })
     }
