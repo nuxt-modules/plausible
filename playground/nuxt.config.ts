@@ -6,5 +6,6 @@ export default defineNuxtConfig({
   plausible: {
     autoPageviews: false,
     autoOutboundTracking: false,
+    proxy: true,
   },
 })
