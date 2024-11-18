@@ -1,7 +1,7 @@
-import { joinURL } from 'ufo'
-import { createError, defineEventHandler, getRequestHeader, getRequestIP, readBody } from 'h3'
 import type { ModuleOptions } from '../../../module'
 import { useRuntimeConfig } from '#imports'
+import { createError, defineEventHandler, getRequestHeader, getRequestIP, readBody } from 'h3'
+import { joinURL } from 'ufo'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event)

@@ -1,8 +1,8 @@
-import { defineNuxtPlugin } from 'nuxt/app'
 import type { Plausible } from '@barbapapazes/plausible-tracker'
-import { useAutoPageviews } from '@barbapapazes/plausible-tracker/extensions/auto-pageviews'
 import type { ModuleOptions } from '../module'
 import { useNuxtApp, useRuntimeConfig } from '#imports'
+import { useAutoPageviews } from '@barbapapazes/plausible-tracker/extensions/auto-pageviews'
+import { defineNuxtPlugin } from 'nuxt/app'
 
 export default defineNuxtPlugin({
   name: 'plausible:auto-pageviews',

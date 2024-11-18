@@ -1,4 +1,3 @@
-import { defu } from 'defu'
 import {
   addImports,
   addPlugin,
@@ -7,6 +6,7 @@ import {
   defineNuxtModule,
   useLogger,
 } from '@nuxt/kit'
+import { defu } from 'defu'
 import { name, version } from '../package.json'
 
 const DEFAULT_HOSTNAMES = ['localhost']

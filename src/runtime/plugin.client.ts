@@ -1,7 +1,7 @@
-import { defineNuxtPlugin } from 'nuxt/app'
-import { createPlausibleTracker } from '@barbapapazes/plausible-tracker'
 import type { ModuleOptions } from '../module'
 import { useRuntimeConfig } from '#imports'
+import { createPlausibleTracker } from '@barbapapazes/plausible-tracker'
+import { defineNuxtPlugin } from 'nuxt/app'
 
 export default defineNuxtPlugin({
   name: 'plausible',
