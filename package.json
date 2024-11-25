@@ -43,7 +43,8 @@
   "dependencies": {
     "@barbapapazes/plausible-tracker": "^0.5.6",
     "@nuxt/kit": "^3.14.1592",
-    "defu": "^6.1.4"
+    "defu": "^6.1.4",
+    "ufo": "^1.5.4"
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^0.7.1",

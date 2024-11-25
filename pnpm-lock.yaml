@@ -17,6 +17,9 @@ importers:
       defu:
         specifier: ^6.1.4
         version: 6.1.4
+      ufo:
+        specifier: ^1.5.4
+        version: 1.5.4
     devDependencies:
       '@nuxt/eslint-config':
         specifier: ^0.7.1
