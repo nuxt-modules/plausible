@@ -7,6 +7,7 @@ import {
   useLogger,
 } from '@nuxt/kit'
 import { defu } from 'defu'
+import { joinURL, withLeadingSlash } from 'ufo'
 import { name, version } from '../package.json'
 
 const DEFAULT_HOSTNAMES = ['localhost']
@@ -100,11 +101,14 @@ export interface ModuleOptions {
   proxy?: boolean
 
   /**
-   * The base URL to proxy the Plausible event endpoint through.
+   * The base endpoint to proxy the Plausible event endpoint through.
    *
-   * @default '/api/__plausible_event__'
+   * @remarks
+   * When proxying is enabled, the frontend will send events to this endpoint instead of the Plausible API host.
+   *
+   * @default '/_plausible'
    */
-  proxyBaseURL?: string
+  proxyBaseEndpoint?: string
 }
 
 export default defineNuxtModule<ModuleOptions>({
@@ -128,7 +132,7 @@ export default defineNuxtModule<ModuleOptions>({
     autoOutboundTracking: false,
     logIgnoredEvents: false,
     proxy: false,
-    proxyBaseURL: '/api/__plausible_event__',
+    proxyBaseEndpoint: '/_plausible',
   },
   setup(options, nuxt) {
     const logger = useLogger('plausible')
@@ -160,17 +164,15 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.build.transpile.push(resolve('runtime'))
 
     if (nuxt.options.runtimeConfig.public.plausible.proxy) {
-      const { proxyBaseURL } = nuxt.options.runtimeConfig.public.plausible
+      const proxyBaseEndpoint = withLeadingSlash(nuxt.options.runtimeConfig.public.plausible.proxyBaseEndpoint)
+      const hasUserProvidedProxyBase = [...nuxt.options.serverHandlers, ...nuxt.options.devServerHandlers].some(handler => handler.route?.startsWith(proxyBaseEndpoint))
 
-      const hasUserProvidedProxyBaseURL
-        = nuxt.options.serverHandlers.find(handler => handler.route?.startsWith(proxyBaseURL))
-        || nuxt.options.devServerHandlers.find(handler => handler.route?.startsWith(proxyBaseURL))
-      if (hasUserProvidedProxyBaseURL) {
-        throw new Error(`The route \`${proxyBaseURL}\` is already in use. Please use the \`proxyBaseURL\` option to change the base URL of the proxy endpoint.`)
+      if (hasUserProvidedProxyBase) {
+        throw new Error(`The route \`${proxyBaseEndpoint}\` is already in use. Please use the \`proxyBaseEndpoint\` option to change the base URL of the proxy endpoint.`)
       }
 
       addServerHandler({
-        route: proxyBaseURL,
+        route: joinURL(proxyBaseEndpoint, 'api/event'),
         handler: resolve('runtime/server/event-handler'),
         method: 'post',
       })

@@ -35,21 +35,23 @@ function pushRoute() {
   <h3>Configuration</h3>
   <details>
     <summary>Public Runtime Options</summary>
-    <pre>{{ JSON.stringify(plausible, null, 2) }}</pre>
+    <pre>{{ JSON.stringify(plausible, undefined, 2) }}</pre>
   </details>
 
   <h3>Composables</h3>
-  <button @click="trackEvent">
-    useTrackEvent
-  </button>
-  &nbsp;
-  <button @click="trackPageview">
-    useTrackPageview
-  </button>
-  &nbsp;
-  <button @click="pushRoute">
-    navigateTo
-  </button>
+  <p>
+    <button @click="trackEvent">
+      useTrackEvent
+    </button>
+    &nbsp;
+    <button @click="trackPageview">
+      useTrackPageview
+    </button>
+    &nbsp;
+    <button @click="pushRoute">
+      navigateTo
+    </button>
+  </p>
 
   <h3>Links</h3>
   <ul>

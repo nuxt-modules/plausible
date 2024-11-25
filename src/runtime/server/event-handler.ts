@@ -1,50 +1,33 @@
 import type { ModuleOptions } from '../../module'
 import { useRuntimeConfig } from '#imports'
-import { createError, defineEventHandler, getRequestHeader, getRequestIP, readBody } from 'h3'
+import { createError, defineEventHandler, getRequestIP, proxyRequest } from 'h3'
 import { joinURL } from 'ufo'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler((event) => {
   const config = useRuntimeConfig(event)
   const options = config.public.plausible as Required<ModuleOptions>
 
+  if (!options?.apiHost) {
+    throw createError({
+      statusCode: 500,
+      message: 'Plausible API host not configured',
+    })
+  }
+
   try {
-    if (!options?.apiHost) {
-      throw createError({
-        statusCode: 500,
-        message: 'Plausible API host not configured',
-      })
-    }
-
     const target = joinURL(options.apiHost, 'api/event')
-    const body = await readBody(event)
-
-    const result = await globalThis.$fetch(target, {
-      method: 'POST',
+    return proxyRequest(event, target, {
       headers: {
-        'Content-Type': 'application/json',
-        ...Object.fromEntries([
-          ['User-Agent', getRequestHeader(event, 'user-agent')],
-          ['X-Forwarded-For', getRequestIP(event, { xForwardedFor: true })],
-        ].filter(([_, value]) => value != null)),
-      },
-      body,
-      retry: 2,
-      timeout: 5000,
-      onRequestError: ({ request, error }) => {
-        console.error(`Failed to send request to ${request}: ${error.message}`)
+        'X-Forwarded-For': getRequestIP(event, { xForwardedFor: true }),
       },
     })
-
-    return result
   }
   catch (error) {
-    if (error instanceof Error && error.name === 'FetchError') {
-      throw createError({
-        statusCode: 502,
-        message: 'Failed to reach Plausible Analytics service',
-      })
-    }
+    console.error(error)
 
-    throw error
+    throw createError({
+      statusCode: 502,
+      message: 'Failed to proxy request to Plausible API',
+    })
   }
 })
