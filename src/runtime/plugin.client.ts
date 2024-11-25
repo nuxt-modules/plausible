@@ -6,8 +6,7 @@ import { defineNuxtPlugin } from 'nuxt/app'
 export default defineNuxtPlugin({
   name: 'plausible',
   setup() {
-    const options = useRuntimeConfig().public
-      .plausible as Required<ModuleOptions>
+    const options = useRuntimeConfig().public.plausible as Required<ModuleOptions>
 
     if (!options.enabled) {
       return
@@ -17,7 +16,7 @@ export default defineNuxtPlugin({
       ...options,
       logIgnored: options.logIgnoredEvents,
       domain: options.domain || window.location.hostname,
-      apiHost: options.proxy ? window.location.origin : options.apiHost,
+      apiHost: options.proxy ? options.proxyBaseEndpoint : options.apiHost,
     })
 
     return {
