@@ -2,7 +2,7 @@
   "name": "@nuxtjs/plausible",
   "type": "module",
   "version": "1.2.0",
-  "packageManager": "pnpm@9.14.2",
+  "packageManager": "pnpm@9.15.4",
   "description": "Natively integrates Plausible Analytics into Nuxt",
   "author": "Johann Schopplich <hello@johannschopplich.com>",
   "license": "MIT",
@@ -15,18 +15,16 @@
   "keywords": [
     "analytics",
     "nuxt",
-    "nuxt3",
     "plausible"
   ],
   "exports": {
     ".": {
-      "types": "./dist/types.d.ts",
-      "require": "./dist/module.cjs",
+      "types": "./dist/types.d.mts",
       "import": "./dist/module.mjs"
     }
   },
-  "main": "./dist/module.cjs",
-  "types": "./dist/types.d.ts",
+  "main": "./dist/module.mjs",
+  "types": "./dist/types.d.mts",
   "files": [
     "dist"
   ],
@@ -42,20 +40,20 @@
   },
   "dependencies": {
     "@barbapapazes/plausible-tracker": "^0.5.6",
-    "@nuxt/kit": "^3.14.1592",
+    "@nuxt/kit": "^3.15.2",
     "defu": "^6.1.4",
     "ufo": "^1.5.4"
   },
   "devDependencies": {
-    "@nuxt/eslint-config": "^0.7.1",
-    "@nuxt/module-builder": "^0.8.4",
-    "@nuxt/schema": "^3.14.1592",
-    "@types/node": "^20.17.7",
-    "bumpp": "^9.8.1",
-    "eslint": "^9.15.0",
-    "eslint-plugin-perfectionist": "^4.0.3",
-    "nuxt": "^3.14.1592",
-    "typescript": "^5.6.3",
-    "vue-tsc": "^2.1.10"
+    "@nuxt/eslint-config": "^0.7.5",
+    "@nuxt/module-builder": "^1.0.0-alpha.1",
+    "@nuxt/schema": "^3.15.2",
+    "@types/node": "^22.10.7",
+    "bumpp": "^9.10.1",
+    "eslint": "^9.18.0",
+    "eslint-plugin-perfectionist": "^4.6.0",
+    "nuxt": "^3.15.2",
+    "typescript": "^5.7.3",
+    "vue-tsc": "^2.2.0"
   }
 }
