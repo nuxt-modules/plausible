@@ -2,7 +2,7 @@
   "name": "@nuxtjs/plausible",
   "type": "module",
   "version": "1.2.0",
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "pnpm@10.15.0",
   "description": "Natively integrates Plausible Analytics into Nuxt",
   "author": "Johann Schopplich <hello@johannschopplich.com>",
   "license": "MIT",
@@ -30,9 +30,9 @@
   ],
   "scripts": {
     "prepack": "nuxt-module-build build",
-    "dev": "nuxi dev playground",
-    "dev:build": "nuxi build playground",
-    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "dev": "nuxt dev playground",
+    "dev:build": "nuxt build playground",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxt prepare playground",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test:types": "tsc --noEmit",
@@ -40,20 +40,20 @@
   },
   "dependencies": {
     "@barbapapazes/plausible-tracker": "^0.5.6",
-    "@nuxt/kit": "^3.15.2",
+    "@nuxt/kit": "^4.0.3",
     "defu": "^6.1.4",
-    "ufo": "^1.5.4"
+    "ufo": "^1.6.1"
   },
   "devDependencies": {
-    "@nuxt/eslint-config": "^0.7.5",
-    "@nuxt/module-builder": "^1.0.0-alpha.1",
-    "@nuxt/schema": "^3.15.2",
-    "@types/node": "^22.10.7",
-    "bumpp": "^9.10.1",
-    "eslint": "^9.18.0",
-    "eslint-plugin-perfectionist": "^4.6.0",
-    "nuxt": "^3.15.2",
-    "typescript": "^5.7.3",
-    "vue-tsc": "^2.2.0"
+    "@nuxt/eslint-config": "^1.9.0",
+    "@nuxt/module-builder": "^1.0.2",
+    "@nuxt/schema": "^4.0.3",
+    "@types/node": "^24.3.0",
+    "bumpp": "^10.2.3",
+    "eslint": "^9.34.0",
+    "eslint-plugin-perfectionist": "^4.15.0",
+    "nuxt": "^4.0.3",
+    "typescript": "^5.9.2",
+    "vue-tsc": "^3.0.6"
   }
 }
