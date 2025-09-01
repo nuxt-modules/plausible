@@ -1,12 +1,28 @@
 <script setup lang="ts">
-import { navigateTo, useRuntimeConfig, useTrackEvent, useTrackPageview } from '#imports'
+import { navigateTo, useHead, useRuntimeConfig, useTrackEvent, useTrackPageview } from '#imports'
 
 const { plausible } = useRuntimeConfig().public
 
+if (import.meta.server) {
+  useHead({
+    title: '@nuxtjs/plausible',
+    link: [
+      {
+        rel: 'stylesheet',
+        href: 'https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css',
+      },
+    ],
+  })
+}
+
 function trackEvent() {
   useTrackEvent('playground', {
-    props: { action: 'click' },
-    callback: () => console.log('Event tracked'),
+    props: {
+      action: 'click',
+    },
+    callback() {
+      console.log('Event tracked')
+    },
   })
 }
 
@@ -20,14 +36,6 @@ function pushRoute() {
 </script>
 
 <template>
-  <Head>
-    <Title>@nuxtjs/plausible</Title>
-    <Link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"
-    />
-  </Head>
-
   <header>
     <h1>@nuxtjs/plausible</h1>
   </header>

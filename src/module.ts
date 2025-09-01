@@ -208,5 +208,14 @@ export default defineNuxtModule<ModuleOptions>({
         order: 2,
       })
     }
+
+    // Add preconnect link when proxy is not used
+    if (!options.proxy) {
+      addPlugin({
+        src: resolve('runtime/plugin-preconnect.client'),
+        mode: 'client',
+        order: -1, // Run early to add preconnect before other resources
+      })
+    }
   },
 })

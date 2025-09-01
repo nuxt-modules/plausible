@@ -1,16 +1,14 @@
-import type { } from 'nuxt/app'
-import type { ModuleOptions } from '../module'
+import type {} from 'nuxt/app'
 import { defineNuxtPlugin, useRuntimeConfig } from '#imports'
 import { createPlausibleTracker } from '@barbapapazes/plausible-tracker'
 
 export default defineNuxtPlugin({
   name: 'plausible',
   setup() {
-    const options = useRuntimeConfig().public.plausible as Required<ModuleOptions>
+    const { plausible: options } = useRuntimeConfig().public
 
-    if (!options.enabled) {
+    if (!options.enabled)
       return
-    }
 
     const plausible = createPlausibleTracker({
       ...options,
