@@ -18,7 +18,7 @@ Native integration of [Plausible Analytics](https://plausible.io/sites) for [Nux
 ## Setup
 
 ```bash
-npx nuxi@latest module add plausible
+npx nuxt module add plausible
 ```
 
 ## Basic Usage
