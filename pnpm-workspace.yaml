@@ -4,4 +4,3 @@ packages:
 onlyBuiltDependencies:
   - '@parcel/watcher'
   - esbuild
-  - unrs-resolver
