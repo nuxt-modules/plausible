@@ -12,8 +12,6 @@ export default defineNuxtPlugin({
     if (!options.enabled)
       return
 
-    const ignoredHostnames = options.ignoredHostnames ?? []
-
     init({
       domain: options.domain || window.location.hostname,
       endpoint: joinURL(
@@ -25,10 +23,10 @@ export default defineNuxtPlugin({
       outboundLinks: options.autoOutboundTracking,
       fileDownloads: options.fileDownloads,
       formSubmissions: options.formSubmissions,
-      captureOnLocalhost: !ignoredHostnames.includes('localhost'),
+      captureOnLocalhost: !options.ignoredHostnames.includes('localhost'),
       logging: options.logIgnoredEvents,
       // Handle non-localhost ignored hostnames (e.g. staging/preview domains)
-      transformRequest: buildHostnameFilter(ignoredHostnames, options.ignoreSubDomains),
+      transformRequest: buildHostnameFilter(options.ignoredHostnames, options.ignoreSubDomains),
     })
 
     const plausible = {
