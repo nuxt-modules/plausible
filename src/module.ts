@@ -4,7 +4,6 @@ import {
   addServerHandler,
   createResolver,
   defineNuxtModule,
-  useLogger,
 } from '@nuxt/kit'
 import { defu } from 'defu'
 import { joinURL, withLeadingSlash } from 'ufo'
@@ -29,14 +28,6 @@ export interface ModuleOptions {
    * @default false
    */
   hashMode?: boolean
-
-  /**
-   * Whether events shall be tracked when running the site locally.
-   *
-   * @deprecated Please use `ignoredHostnames` instead.
-   * @default false
-   */
-  trackLocalhost?: boolean
 
   /**
    * Hostnames to ignore when tracking events.
@@ -80,11 +71,29 @@ export interface ModuleOptions {
    * Track all outbound link clicks automatically.
    *
    * @remarks
-   * If enabled, a [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) automagically detects link nodes throughout the application and binds `click` events to them.
+   * If enabled, outbound link clicks are tracked automatically.
    *
    * @default false
    */
   autoOutboundTracking?: boolean
+
+  /**
+   * Track file downloads automatically.
+   *
+   * @remarks
+   * When enabled, clicks on links to common file types are tracked as `File Download` events.
+   * Pass an object with `fileExtensions` to customize which file types are tracked.
+   *
+   * @default false
+   */
+  fileDownloads?: boolean | { fileExtensions: string[] }
+
+  /**
+   * Track form submissions automatically.
+   *
+   * @default false
+   */
+  formSubmissions?: boolean
 
   /**
    * Log events to the console if they are ignored.
@@ -126,16 +135,16 @@ export default defineNuxtModule<ModuleOptions>({
     domain: '',
     ignoredHostnames: undefined,
     ignoreSubDomains: false,
-    trackLocalhost: undefined,
     apiHost: 'https://plausible.io',
     autoPageviews: true,
     autoOutboundTracking: false,
+    fileDownloads: false,
+    formSubmissions: false,
     logIgnoredEvents: false,
     proxy: false,
     proxyBaseEndpoint: '/_plausible',
   },
   setup(options, nuxt) {
-    const logger = useLogger('plausible')
     const { resolve } = createResolver(import.meta.url)
 
     // Set default hostnames if `ignoredHostnames` is not set
@@ -143,16 +152,6 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Dedupe `ignoredHostnames` items
     options.ignoredHostnames = Array.from(new Set(options.ignoredHostnames))
-
-    if (options.trackLocalhost !== undefined) {
-      logger.warn('The `trackLocalhost` option has been deprecated. Please use `ignoredHostnames` instead.')
-    }
-    // Migrate `trackLocalhost` to `ignoredHostnames`
-    else if (options.trackLocalhost) {
-      options.ignoredHostnames = options.ignoredHostnames.filter(
-        domain => domain !== 'localhost',
-      )
-    }
 
     // Add module options to public runtime config
     nuxt.options.runtimeConfig.public.plausible = defu(
@@ -190,24 +189,6 @@ export default defineNuxtModule<ModuleOptions>({
       src: resolve('runtime/plugin.client'),
       mode: 'client',
     })
-
-    // Split plugins to reduce bundle size
-
-    if (options.autoPageviews) {
-      addPlugin({
-        src: resolve('runtime/plugin-auto-pageviews.client'),
-        mode: 'client',
-        order: 1,
-      })
-    }
-
-    if (options.autoOutboundTracking) {
-      addPlugin({
-        src: resolve('runtime/plugin-auto-outbound-tracking.client'),
-        mode: 'client',
-        order: 2,
-      })
-    }
 
     // Add preconnect link when proxy is not used
     if (!options.proxy) {

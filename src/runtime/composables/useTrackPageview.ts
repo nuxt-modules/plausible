@@ -1,4 +1,4 @@
-import type { EventOptions, Plausible } from '@barbapapazes/plausible-tracker'
+import type { PlausibleEventOptions } from '@plausible-analytics/tracker'
 import { useNuxtApp } from '#imports'
 
 /**
@@ -10,8 +10,8 @@ import { useNuxtApp } from '#imports'
  * @example
  * useTrackPageview()
  */
-export function useTrackPageview(options?: EventOptions) {
+export function useTrackPageview(options?: PlausibleEventOptions) {
   if (import.meta.client) {
-    ;(useNuxtApp().$plausible as Plausible)?.trackPageview(options)
+    useNuxtApp().$plausible?.trackPageview(options)
   }
 }

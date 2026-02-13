@@ -1,8 +1,4 @@
-import type {
-  EventName,
-  EventOptions,
-  Plausible,
-} from '@barbapapazes/plausible-tracker'
+import type { PlausibleEventOptions } from '@plausible-analytics/tracker'
 import { useNuxtApp } from '#imports'
 
 /**
@@ -18,8 +14,8 @@ import { useNuxtApp } from '#imports'
  * // Tracks the `Download` goal passing a `method` property.
  * useTrackEvent('Download', { props: { method: 'HTTP' } })
  */
-export function useTrackEvent(eventName: EventName, options?: EventOptions) {
+export function useTrackEvent(eventName: string, options?: PlausibleEventOptions) {
   if (import.meta.client) {
-    ;(useNuxtApp().$plausible as Plausible)?.trackEvent(eventName, options)
+    useNuxtApp().$plausible?.trackEvent(eventName, options)
   }
 }
