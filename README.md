@@ -163,6 +163,9 @@ useTrackEvent('signup')
 
 // Tracks the `Download` goal passing a `method` property
 useTrackEvent('Download', { props: { method: 'HTTP' } })
+
+// Tracks the `Purchase` goal with revenue data
+useTrackEvent('Purchase', { revenue: { amount: 15.99, currency: 'USD' } })
 ```
 
 ### `useTrackPageview`
