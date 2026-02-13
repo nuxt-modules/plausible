@@ -120,6 +120,12 @@ export interface ModuleOptions {
   proxyBaseEndpoint?: string
 }
 
+declare module '@nuxt/schema' {
+  interface PublicRuntimeConfig {
+    plausible: Required<ModuleOptions>
+  }
+}
+
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name,
@@ -155,7 +161,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     // Add module options to public runtime config
     nuxt.options.runtimeConfig.public.plausible = defu(
-      nuxt.options.runtimeConfig.public.plausible as Required<ModuleOptions>,
+      nuxt.options.runtimeConfig.public.plausible,
       options,
     )
 
