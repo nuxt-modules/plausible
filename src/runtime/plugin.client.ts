@@ -3,7 +3,7 @@ import type {} from 'nuxt/app'
 import type { ModuleOptions } from '../module'
 import { defineNuxtPlugin, useRuntimeConfig } from '#imports'
 import { init, track } from '@plausible-analytics/tracker'
-import { joinURL } from 'ufo'
+import { joinURL, withLeadingSlash } from 'ufo'
 
 export default defineNuxtPlugin({
   name: 'plausible',
@@ -17,9 +17,10 @@ export default defineNuxtPlugin({
 
     init({
       domain: options.domain || window.location.hostname,
-      endpoint: options.proxy
-        ? joinURL(options.proxyBaseEndpoint, 'api/event')
-        : joinURL(options.apiHost, 'api/event'),
+      endpoint: joinURL(
+        options.proxy ? withLeadingSlash(options.proxyBaseEndpoint) : options.apiHost,
+        'api/event',
+      ),
       autoCapturePageviews: options.autoPageviews,
       hashBasedRouting: options.hashMode,
       outboundLinks: options.autoOutboundTracking,
