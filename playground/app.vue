@@ -20,8 +20,27 @@ function trackEvent() {
     props: {
       action: 'click',
     },
-    callback() {
-      console.log('Event tracked')
+    callback(result) {
+      console.log('Event tracked', result)
+    },
+  })
+}
+
+function trackNonInteractiveEvent() {
+  useTrackEvent('background-task', {
+    interactive: false,
+    callback(result) {
+      console.log('Non-interactive event tracked', result)
+    },
+  })
+}
+
+function trackRevenue() {
+  useTrackEvent('Purchase', {
+    revenue: { amount: 29.99, currency: 'USD' },
+    props: { plan: 'Pro' },
+    callback(result) {
+      console.log('Revenue event tracked', result)
     },
   })
 }
@@ -47,19 +66,38 @@ function pushRoute() {
   </details>
 
   <h3>Composables</h3>
-  <p>
+  <div class="button-group">
     <button @click="trackEvent">
       useTrackEvent
     </button>
-    &nbsp;
+    <button @click="trackNonInteractiveEvent">
+      Non-interactive Event
+    </button>
+    <button @click="trackRevenue">
+      Revenue Event
+    </button>
     <button @click="trackPageview">
       useTrackPageview
     </button>
-    &nbsp;
     <button @click="pushRoute">
       navigateTo
     </button>
-  </p>
+  </div>
+
+  <h3>File Downloads</h3>
+  <ul>
+    <li><a href="/test.pdf">Download PDF</a></li>
+    <li><a href="/test.zip">Download ZIP</a></li>
+  </ul>
+
+  <h3>Form Submissions</h3>
+  <form @submit.prevent>
+    <label>Email: <input type="email" name="email" placeholder="test@example.com"></label>
+    &nbsp;
+    <button type="submit">
+      Submit
+    </button>
+  </form>
 
   <h3>Links</h3>
   <ul>
@@ -78,3 +116,11 @@ function pushRoute() {
     </li>
   </ul>
 </template>
+
+<style>
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+</style>

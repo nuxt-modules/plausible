@@ -8,8 +8,11 @@ export default defineNuxtConfig({
   plausible: {
     // Enable tracking events on localhost
     ignoredHostnames: [],
-    autoPageviews: false,
-    autoOutboundTracking: false,
+    autoPageviews: true,
+    autoOutboundTracking: true,
+    fileDownloads: true,
+    formSubmissions: true,
+    logIgnoredEvents: true,
     proxy: true,
   },
 })
