@@ -1,6 +1,5 @@
-import type { PlausibleEventOptions, PlausibleRequestPayload } from '@plausible-analytics/tracker'
+import type { PlausibleConfig, PlausibleEventOptions, PlausibleRequestPayload } from '@plausible-analytics/tracker'
 import type {} from 'nuxt/app'
-import type { ModuleOptions } from '../module'
 import { defineNuxtPlugin, useRuntimeConfig } from '#imports'
 import { init, track } from '@plausible-analytics/tracker'
 import { joinURL, withLeadingSlash } from 'ufo'
@@ -8,7 +7,7 @@ import { joinURL, withLeadingSlash } from 'ufo'
 export default defineNuxtPlugin({
   name: 'plausible',
   setup() {
-    const { plausible: options } = useRuntimeConfig().public as { plausible: Required<ModuleOptions> }
+    const { plausible: options } = useRuntimeConfig().public
 
     if (!options.enabled)
       return
@@ -26,7 +25,6 @@ export default defineNuxtPlugin({
       outboundLinks: options.autoOutboundTracking,
       fileDownloads: options.fileDownloads,
       formSubmissions: options.formSubmissions,
-      // The tracker's built-in check also covers 127.x.x.x, [::1], and file: protocol
       captureOnLocalhost: !ignoredHostnames.includes('localhost'),
       logging: options.logIgnoredEvents,
       // Handle non-localhost ignored hostnames (e.g. staging/preview domains)
@@ -50,18 +48,20 @@ export default defineNuxtPlugin({
   },
 })
 
-function buildHostnameFilter(ignoredHostnames: string[], ignoreSubDomains: boolean) {
-  const customIgnoredHostnames = ignoredHostnames.filter(h => h !== 'localhost')
+function buildHostnameFilter(ignoredHostnames: string[], ignoreSubDomains: boolean): PlausibleConfig['transformRequest'] {
+  const customIgnoredHostnames = ignoredHostnames.filter(hostname => hostname !== 'localhost')
+
   if (customIgnoredHostnames.length === 0)
-    return undefined
+    return
 
   return (payload: PlausibleRequestPayload) => {
-    const hostname = window.location.hostname
-    const isIgnored = customIgnoredHostnames.some(ignored =>
+    const { hostname } = window.location
+    const isIgnored = customIgnoredHostnames.some(i =>
       ignoreSubDomains
-        ? hostname === ignored || hostname.endsWith(`.${ignored}`)
-        : hostname === ignored,
+        ? hostname === i || hostname.endsWith(`.${i}`)
+        : hostname === i,
     )
+
     return isIgnored ? null : payload
   }
 }
