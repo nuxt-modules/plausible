@@ -42,13 +42,13 @@ export default defineEventHandler((event) => {
  * may be set to an internal/proxy IP (e.g. Docker network IP) by the runtime,
  * causing the real client IP from proxy headers to be ignored.
  */
-function resolveClientIP(event: H3Event): string | undefined {
+function resolveClientIP(event: H3Event) {
   // Cloudflare
   const cfConnectingIp = getRequestHeader(event, 'cf-connecting-ip')
   if (cfConnectingIp)
     return cfConnectingIp
 
-  // Common reverse proxy header (Nginx, etc.)
+  // Common reverse proxy header (nginx, etc.)
   const xRealIp = getRequestHeader(event, 'x-real-ip')
   if (xRealIp)
     return xRealIp
