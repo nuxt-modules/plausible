@@ -18,6 +18,7 @@ export default defineEventHandler((event) => {
   try {
     const target = joinURL(options.apiHost, 'api/event')
     const clientIP = resolveClientIP(event)
+
     return proxyRequest(event, target, {
       headers: {
         ...(clientIP ? { 'X-Forwarded-For': clientIP } : {}),
@@ -35,25 +36,11 @@ export default defineEventHandler((event) => {
 })
 
 /**
- * Resolve the real client IP address from common reverse proxy and CDN headers.
- *
- * This reads headers directly instead of relying on `getRequestIP` alone,
- * because `getRequestIP` checks `event.context.clientAddress` first, which
- * may be set to an internal/proxy IP (e.g. Docker network IP) by the runtime,
- * causing the real client IP from proxy headers to be ignored.
+ * Reads `x-forwarded-for` before falling back to `getRequestIP`, because
+ * H3 v1 checks `event.context.clientAddress` first – which may resolve to
+ * an internal IP (e.g. Docker network) instead of the real client IP.
  */
 function resolveClientIP(event: H3Event) {
-  // Cloudflare
-  const cfConnectingIp = getRequestHeader(event, 'cf-connecting-ip')
-  if (cfConnectingIp)
-    return cfConnectingIp
-
-  // Common reverse proxy header (nginx, etc.)
-  const xRealIp = getRequestHeader(event, 'x-real-ip')
-  if (xRealIp)
-    return xRealIp
-
-  // Standard proxy header (first IP is the original client)
   const xForwardedFor = getRequestHeader(event, 'x-forwarded-for')
   if (xForwardedFor) {
     const firstIp = xForwardedFor.split(',')[0]?.trim()
