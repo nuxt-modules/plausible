@@ -168,6 +168,13 @@ export default defineNuxtModule<ModuleOptions>({
     // Transpile runtime
     nuxt.options.build.transpile.push(resolve('runtime'))
 
+    // Ensure `@plausible-analytics/tracker` is pre-bundled by Vite.
+    // The package only has a `module` field (no `main` or `exports`), which
+    // causes Vite's resolver to fail in certain environments (e.g. Vitest).
+    nuxt.options.vite.optimizeDeps ||= {}
+    nuxt.options.vite.optimizeDeps.include ||= []
+    nuxt.options.vite.optimizeDeps.include.push('@plausible-analytics/tracker')
+
     if (nuxt.options.runtimeConfig.public.plausible.proxy) {
       const proxyBaseEndpoint = withLeadingSlash(nuxt.options.runtimeConfig.public.plausible.proxyBaseEndpoint)
       const hasUserProvidedProxyBase = [...nuxt.options.serverHandlers, ...nuxt.options.devServerHandlers].some(handler => handler.route?.startsWith(proxyBaseEndpoint))
