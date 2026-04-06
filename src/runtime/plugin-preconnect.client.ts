@@ -7,7 +7,7 @@ export default defineNuxtPlugin({
 
     // Add preconnect to Plausible API host for better performance
     // Note: This plugin is only loaded when proxy is disabled
-    if (options.enabled && options.apiHost) {
+    if (options.enabled && options.apiHost && !options.apiHost.startsWith('/')) {
       useHead({
         link: [
           {
