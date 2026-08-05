@@ -70,9 +70,6 @@ export interface ModuleOptions {
   /**
    * Track all outbound link clicks automatically.
    *
-   * @remarks
-   * If enabled, outbound link clicks are tracked automatically.
-   *
    * @default false
    */
   autoOutboundTracking?: boolean
@@ -153,19 +150,15 @@ export default defineNuxtModule<ModuleOptions>({
   setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
 
-    // Set default hostnames if `ignoredHostnames` is not set
     options.ignoredHostnames ??= [...DEFAULT_HOSTNAMES]
 
-    // Dedupe `ignoredHostnames` items
     options.ignoredHostnames = Array.from(new Set(options.ignoredHostnames))
 
-    // Add module options to public runtime config
     nuxt.options.runtimeConfig.public.plausible = defu(
       nuxt.options.runtimeConfig.public.plausible,
       options,
     )
 
-    // Transpile runtime
     nuxt.options.build.transpile.push(resolve('runtime'))
 
     // Ensure `@plausible-analytics/tracker` is pre-bundled by Vite.
@@ -203,12 +196,11 @@ export default defineNuxtModule<ModuleOptions>({
       mode: 'client',
     })
 
-    // Add preconnect link when proxy is not used
     if (!options.proxy) {
       addPlugin({
         src: resolve('runtime/plugin-preconnect.client'),
         mode: 'client',
-        order: -1, // Run early to add preconnect before other resources
+        order: -1, // Run early to add preconnect before other resources.
       })
     }
   },

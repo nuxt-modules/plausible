@@ -2,7 +2,7 @@ import type { PlausibleEventOptions } from '@plausible-analytics/tracker'
 import { useNuxtApp } from '#imports'
 
 /**
- * Manually track a page view
+ * Tracks a page view manually.
  *
  * @remarks
  * Pass optional event data to be sent with the `eventData` argument. Defaults to the current page's data merged with the default options provided during the Plausible initialization.

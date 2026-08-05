@@ -2,7 +2,7 @@ import type { PlausibleEventOptions } from '@plausible-analytics/tracker'
 import { useNuxtApp } from '#imports'
 
 /**
- * Tracks a custom event
+ * Tracks a custom event.
  *
  * @remarks
  * Track your defined goals by passing the goal's name as the argument `eventName`.

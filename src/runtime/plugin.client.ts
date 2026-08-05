@@ -25,7 +25,7 @@ export default defineNuxtPlugin({
       formSubmissions: options.formSubmissions,
       captureOnLocalhost: !options.ignoredHostnames.includes('localhost'),
       logging: options.logIgnoredEvents,
-      // Handle non-localhost ignored hostnames (e.g. staging/preview domains)
+      // Handle non-localhost ignored hostnames (e.g. staging/preview domains).
       transformRequest: buildHostnameFilter(options.ignoredHostnames, options.ignoreSubDomains),
     })
 

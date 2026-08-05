@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-09-01',
 
   plausible: {
-    // Enable tracking events on localhost
+    // Enable tracking events on localhost.
     ignoredHostnames: [],
     autoPageviews: true,
     autoOutboundTracking: true,

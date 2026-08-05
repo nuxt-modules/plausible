@@ -5,8 +5,7 @@ export default defineNuxtPlugin({
   setup() {
     const { plausible: options } = useRuntimeConfig().public
 
-    // Add preconnect to Plausible API host for better performance
-    // Note: This plugin is only loaded when proxy is disabled
+    // Note: This plugin is only loaded when proxy is disabled.
     if (options.enabled && options.apiHost && !options.apiHost.startsWith('/')) {
       useHead({
         link: [
