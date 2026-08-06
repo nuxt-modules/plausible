@@ -1,8 +1,9 @@
-import type { PlausibleConfig, PlausibleEventOptions, PlausibleRequestPayload } from '@plausible-analytics/tracker'
+import type { PlausibleEventOptions } from '@plausible-analytics/tracker'
 import type {} from 'nuxt/app'
 import { init, track } from '@plausible-analytics/tracker'
 import { joinURL, withLeadingSlash } from 'ufo'
 import { defineNuxtPlugin, useRuntimeConfig } from '#imports'
+import { buildHostnameFilter } from './utils'
 
 export default defineNuxtPlugin({
   name: 'plausible',
@@ -45,21 +46,3 @@ export default defineNuxtPlugin({
     }
   },
 })
-
-function buildHostnameFilter(ignoredHostnames: string[], ignoreSubDomains: boolean): PlausibleConfig['transformRequest'] {
-  const customIgnoredHostnames = ignoredHostnames.filter(hostname => hostname !== 'localhost')
-
-  if (customIgnoredHostnames.length === 0)
-    return
-
-  return (payload: PlausibleRequestPayload) => {
-    const { hostname } = window.location
-    const isIgnored = customIgnoredHostnames.some(i =>
-      ignoreSubDomains
-        ? hostname === i || hostname.endsWith(`.${i}`)
-        : hostname === i,
-    )
-
-    return isIgnored ? null : payload
-  }
-}
