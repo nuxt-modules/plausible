@@ -5,7 +5,7 @@ import { useNuxtApp } from '#imports'
  * Tracks a page view manually.
  *
  * @remarks
- * Pass optional event data to be sent with the `eventData` argument. Defaults to the current page's data merged with the default options provided during the Plausible initialization.
+ * Pass event data to send along with the `options` argument. Defaults to the current page's data merged with the default options provided during the Plausible initialization.
  *
  * @example
  * useTrackPageview()

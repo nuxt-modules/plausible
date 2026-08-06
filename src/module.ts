@@ -32,12 +32,20 @@ export interface ModuleOptions {
   /**
    * Hostnames to ignore when tracking events.
    *
+   * @remarks
+   * `localhost` is handled by the tracker's own localhost check. Every other
+   * entry is matched against `window.location.hostname` before a request goes out.
+   *
    * @default ['localhost']
    */
   ignoredHostnames?: string[]
 
   /**
-   * Ignore the hostname if it is a subdomain of `ignoredHostnames`.
+   * Ignore a hostname that is a subdomain of an entry in `ignoredHostnames`.
+   *
+   * @remarks
+   * Does not reach `localhost`, and therefore does nothing at all as long as
+   * `ignoredHostnames` is left at its default.
    *
    * @default false
    */
