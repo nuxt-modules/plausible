@@ -4,7 +4,7 @@ import { createError, defineEventHandler, getRequestHeader, getRequestIP, proxyR
 import { joinURL } from 'ufo'
 import { useRuntimeConfig } from '#imports'
 
-export default defineEventHandler((event) => {
+export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event)
   const options = config.public.plausible as Required<ModuleOptions>
 
@@ -19,7 +19,7 @@ export default defineEventHandler((event) => {
     const target = joinURL(options.apiHost, 'api/event')
     const clientIP = resolveClientIP(event)
 
-    return proxyRequest(event, target, {
+    return await proxyRequest(event, target, {
       headers: {
         ...(clientIP ? { 'X-Forwarded-For': clientIP } : {}),
       },
