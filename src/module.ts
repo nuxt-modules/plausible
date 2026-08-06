@@ -194,7 +194,6 @@ export default defineNuxtModule<ModuleOptions>({
     addImports(
       ['useTrackEvent', 'useTrackPageview'].map(name => ({
         name,
-        as: name,
         from: resolve(`runtime/composables/${name}`),
       })),
     )
