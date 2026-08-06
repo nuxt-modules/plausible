@@ -20,6 +20,8 @@ Native integration of [Plausible Analytics](https://plausible.io) for [Nuxt](htt
 
 ## Setup
 
+Requires Nuxt 4.
+
 ```bash
 npx nuxt module add plausible
 ```
