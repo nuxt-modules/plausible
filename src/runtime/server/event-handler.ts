@@ -1,8 +1,8 @@
 import type { H3Event } from 'h3'
 import type { ModuleOptions } from '../../module'
-import { useRuntimeConfig } from '#imports'
 import { createError, defineEventHandler, getRequestHeader, getRequestIP, proxyRequest } from 'h3'
 import { joinURL } from 'ufo'
+import { useRuntimeConfig } from '#imports'
 
 export default defineEventHandler((event) => {
   const config = useRuntimeConfig(event)

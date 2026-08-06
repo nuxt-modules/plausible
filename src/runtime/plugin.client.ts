@@ -1,8 +1,8 @@
 import type { PlausibleConfig, PlausibleEventOptions, PlausibleRequestPayload } from '@plausible-analytics/tracker'
 import type {} from 'nuxt/app'
-import { defineNuxtPlugin, useRuntimeConfig } from '#imports'
 import { init, track } from '@plausible-analytics/tracker'
 import { joinURL, withLeadingSlash } from 'ufo'
+import { defineNuxtPlugin, useRuntimeConfig } from '#imports'
 
 export default defineNuxtPlugin({
   name: 'plausible',
