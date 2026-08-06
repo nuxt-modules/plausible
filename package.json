@@ -52,7 +52,6 @@
     "bumpp": "^12.2.0",
     "eslint": "^10.8.0",
     "nuxt": "^4.5.2",
-    "typescript": "^6.0.3",
-    "vue-tsc": "^3.3.9"
+    "typescript": "^6.0.3"
   }
 }
