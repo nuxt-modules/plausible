@@ -31,7 +31,7 @@ describe('buildHostnameFilter', () => {
     expect(filter!(payload)).toBe(payload)
   })
 
-  it('passes a subdomain through unless subdomains are ignored too', () => {
+  it('passes a subdomain through when ignoreSubDomains is false', () => {
     stubHostname('preview.staging.example.com')
     const filter = buildHostnameFilter(['staging.example.com'], false)
 
@@ -45,7 +45,7 @@ describe('buildHostnameFilter', () => {
     expect(filter!(payload)).toBeNull()
   })
 
-  it('matches a hostname that merely ends in an ignored one only as a subdomain', () => {
+  it('passes notstaging.example.com through when staging.example.com is ignored', () => {
     stubHostname('notstaging.example.com')
     const filter = buildHostnameFilter(['staging.example.com'], true)
 
