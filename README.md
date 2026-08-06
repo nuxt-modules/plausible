@@ -6,6 +6,8 @@
 
 Native integration of [Plausible Analytics](https://plausible.io) for [Nuxt](https://nuxt.com).
 
+- [✨ &nbsp;Release Notes](https://github.com/nuxt-modules/plausible/releases)
+
 ## Features
 
 - 🌻 No configuration necessary
