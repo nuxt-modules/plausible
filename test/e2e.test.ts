@@ -1,4 +1,4 @@
-import { fileURLToPath } from 'node:url'
+import { join } from 'node:path'
 import { fetch, setup } from '@nuxt/test-utils/e2e'
 import { describe, expect, it } from 'vitest'
 
@@ -13,7 +13,7 @@ function postEvent() {
 describe('nuxt-plausible proxy', async () => {
   await setup({
     server: true,
-    rootDir: fileURLToPath(new URL('./fixture', import.meta.url)),
+    rootDir: join(import.meta.dirname, 'fixture'),
     nuxtConfig: {
       plausible: {
         proxy: true,

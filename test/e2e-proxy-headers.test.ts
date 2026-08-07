@@ -2,7 +2,7 @@ import type { IncomingHttpHeaders } from 'node:http'
 import type { AddressInfo } from 'node:net'
 import { Buffer } from 'node:buffer'
 import { createServer } from 'node:http'
-import { fileURLToPath } from 'node:url'
+import { join } from 'node:path'
 import { fetch, setup } from '@nuxt/test-utils/e2e'
 import { afterAll, beforeEach, describe, expect, it } from 'vitest'
 
@@ -38,7 +38,7 @@ function postEvent(headers: Record<string, string>) {
 describe('event proxy', async () => {
   await setup({
     server: true,
-    rootDir: fileURLToPath(new URL('./fixture', import.meta.url)),
+    rootDir: join(import.meta.dirname, 'fixture'),
     nuxtConfig: {
       plausible: {
         proxy: true,
