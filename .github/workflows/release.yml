@@ -21,6 +21,7 @@ jobs:
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org/
+          cache: pnpm
 
       - name: Publish changelog
         run: npx changelogithub
@@ -35,5 +36,3 @@ jobs:
 
       - name: Publish to npm
         run: npm install -g npm@latest && npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
