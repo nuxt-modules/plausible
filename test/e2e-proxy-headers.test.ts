@@ -4,7 +4,7 @@ import { Buffer } from 'node:buffer'
 import { createServer } from 'node:http'
 import { fileURLToPath } from 'node:url'
 import { fetch, setup } from '@nuxt/test-utils/e2e'
-import { afterAll, describe, expect, it } from 'vitest'
+import { afterAll, beforeEach, describe, expect, it } from 'vitest'
 
 const upstreamHeaders: IncomingHttpHeaders[] = []
 const upstreamBodies: string[] = []
@@ -47,51 +47,56 @@ describe('event proxy', async () => {
     },
   })
 
+  beforeEach(() => {
+    upstreamHeaders.length = 0
+    upstreamBodies.length = 0
+  })
+
   afterAll(() => {
     upstream.close()
   })
 
-  it('withholds the browser cookie from the upstream request', async () => {
-    upstreamHeaders.length = 0
-
+  it('withholds cookie', async () => {
     await postEvent({ cookie: 'session=secret' })
 
     expect(upstreamHeaders).toHaveLength(1)
     expect(upstreamHeaders[0]!.cookie).toBeUndefined()
   })
 
-  it('withholds the authorization header from the upstream request', async () => {
-    upstreamHeaders.length = 0
-
+  it('withholds authorization', async () => {
     await postEvent({ authorization: 'Bearer secret' })
 
     expect(upstreamHeaders[0]!.authorization).toBeUndefined()
   })
 
-  it('forwards the user agent Plausible attributes the visitor by', async () => {
-    upstreamHeaders.length = 0
-
+  it('forwards user-agent', async () => {
     await postEvent({})
 
     expect(upstreamHeaders[0]!['user-agent']).toBe('Mozilla/5.0 (Macintosh)')
   })
 
-  it('sends the client IP as x-forwarded-for', async () => {
-    upstreamHeaders.length = 0
+  it('adds x-forwarded-for from the connection when the request carries none', async () => {
+    await postEvent({})
 
-    await postEvent({ 'x-forwarded-for': '203.0.113.7' })
+    expect(upstreamHeaders[0]!['x-forwarded-for']).toMatch(/(?:^|:)(?:127\.0\.0\.1|1)$/)
+  })
+
+  it('takes the first entry of an inbound x-forwarded-for', async () => {
+    await postEvent({ 'x-forwarded-for': '203.0.113.7, 10.0.0.1' })
 
     expect(upstreamHeaders[0]!['x-forwarded-for']).toBe('203.0.113.7')
   })
 
-  it('forwards the event body and the content type it was sent with', async () => {
-    upstreamHeaders.length = 0
-    upstreamBodies.length = 0
+  it('forwards content-type', async () => {
+    await postEvent({})
 
+    expect(upstreamHeaders[0]!['content-type']).toBe('text/plain')
+  })
+
+  it('forwards the event body', async () => {
     const response = await postEvent({})
 
     expect(response.status).toBe(202)
-    expect(upstreamHeaders[0]!['content-type']).toBe('text/plain')
     expect(JSON.parse(upstreamBodies[0]!)).toMatchObject({ n: 'pageview', d: 'example.com' })
   })
 })
