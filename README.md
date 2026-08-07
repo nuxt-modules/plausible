@@ -86,7 +86,7 @@ export default defineNuxtConfig({
 ```
 
 > [!NOTE]
-> When enabled, all Plausible events will be sent to your server first, which then forwards them to Plausible's API. The default proxy endpoint is `/_plausible`, but you can customize the path using the `proxyBaseEndpoint` module option.
+> When enabled, all Plausible events will be sent to your server first, which then forwards them to Plausible's API. The route is `/_plausible/api/event`; customize the `/_plausible` part with the `proxyBaseEndpoint` module option. Setting `enabled` to `false` switches the route off along with the tracker, so a build with tracking disabled exposes no forwarder.
 
 Because the proxy answers on your own origin, the browser attaches the cookies your site has set. Only the headers Plausible reads travel on: the `user-agent`, which it attributes the visitor and their device by, the `content-type` of the event, and an `x-forwarded-for` carrying the visitor's IP address, which Plausible resolves the country from. Your cookies stay on your server.
 
@@ -132,13 +132,15 @@ export default defineNuxtConfig({
 | `hashMode`             | `boolean`                            | `false`                      | Whether page views shall be tracked when the URL hash changes. Enable this if your Nuxt app uses hash-based routing. |
 | `domain`               | `string`                             | `'window.location.hostname'` | The domain to bind tracking events to.                                                                               |
 | `ignoredHostnames`     | `string[]`                           | `['localhost']`              | Hostnames to ignore when tracking events.                                                                            |
-| `ignoreSubDomains`     | `boolean`                            | `false`                      | Also ignore subdomains of `ignoredHostnames`.                                                                        |
+| `ignoreSubDomains`     | `boolean`                            | `false`                      | Also ignore subdomains of `ignoredHostnames`. Has no effect on `localhost`, so it does nothing until you add a hostname of your own. |
 | `apiHost`              | `string`                             | `'https://plausible.io'`     | The API host where events will be sent to.                                                                           |
 | `autoPageviews`        | `boolean`                            | `true`                       | Track page views automatically. Disable this if you want to manually manage pageview tracking.                       |
 | `autoOutboundTracking` | `boolean`                            | `false`                      | Track outbound link clicks automatically.                                                                            |
 | `fileDownloads`        | `boolean \| { fileExtensions: string[] }` | `false`                      | Track file downloads automatically. Pass an object to customize tracked file extensions.                             |
 | `formSubmissions`      | `boolean`                            | `false`                      | Track form submissions automatically.                                                                                |
 | `logIgnoredEvents`     | `boolean`                            | `false`                      | Log ignored events to the console.                                                                                   |
+| `proxy`                | `boolean`                            | `false`                      | Route events through your own origin instead of the Plausible API host. See [Proxy Configuration](#proxy-configuration). |
+| `proxyBaseEndpoint`    | `string`                             | `'/_plausible'`              | Base path the proxy answers on. The event route sits below it, at `/_plausible/api/event`.                           |
 | `proxy`                | `boolean`                            | `false`                      | Proxy the event endpoint through the current origin.                                                                 |
 | `proxyBaseEndpoint`    | `string`                             | `'/_plausible'`              | The base endpoint path for the proxy.                                                                                |
 
@@ -195,6 +197,16 @@ useTrackPageview()
 // Track with a custom URL
 useTrackPageview({ url: '/virtual-page' })
 ```
+
+## Migration
+
+### v3 to v4
+
+**Nuxt 4 is required.** The module no longer supports Nuxt 3. Nothing else in your configuration changes on that account.
+
+**The proxy forwards three headers, not all of them.** Only the `user-agent`, the `content-type` and an `x-forwarded-for` carrying the visitor's IP travel on to Plausible. See [Proxy Configuration](#proxy-configuration) for why, and reach for a server route of your own if you relied on another header arriving.
+
+**`enabled: false` removes the proxy route.** The event route used to be registered on `proxy` alone, so a build with tracking switched off still answered on `/_plausible/api/event` and forwarded whatever it received. It no longer registers. If you were posting to that route from something other than this module, keep `enabled` on and switch tracking off where you call it instead.
 
 ## 💻 Development
 
