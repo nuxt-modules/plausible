@@ -42,7 +42,7 @@ export default defineEventHandler(async (event) => {
     })
   }
   catch (error) {
-    console.error(error)
+    console.error('[nuxt-plausible]', error)
 
     throw createError({
       statusCode: 502,
