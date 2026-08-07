@@ -176,7 +176,7 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.vite.optimizeDeps.include ||= []
     nuxt.options.vite.optimizeDeps.include.push('@plausible-analytics/tracker')
 
-    if (nuxt.options.runtimeConfig.public.plausible.proxy) {
+    if (nuxt.options.runtimeConfig.public.plausible.enabled && nuxt.options.runtimeConfig.public.plausible.proxy) {
       const proxyBaseEndpoint = withLeadingSlash(nuxt.options.runtimeConfig.public.plausible.proxyBaseEndpoint)
       const hasUserProvidedProxyBase = [...nuxt.options.serverHandlers, ...nuxt.options.devServerHandlers].some(handler => handler.route?.startsWith(proxyBaseEndpoint))
 
