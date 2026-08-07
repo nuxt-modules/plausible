@@ -88,6 +88,8 @@ export default defineNuxtConfig({
 > [!NOTE]
 > When enabled, all Plausible events will be sent to your server first, which then forwards them to Plausible's API. The default proxy endpoint is `/_plausible`, but you can customize the path using the `proxyBaseEndpoint` module option.
 
+Because the proxy answers on your own origin, the browser attaches the cookies your site has set. Only the headers Plausible reads travel on: the `user-agent`, which it attributes the visitor and their device by, the `content-type` of the event, and an `x-forwarded-for` carrying the visitor's IP address, which Plausible resolves the country from. Your cookies stay on your server.
+
 ### Enhanced Tracking
 
 The module supports automatic tracking of outbound link clicks, file downloads, and form submissions – all powered by the [official Plausible tracker](https://github.com/plausible/analytics/tree/master/tracker).
