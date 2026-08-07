@@ -3,7 +3,7 @@ import { setup } from '@nuxt/test-utils/e2e'
 import { describe, expect, it } from 'vitest'
 import { postEvent } from './post-event'
 
-describe('event proxy (disabled)', async () => {
+describe('event proxy (proxy: false)', async () => {
   await setup({
     server: true,
     rootDir: join(import.meta.dirname, 'fixture'),
