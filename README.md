@@ -4,7 +4,7 @@
 
 [![npm version](https://img.shields.io/npm/v/@nuxtjs/plausible?color=a1b858&label=)](https://www.npmjs.com/package/@nuxtjs/plausible)
 
-Native integration of [Plausible Analytics](https://plausible.io) for [Nuxt](https://nuxt.com).
+Privacy-friendly web analytics for [Nuxt](https://nuxt.com), powered by [Plausible](https://plausible.io).
 
 - [✨ &nbsp;Release Notes](https://github.com/nuxt-modules/plausible/releases)
 

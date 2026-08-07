@@ -3,7 +3,7 @@
   "type": "module",
   "version": "4.0.0",
   "packageManager": "pnpm@11.20.0",
-  "description": "Plausible Analytics with an optional first-party proxy",
+  "description": "Privacy-friendly web analytics for Nuxt, powered by Plausible",
   "author": "Johann Schopplich <hello@johannschopplich.com>",
   "license": "MIT",
   "homepage": "https://github.com/nuxt-modules/plausible#readme",
