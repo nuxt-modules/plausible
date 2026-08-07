@@ -90,6 +90,9 @@ export default defineNuxtConfig({
 
 Because the proxy answers on your own origin, the browser attaches the cookies your site has set. Only the headers Plausible reads travel on: the `user-agent`, which it attributes the visitor and their device by, the `content-type` of the event, and an `x-forwarded-for` carrying the visitor's IP address, which Plausible resolves the country from. Your cookies stay on your server.
 
+> [!IMPORTANT]
+> Up to v3 the proxy forwarded every header of the incoming request. If you counted on one beyond these three reaching Plausible, it no longer travels.
+
 ### Enhanced Tracking
 
 The module supports automatic tracking of outbound link clicks, file downloads, and form submissions – all powered by the [official Plausible tracker](https://github.com/plausible/analytics/tree/master/tracker).
