@@ -1,16 +1,9 @@
 import { join } from 'node:path'
-import { fetch, setup } from '@nuxt/test-utils/e2e'
+import { setup } from '@nuxt/test-utils/e2e'
 import { describe, expect, it } from 'vitest'
+import { postEvent } from './post-event'
 
-function postEvent() {
-  return fetch('/_plausible/api/event', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ n: 'pageview', d: 'example.com', u: 'https://example.com/' }),
-  })
-}
-
-describe('nuxt-plausible proxy', async () => {
+describe('event proxy (unreachable host)', async () => {
   await setup({
     server: true,
     rootDir: join(import.meta.dirname, 'fixture'),
@@ -23,7 +16,7 @@ describe('nuxt-plausible proxy', async () => {
     },
   })
 
-  it('reports a bad gateway when Plausible cannot be reached', async () => {
+  it('reports a bad gateway', async () => {
     const response = await postEvent()
 
     expect(response.status).toBe(502)
