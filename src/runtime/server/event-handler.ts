@@ -4,16 +4,7 @@ import { createError, defineEventHandler, getRequestHeader, getRequestIP, readRa
 import { joinURL } from 'ufo'
 import { useRuntimeConfig } from '#imports'
 
-/**
- * Request headers Plausible reads from an event: `user-agent` identifies the
- * visitor and their device, `content-type` describes the body.
- *
- * @remarks
- * The proxy answers on your own domain, so the browser attaches its first-party
- * cookies to a request that leaves for a third party. Forwarding an allowlist
- * rather than stripping known-sensitive names keeps the next header someone adds
- * out of it as well.
- */
+/** Allowlisted, not denylisted: the proxy answers on the site's own origin, so it receives the browser's first-party cookies. */
 const FORWARDED_HEADERS = ['user-agent', 'content-type']
 
 export default defineEventHandler(async (event) => {
@@ -38,9 +29,7 @@ export default defineEventHandler(async (event) => {
         headers[name] = value
     }
 
-    // Plausible reads the visitor's IP from the proxy, since the request now
-    // arrives from the server. It prefers `x-plausible-ip` and `cf-connecting-ip`
-    // over this one, and neither is forwarded, so a client cannot outrank it.
+    // Plausible prefers `x-plausible-ip` and `cf-connecting-ip` over this one; neither is forwarded, so a client cannot outrank it.
     if (clientIP)
       headers['x-forwarded-for'] = clientIP
 
@@ -62,11 +51,7 @@ export default defineEventHandler(async (event) => {
   }
 })
 
-/**
- * Reads `x-forwarded-for` before falling back to `getRequestIP`, because
- * H3 v1 checks `event.context.clientAddress` first – which may resolve to
- * an internal IP (e.g. Docker network) instead of the real client IP.
- */
+/** Prefers `x-forwarded-for` over `getRequestIP`, which reads `event.context.clientAddress` first and may land on a Docker-internal address. */
 function resolveClientIP(event: H3Event) {
   const xForwardedFor = getRequestHeader(event, 'x-forwarded-for')
   if (xForwardedFor) {
