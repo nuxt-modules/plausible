@@ -4,5 +4,5 @@ import NuxtPlausible from '../../src/module'
 export default defineNuxtConfig({
   modules: [NuxtPlausible],
 
-  compatibilityDate: '2025-01-01',
+  compatibilityDate: '2026-01-01',
 })
