@@ -198,16 +198,6 @@ useTrackPageview()
 useTrackPageview({ url: '/virtual-page' })
 ```
 
-## Migration
-
-### v3 to v4
-
-**Nuxt 4 is required.** The module no longer supports Nuxt 3. Nothing else in your configuration changes on that account.
-
-**The proxy forwards three headers, not all of them.** Only the `user-agent`, the `content-type` and an `x-forwarded-for` carrying the visitor's IP travel on to Plausible. See [Proxy Configuration](#proxy-configuration) for why, and reach for a server route of your own if you relied on another header arriving.
-
-**`enabled: false` removes the proxy route.** The event route used to be registered on `proxy` alone, so a build with tracking switched off still answered on `/_plausible/api/event` and forwarded whatever it received. It no longer registers. If you were posting to that route from something other than this module, keep `enabled` on and switch tracking off where you call it instead.
-
 ## 💻 Development
 
 1. Clone this repository
