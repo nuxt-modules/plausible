@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
     return await sendProxy(event, target, {
       fetchOptions: {
         method: event.method,
-        body,
+        body: body && new Uint8Array(body),
         headers,
       },
     })
