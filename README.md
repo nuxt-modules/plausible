@@ -37,7 +37,7 @@ export default defineNuxtConfig({
 Done! Plausible will now run in your application's client.
 
 > [!TIP]
-> By default, `@nuxtjs/plausible` will use `window.location.hostname` for the Plausible `domain` configuration key, which should suit most use cases. If you need to customize the domain, you can do so in the [module options](#module-options).
+> By default, `@nuxtjs/plausible` uses `window.location.hostname` as the Plausible `domain`. Set the [`domain` option](#module-options) to override it.
 
 ## Configuration
 
@@ -45,8 +45,6 @@ All [supported module options](#module-options) can be configured using the `pla
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/plausible'],
-
   plausible: {
     // Skip tracking on the staging domain as well as localhost
     ignoredHostnames: ['localhost', 'staging.example.com'],
@@ -59,7 +57,7 @@ export default defineNuxtConfig({
 
 ### Runtime Config
 
-Alternatively, leveraging [automatically replaced public runtime config values](https://nuxt.com/docs/api/nuxt-config#runtimeconfig) by matching environment variables at runtime, set your desired option in your project's `.env` file:
+Alternatively, set options in your project's `.env` file – Nuxt [replaces public runtime config values](https://nuxt.com/docs/api/nuxt-config#runtimeconfig) with matching environment variables at runtime:
 
 ```bash
 # Sets the `plausible.domain` option to `example.com`
@@ -76,8 +74,6 @@ To enable the proxy, set the `proxy` option to `true`:
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/plausible'],
-
   plausible: {
     proxy: true,
   },
@@ -96,12 +92,10 @@ The route answers `413` for a body over 8 KB. A Plausible event is a few hundred
 
 ### Enhanced Tracking
 
-The module supports automatic tracking of outbound link clicks, file downloads and form submissions – all powered by the [official Plausible tracker](https://github.com/plausible/analytics/tree/master/tracker).
+The [official Plausible tracker](https://github.com/plausible/analytics/tree/master/tracker) tracks outbound link clicks, file downloads and form submissions:
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/plausible'],
-
   plausible: {
     autoOutboundTracking: true,
     fileDownloads: true,
@@ -110,12 +104,10 @@ export default defineNuxtConfig({
 })
 ```
 
-By default, file download tracking covers common file types (pdf, xlsx, docx, zip, etc.). You can customize which file extensions are tracked:
+File download tracking covers common file types (pdf, xlsx, docx, zip, etc.) unless you name extensions yourself:
 
 ```ts
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/plausible'],
-
   plausible: {
     fileDownloads: { fileExtensions: ['pdf', 'zip', 'csv'] },
   },
@@ -134,7 +126,7 @@ export default defineNuxtConfig({
 | `domain`               | `string`                             | `'window.location.hostname'` | The domain to bind tracking events to.                                                                               |
 | `ignoredHostnames`     | `string[]`                           | `['localhost']`              | Hostnames to ignore when tracking events.                                                                            |
 | `ignoreSubDomains`     | `boolean`                            | `false`                      | Also ignore subdomains of `ignoredHostnames`. Has no effect on `localhost`, so it does nothing until you add a hostname of your own. |
-| `apiHost`              | `string`                             | `'https://plausible.io'`     | The API host where events will be sent to.                                                                           |
+| `apiHost`              | `string`                             | `'https://plausible.io'`     | The API host to send events to.                                                                           |
 | `autoPageviews`        | `boolean`                            | `true`                       | Track page views automatically. Disable this if you want to manually manage pageview tracking.                       |
 | `autoOutboundTracking` | `boolean`                            | `false`                      | Track outbound link clicks automatically.                                                                            |
 | `fileDownloads`        | `boolean \| { fileExtensions: string[] }` | `false`                      | Track file downloads automatically. Pass an object to customize tracked file extensions.                             |
@@ -145,7 +137,7 @@ export default defineNuxtConfig({
 
 ## Composables
 
-As with other composables in the Nuxt ecosystem, they are auto-imported and can be used in your application's components.
+The composables are auto-imported.
 
 > [!NOTE]
 > Since the Plausible instance is only available on the client, executing the composables on the server will have no effect.
