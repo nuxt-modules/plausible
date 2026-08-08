@@ -15,7 +15,6 @@ Privacy-friendly web analytics for [Nuxt](https://nuxt.com), powered by [Plausib
 - 📊 Automatic tracking of outbound links, file downloads and form submissions
 - 🔀 Optional API proxy to avoid ad blockers
 - 📂 [`.env` file support](#runtime-config)
-- 🧺 Sensible default options
 - 🦾 SSR-ready
 
 ## Setup
@@ -86,7 +85,7 @@ export default defineNuxtConfig({
 ```
 
 > [!NOTE]
-> When enabled, all Plausible events will be sent to your server first, which then forwards them to Plausible's API. The route is `/_plausible/api/event`; customize the `/_plausible` part with the `proxyBaseEndpoint` module option. Setting `enabled` to `false` switches the route off along with the tracker, so a build with tracking disabled exposes no forwarder.
+> The route is `/_plausible/api/event`. Setting `enabled` to `false` switches it off along with the tracker, so a build with tracking disabled exposes no forwarder.
 
 Because the proxy answers on your own origin, the browser attaches the cookies your site has set. Only the headers Plausible reads travel on: the `user-agent`, which it attributes the visitor and their device by, the `content-type` of the event, and an `x-forwarded-for` carrying the visitor's IP address, which Plausible resolves the country from. Your cookies stay on your server.
 
@@ -153,7 +152,7 @@ As with other composables in the Nuxt ecosystem, they are auto-imported and can 
 
 ### `useTrackEvent`
 
-Track a custom event. Track your defined goals by passing the goal's name as the argument `eventName`.
+Track a custom event. Pass a goal's name as `eventName` to record that goal.
 
 **Type Declarations**
 
