@@ -12,7 +12,7 @@ Privacy-friendly web analytics for [Nuxt](https://nuxt.com), powered by [Plausib
 
 - 🌻 No configuration necessary
 - 📯 Track events and page views manually with [composables](#composables)
-- 📊 Automatic tracking of outbound links, file downloads, and form submissions
+- 📊 Automatic tracking of outbound links, file downloads and form submissions
 - 🔀 Optional API proxy to avoid ad blockers
 - 📂 [`.env` file support](#configuration)
 - 🧺 Sensible default options
@@ -60,7 +60,7 @@ export default defineNuxtConfig({
 
 ### Runtime Config
 
-Alternatively, leveraging [automatically replaced public runtime config values](https://nuxt.com/docs/api/configuration/nuxt-config#runtimeconfig) by matching environment variables at runtime, set your desired option in your project's `.env` file:
+Alternatively, leveraging [automatically replaced public runtime config values](https://nuxt.com/docs/api/nuxt-config#runtimeconfig) by matching environment variables at runtime, set your desired option in your project's `.env` file:
 
 ```bash
 # Sets the `plausible.domain` option to `example.com`
@@ -71,7 +71,7 @@ With this setup, you can omit the `plausible` key in your Nuxt configuration.
 
 ### Proxy Configuration
 
-The module provides a proxy feature that routes Plausible events through your Nitro server instead of sending them directly to Plausible's servers. This is useful to prevent ad blockers from blocking requests to Plausible's domain.
+The proxy routes Plausible events through your Nitro server instead of sending them straight to Plausible's servers, which keeps ad blockers from blocking requests to Plausible's domain.
 
 To enable the proxy, set the `proxy` option to `true`:
 
@@ -90,12 +90,14 @@ export default defineNuxtConfig({
 
 Because the proxy answers on your own origin, the browser attaches the cookies your site has set. Only the headers Plausible reads travel on: the `user-agent`, which it attributes the visitor and their device by, the `content-type` of the event, and an `x-forwarded-for` carrying the visitor's IP address, which Plausible resolves the country from. Your cookies stay on your server.
 
+The route answers `413` for a body over 8 KB. A Plausible event is a few hundred bytes, and the route takes no authentication.
+
 > [!IMPORTANT]
 > Up to v3 the proxy forwarded every header of the incoming request. If you counted on one beyond these three reaching Plausible, it no longer travels.
 
 ### Enhanced Tracking
 
-The module supports automatic tracking of outbound link clicks, file downloads, and form submissions – all powered by the [official Plausible tracker](https://github.com/plausible/analytics/tree/master/tracker).
+The module supports automatic tracking of outbound link clicks, file downloads and form submissions – all powered by the [official Plausible tracker](https://github.com/plausible/analytics/tree/master/tracker).
 
 ```ts
 export default defineNuxtConfig({
@@ -122,7 +124,7 @@ export default defineNuxtConfig({
 ```
 
 > [!NOTE]
-> These features require the corresponding goals to be configured in your [Plausible dashboard](https://plausible.io/docs/custom-event-goals). Outbound link clicks are tracked as `Outbound Link: Click`, file downloads as `File Download`, and form submissions as `Form: Submission`.
+> These features require the corresponding goals to be configured in your [Plausible dashboard](https://plausible.io/docs/custom-event-goals). Outbound link clicks are tracked as `Outbound Link: Click`, file downloads as `File Download` and form submissions as `Form: Submission`.
 
 ## Module Options
 
@@ -141,8 +143,6 @@ export default defineNuxtConfig({
 | `logIgnoredEvents`     | `boolean`                            | `false`                      | Log ignored events to the console.                                                                                   |
 | `proxy`                | `boolean`                            | `false`                      | Route events through your own origin instead of the Plausible API host. See [Proxy Configuration](#proxy-configuration). |
 | `proxyBaseEndpoint`    | `string`                             | `'/_plausible'`              | Base path the proxy answers on. The event route sits below it, at `/_plausible/api/event`.                           |
-| `proxy`                | `boolean`                            | `false`                      | Proxy the event endpoint through the current origin.                                                                 |
-| `proxyBaseEndpoint`    | `string`                             | `'/_plausible'`              | The base endpoint path for the proxy.                                                                                |
 
 ## Composables
 
