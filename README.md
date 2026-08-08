@@ -14,7 +14,7 @@ Privacy-friendly web analytics for [Nuxt](https://nuxt.com), powered by [Plausib
 - 📯 Track events and page views manually with [composables](#composables)
 - 📊 Automatic tracking of outbound links, file downloads and form submissions
 - 🔀 Optional API proxy to avoid ad blockers
-- 📂 [`.env` file support](#configuration)
+- 📂 [`.env` file support](#runtime-config)
 - 🧺 Sensible default options
 - 🦾 SSR-ready
 
@@ -49,8 +49,8 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/plausible'],
 
   plausible: {
-    // Prevent tracking on localhost
-    ignoredHostnames: ['localhost'],
+    // Skip tracking on the staging domain as well as localhost
+    ignoredHostnames: ['localhost', 'staging.example.com'],
   },
 })
 ```
