@@ -23,18 +23,7 @@ Privacy-friendly web analytics for [Nuxt](https://nuxt.com), powered by [Plausib
 npx nuxt module add plausible
 ```
 
-## Basic Usage
-
-Add `@nuxtjs/plausible` to the `modules` section of your Nuxt configuration:
-
-```ts
-// `nuxt.config.ts`
-export default defineNuxtConfig({
-  modules: ['@nuxtjs/plausible'],
-})
-```
-
-Done! Plausible now runs in your application's client.
+The command installs `@nuxtjs/plausible` and adds it to the `modules` section of your Nuxt configuration. Plausible now runs in your application's client.
 
 > [!TIP]
 > By default, `@nuxtjs/plausible` uses `window.location.hostname` as the Plausible `domain`. Set the [`domain` option](#module-options) to override it.
