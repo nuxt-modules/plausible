@@ -1,7 +1,7 @@
 {
   "name": "@nuxtjs/plausible",
   "type": "module",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "packageManager": "pnpm@12.18.0",
   "description": "Privacy-friendly web analytics for Nuxt, powered by Plausible",
   "author": "Johann Schopplich <hello@johannschopplich.com>",
