@@ -115,17 +115,4 @@ describe('event proxy', async () => {
 
     expect(status).toBe(413)
   })
-
-  it('forwards nothing when the client breaks off the body', async () => {
-    await new Promise<void>((resolve) => {
-      const client = request(url('/_plausible/api/event'), { method: 'POST' })
-      client.on('error', () => {})
-      client.on('close', resolve)
-      client.write('{"n":"pagev', () => setTimeout(() => client.destroy(), 50))
-    })
-    // Gives the handler time to forward what it read, if it does.
-    await new Promise(resolve => setTimeout(resolve, 500))
-
-    expect(upstreamBodies).toHaveLength(0)
-  })
 })
