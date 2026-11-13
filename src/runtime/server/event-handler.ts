@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
   if (contentLength > MAX_BODY_SIZE)
     throw payloadTooLargeError()
 
-  const body = await readBody(event)
+  const body = await readLimitedBody(event)
 
   try {
     const target = joinURL(options.apiHost, 'api/event')
@@ -66,7 +66,7 @@ export default defineEventHandler(async (event) => {
   }
 })
 
-async function readBody(event: H3Event): Promise<Buffer | undefined> {
+async function readLimitedBody(event: H3Event): Promise<Buffer | undefined> {
   const request = event.node.req as IncomingMessage & Record<PropertyKey, unknown>
 
   // Mirrors where `readRawBody` looks before the Node stream: a body an earlier handler
