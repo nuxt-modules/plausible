@@ -158,14 +158,14 @@ export default defineNuxtModule<ModuleOptions>({
   setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url)
 
-    options.ignoredHostnames ??= [...DEFAULT_HOSTNAMES]
+    const runtimeOptions = nuxt.options.runtimeConfig.public.plausible
+    const ignoredHostnames = runtimeOptions?.ignoredHostnames ?? options.ignoredHostnames ?? DEFAULT_HOSTNAMES
 
-    options.ignoredHostnames = Array.from(new Set(options.ignoredHostnames))
-
-    nuxt.options.runtimeConfig.public.plausible = defu(
-      nuxt.options.runtimeConfig.public.plausible,
-      options,
-    )
+    nuxt.options.runtimeConfig.public.plausible = {
+      ...defu(runtimeOptions, options),
+      // `defu` would append the lists, so one set under `runtimeConfig` could not drop `localhost`.
+      ignoredHostnames: Array.from(new Set(ignoredHostnames)),
+    }
 
     nuxt.options.build.transpile.push(resolve('runtime'))
 
