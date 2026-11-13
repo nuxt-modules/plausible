@@ -55,7 +55,10 @@ export interface ModuleOptions {
   /**
    * The domain to bind tracking event to.
    *
-   * @default window.location.hostname
+   * @remarks
+   * When empty, the client falls back to `window.location.hostname`.
+   *
+   * @default ''
    */
   domain?: string
 
