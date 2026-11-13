@@ -2,6 +2,7 @@ import type { NuxtConfig } from '@nuxt/schema'
 import { join } from 'node:path'
 import { loadNuxt } from '@nuxt/kit'
 import { describe, expect, it } from 'vitest'
+import { isRouteWithin } from '../src/utils'
 
 describe('ignoredHostnames', () => {
   it('replaces the default with an empty list from runtimeConfig', async () => {
@@ -17,14 +18,17 @@ describe('ignoredHostnames', () => {
   })
 })
 
-describe('proxy route check', () => {
-  it('accepts a handler whose route only shares the prefix of proxyBaseEndpoint', async () => {
-    await expect(resolvePlausibleConfig({
-      plausible: { proxy: true },
-      serverHandlers: [
-        { route: '/_plausible-other/x', handler: '~/server/x.ts' },
-      ],
-    })).resolves.toBeDefined()
+describe('isRouteWithin', () => {
+  it('matches /_plausible/x against /_plausible', () => {
+    expect(isRouteWithin('/_plausible/x', '/_plausible')).toBe(true)
+  })
+
+  it('matches /_plausible against itself', () => {
+    expect(isRouteWithin('/_plausible', '/_plausible')).toBe(true)
+  })
+
+  it('never matches /_plausible-other/x (which only shares the prefix) against /_plausible', () => {
+    expect(isRouteWithin('/_plausible-other/x', '/_plausible')).toBe(false)
   })
 })
 
