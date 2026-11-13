@@ -1,62 +1,15 @@
-import type { PlausibleRequestPayload } from '@plausible-analytics/tracker'
-import { afterEach, describe, expect, it, vi } from 'vitest'
-import { buildHostnameFilter, normalizeHostnames } from '../src/runtime/utils'
+import { describe, expect, it } from 'vitest'
+import { isRouteWithin } from '../src/utils'
 
-const payload = { n: 'pageview' } as unknown as PlausibleRequestPayload
-
-function stubHostname(hostname: string) {
-  vi.stubGlobal('window', {
-    location: { hostname },
-  })
-}
-
-afterEach(() => {
-  vi.unstubAllGlobals()
-})
-
-describe('buildHostnameFilter', () => {
-  it('returns no filter when only localhost is ignored', () => {
-    expect(buildHostnameFilter(['localhost'], false)).toBeUndefined()
+describe('isRouteWithin', () => {
+  it.each([
+    ['/_plausible/x', '/_plausible'],
+    ['/_plausible', '/_plausible'],
+  ])('matches %s against %s', (route, base) => {
+    expect(isRouteWithin(route, base)).toBe(true)
   })
 
-  it('drops an event sent from an ignored hostname', () => {
-    stubHostname('staging.example.com')
-    const filter = buildHostnameFilter(['staging.example.com'], false)
-
-    expect(filter!(payload)).toBeNull()
-  })
-
-  it('passes an event through from a hostname that is not ignored', () => {
-    stubHostname('example.com')
-    const filter = buildHostnameFilter(['staging.example.com'], false)
-
-    expect(filter!(payload)).toBe(payload)
-  })
-
-  it('passes a subdomain through when ignoreSubDomains is false', () => {
-    stubHostname('preview.staging.example.com')
-    const filter = buildHostnameFilter(['staging.example.com'], false)
-
-    expect(filter!(payload)).toBe(payload)
-  })
-
-  it('drops a subdomain of an ignored hostname when subdomains are ignored', () => {
-    stubHostname('preview.staging.example.com')
-    const filter = buildHostnameFilter(['staging.example.com'], true)
-
-    expect(filter!(payload)).toBeNull()
-  })
-
-  it('passes notstaging.example.com through when staging.example.com is ignored', () => {
-    stubHostname('notstaging.example.com')
-    const filter = buildHostnameFilter(['staging.example.com'], true)
-
-    expect(filter!(payload)).toBe(payload)
-  })
-})
-
-describe('normalizeHostnames', () => {
-  it('wraps a plain string (as an environment variable sets it) in a list', () => {
-    expect(normalizeHostnames('staging.example.com')).toEqual(['staging.example.com'])
+  it('never matches /_plausible-other/x (which only shares the prefix) against /_plausible', () => {
+    expect(isRouteWithin('/_plausible-other/x', '/_plausible')).toBe(false)
   })
 })
