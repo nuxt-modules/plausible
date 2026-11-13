@@ -8,6 +8,7 @@ import {
 import { defu } from 'defu'
 import { joinURL, withLeadingSlash } from 'ufo'
 import { name, version } from '../package.json'
+import { normalizeHostnames } from './runtime/utils'
 
 const DEFAULT_HOSTNAMES = ['localhost']
 
@@ -164,7 +165,7 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.runtimeConfig.public.plausible = {
       ...defu(runtimeOptions, options),
       // `defu` would append the lists, so one set under `runtimeConfig` could not drop `localhost`.
-      ignoredHostnames: Array.from(new Set(ignoredHostnames)),
+      ignoredHostnames: normalizeHostnames(ignoredHostnames),
     }
 
     nuxt.options.build.transpile.push(resolve('runtime'))

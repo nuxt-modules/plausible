@@ -3,7 +3,7 @@ import type {} from 'nuxt/app'
 import { init, track } from '@plausible-analytics/tracker'
 import { joinURL, withLeadingSlash } from 'ufo'
 import { defineNuxtPlugin, useRuntimeConfig } from '#imports'
-import { buildHostnameFilter } from './utils'
+import { buildHostnameFilter, normalizeHostnames } from './utils'
 
 export default defineNuxtPlugin({
   name: 'plausible',
@@ -12,6 +12,8 @@ export default defineNuxtPlugin({
 
     if (!options.enabled)
       return
+
+    const ignoredHostnames = normalizeHostnames(options.ignoredHostnames)
 
     init({
       domain: options.domain || window.location.hostname,
@@ -26,10 +28,10 @@ export default defineNuxtPlugin({
       outboundLinks: options.autoOutboundTracking,
       fileDownloads: options.fileDownloads,
       formSubmissions: options.formSubmissions,
-      captureOnLocalhost: !options.ignoredHostnames.includes('localhost'),
+      captureOnLocalhost: !ignoredHostnames.includes('localhost'),
       logging: options.logIgnoredEvents,
       // Handle non-localhost ignored hostnames (e.g. staging/preview domains).
-      transformRequest: buildHostnameFilter(options.ignoredHostnames, options.ignoreSubDomains),
+      transformRequest: buildHostnameFilter(ignoredHostnames, options.ignoreSubDomains),
     })
 
     const plausible = {

@@ -1,6 +1,6 @@
 import type { PlausibleRequestPayload } from '@plausible-analytics/tracker'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { buildHostnameFilter } from '../src/runtime/utils'
+import { buildHostnameFilter, normalizeHostnames } from '../src/runtime/utils'
 
 const payload = { n: 'pageview' } as unknown as PlausibleRequestPayload
 
@@ -52,5 +52,11 @@ describe('buildHostnameFilter', () => {
     const filter = buildHostnameFilter(['staging.example.com'], true)
 
     expect(filter!(payload)).toBe(payload)
+  })
+})
+
+describe('normalizeHostnames', () => {
+  it('wraps a plain string (as an environment variable sets it) in a list', () => {
+    expect(normalizeHostnames('staging.example.com')).toEqual(['staging.example.com'])
   })
 })
