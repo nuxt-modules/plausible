@@ -87,7 +87,10 @@ describe('event proxy', async () => {
   })
 
   it('answers 413 for a body over 8 KB and forwards nothing', async () => {
-    const response = await postEvent({}, JSON.stringify({ n: 'pageview', p: 'x'.repeat(9 * 1024) }))
+    const response = await postEvent({}, JSON.stringify({
+      n: 'pageview',
+      p: 'x'.repeat(9 * 1024),
+    }))
 
     expect(response.status).toBe(413)
     expect(upstreamBodies).toHaveLength(0)

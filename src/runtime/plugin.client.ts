@@ -16,7 +16,9 @@ export default defineNuxtPlugin({
     init({
       domain: options.domain || window.location.hostname,
       endpoint: joinURL(
-        options.proxy ? withLeadingSlash(options.proxyBaseEndpoint) : options.apiHost,
+        options.proxy
+          ? withLeadingSlash(options.proxyBaseEndpoint)
+          : options.apiHost,
         'api/event',
       ),
       autoCapturePageviews: options.autoPageviews,

@@ -120,7 +120,9 @@ File download tracking covers common file types (pdf, xlsx, docx, zip, etc.) unl
 ```ts
 export default defineNuxtConfig({
   plausible: {
-    fileDownloads: { fileExtensions: ['pdf', 'zip', 'csv'] },
+    fileDownloads: {
+      fileExtensions: ['pdf', 'zip', 'csv']
+    },
   },
 })
 ```
@@ -170,10 +172,14 @@ function useTrackEvent(
 useTrackEvent('signup')
 
 // Tracks the `Download` goal passing a `method` property
-useTrackEvent('Download', { props: { method: 'HTTP' } })
+useTrackEvent('Download', {
+  props: { method: 'HTTP' }
+})
 
 // Tracks the `Purchase` goal with revenue data
-useTrackEvent('Purchase', { revenue: { amount: 15.99, currency: 'USD' } })
+useTrackEvent('Purchase', {
+  revenue: { amount: 15.99, currency: 'USD' }
+})
 ```
 
 ### `useTrackPageview`

@@ -178,7 +178,10 @@ export default defineNuxtModule<ModuleOptions>({
 
     if (nuxt.options.runtimeConfig.public.plausible.enabled && nuxt.options.runtimeConfig.public.plausible.proxy) {
       const proxyBaseEndpoint = withLeadingSlash(nuxt.options.runtimeConfig.public.plausible.proxyBaseEndpoint)
-      const hasUserProvidedProxyBase = [...nuxt.options.serverHandlers, ...nuxt.options.devServerHandlers].some(handler => handler.route?.startsWith(proxyBaseEndpoint))
+      const hasUserProvidedProxyBase = [
+        ...nuxt.options.serverHandlers,
+        ...nuxt.options.devServerHandlers,
+      ].some(handler => handler.route?.startsWith(proxyBaseEndpoint))
 
       if (hasUserProvidedProxyBase) {
         throw new Error(`The route \`${proxyBaseEndpoint}\` is already in use. Please use the \`proxyBaseEndpoint\` option to change the base URL of the proxy endpoint.`)

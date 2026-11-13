@@ -5,7 +5,9 @@ import { buildHostnameFilter } from '../src/runtime/utils'
 const payload = { n: 'pageview' } as unknown as PlausibleRequestPayload
 
 function stubHostname(hostname: string) {
-  vi.stubGlobal('window', { location: { hostname } })
+  vi.stubGlobal('window', {
+    location: { hostname },
+  })
 }
 
 afterEach(() => {
