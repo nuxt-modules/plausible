@@ -44,7 +44,7 @@ export default defineEventHandler(async (event) => {
         headers[name] = value
     }
 
-    // Plausible prefers `x-plausible-ip` and `cf-connecting-ip` over this one, and neither is forwarded. The address itself is the leftmost `x-forwarded-for` entry, which the client can set.
+    // Plausible prefers `x-plausible-ip` and `cf-connecting-ip` over this one, and neither is forwarded.
     if (clientIP)
       headers['x-forwarded-for'] = clientIP
 
@@ -82,7 +82,7 @@ async function readLimitedBody(event: H3Event): Promise<Buffer | undefined> {
   return readBodyStream(request, MAX_BODY_SIZE)
 }
 
-/** Prefers `x-forwarded-for` over `getRequestIP`, which reads `event.context.clientAddress` first and may land on a Docker-internal address. */
+/** Prefers `x-forwarded-for`, which a client can set, over `getRequestIP`, which reads `event.context.clientAddress` first and may land on a Docker-internal address. */
 function resolveClientIP(event: H3Event) {
   const xForwardedFor = getRequestHeader(event, 'x-forwarded-for')
   if (xForwardedFor) {
