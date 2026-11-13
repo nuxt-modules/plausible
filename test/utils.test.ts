@@ -5,6 +5,8 @@ describe('isRouteWithin', () => {
   it.each([
     ['/_plausible/x', '/_plausible'],
     ['/_plausible', '/_plausible'],
+    ['/api/event', '/'],
+    ['/_plausible/x', '/_plausible//'],
   ])('matches %s against %s', (route, base) => {
     expect(isRouteWithin(route, base)).toBe(true)
   })
