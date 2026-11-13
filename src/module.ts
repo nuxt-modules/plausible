@@ -9,6 +9,7 @@ import { defu } from 'defu'
 import { joinURL, withLeadingSlash, withoutTrailingSlash } from 'ufo'
 import { name, version } from '../package.json'
 import { normalizeHostnames } from './runtime/utils'
+import { isRouteWithin } from './utils'
 
 export type { PlausibleEventOptions } from '@plausible-analytics/tracker'
 
@@ -187,7 +188,7 @@ export default defineNuxtModule<ModuleOptions>({
       const hasUserProvidedProxyBase = [
         ...nuxt.options.serverHandlers,
         ...nuxt.options.devServerHandlers,
-      ].some(handler => handler.route === proxyBaseEndpoint || handler.route?.startsWith(`${proxyBaseEndpoint}/`))
+      ].some(handler => handler.route && isRouteWithin(handler.route, proxyBaseEndpoint))
 
       if (hasUserProvidedProxyBase) {
         throw new Error(`The route \`${proxyBaseEndpoint}\` is already in use. Please use the \`proxyBaseEndpoint\` option to change the base URL of the proxy endpoint.`)
