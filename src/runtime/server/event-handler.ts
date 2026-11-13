@@ -69,8 +69,7 @@ export default defineEventHandler(async (event) => {
 async function readLimitedBody(event: H3Event): Promise<Buffer | undefined> {
   const request = event.node.req as IncomingMessage & Record<PropertyKey, unknown>
 
-  // Mirrors where `readRawBody` looks before the Node stream: a body an earlier handler
-  // has read, or one a non-Node runtime buffers before Nitro runs. Only the limit is left to check.
+  // Mirrors where h3 looks for a body before the Node stream: one an earlier handler has read, or one a non-Node runtime buffers before Nitro runs.
   if (event._requestBody || event.web?.request?.body || request[RAW_BODY_KEY] || request.rawBody || request.body || '__unenv__' in request) {
     const body = await readRawBody(event, false).catch(() => {
       throw unreadablePayloadError()
