@@ -170,7 +170,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     nuxt.options.runtimeConfig.public.plausible = {
       ...defu(runtimeOptions, options),
-      // `defu` would append the lists, so one set under `runtimeConfig` could not drop `localhost`.
+      // `defu` would join a list under `runtimeConfig` with the module option's instead of replacing it.
       ignoredHostnames: normalizeHostnames(ignoredHostnames),
     }
 
