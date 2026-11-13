@@ -17,6 +17,15 @@ describe('ignoredHostnames', () => {
   })
 })
 
+describe('proxy', () => {
+  it('rejects a file route under /_plausible, the default proxyBaseEndpoint', async () => {
+    await expect(loadNuxt({
+      cwd: join(import.meta.dirname, 'fixture-file-route'),
+      ready: true,
+    })).rejects.toThrow('The route `/_plausible` is already in use')
+  })
+})
+
 async function resolvePlausibleConfig(overrides: NuxtConfig) {
   const nuxt = await loadNuxt({
     cwd: join(import.meta.dirname, 'fixture'),

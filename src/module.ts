@@ -178,14 +178,17 @@ export default defineNuxtModule<ModuleOptions>({
 
     if (nuxt.options.runtimeConfig.public.plausible.enabled && nuxt.options.runtimeConfig.public.plausible.proxy) {
       const proxyBaseEndpoint = withoutTrailingSlash(withLeadingSlash(nuxt.options.runtimeConfig.public.plausible.proxyBaseEndpoint))
-      const hasUserProvidedProxyBase = [
+      const assertProxyBaseEndpointIsFree = (handlers: { route?: string }[]) => {
+        if (handlers.some(handler => handler.route && isRouteWithin(handler.route, proxyBaseEndpoint)))
+          throw new Error(`The route \`${proxyBaseEndpoint}\` is already in use. Please use the \`proxyBaseEndpoint\` option to change the base URL of the proxy endpoint.`)
+      }
+
+      assertProxyBaseEndpointIsFree([
         ...nuxt.options.serverHandlers,
         ...nuxt.options.devServerHandlers,
-      ].some(handler => handler.route && isRouteWithin(handler.route, proxyBaseEndpoint))
-
-      if (hasUserProvidedProxyBase) {
-        throw new Error(`The route \`${proxyBaseEndpoint}\` is already in use. Please use the \`proxyBaseEndpoint\` option to change the base URL of the proxy endpoint.`)
-      }
+      ])
+      // File routes are only known once Nitro has scanned them.
+      nuxt.hook('nitro:init', nitro => assertProxyBaseEndpointIsFree(nitro.scannedHandlers))
 
       addServerHandler({
         route: joinURL(proxyBaseEndpoint, 'api/event'),
