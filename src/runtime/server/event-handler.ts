@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
         headers[name] = value
     }
 
-    // Plausible prefers `x-plausible-ip` and `cf-connecting-ip` over this one; neither is forwarded, so a client cannot outrank it.
+    // Plausible prefers `x-plausible-ip` and `cf-connecting-ip` over this one, and neither is forwarded. The address itself is the leftmost `x-forwarded-for` entry, which the client can set.
     if (clientIP)
       headers['x-forwarded-for'] = clientIP
 
