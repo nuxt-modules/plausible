@@ -1,3 +1,4 @@
+import type {} from 'nuxt/app'
 import { defineNuxtPlugin, useHead, useRuntimeConfig } from '#imports'
 
 export default defineNuxtPlugin({
