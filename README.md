@@ -198,7 +198,7 @@ Both composables take the same options:
 
 | Option        | Type                                                          | Description                                                                                                      |
 | ------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `props`       | `Record<string, string>`                                      | [Custom properties](https://plausible.io/docs/custom-props/introduction) of the event.                           |
+| `props`       | `Record<string, string \| number \| boolean>`                 | [Custom properties](https://plausible.io/docs/custom-props/introduction) of the event.                           |
 | `revenue`     | `{ amount: number \| string, currency: string }`              | [Revenue](https://plausible.io/docs/ecommerce-revenue-tracking) of the event, in an ISO 4217 `currency` such as `USD`. |
 | `interactive` | `boolean`                                                     | Defaults to `true`, and `false` keeps the event out of the bounce rate.                                           |
 | `url`         | `string`                                                      | The full page URL to record instead of the current one.                                                          |
