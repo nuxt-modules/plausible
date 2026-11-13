@@ -1,11 +1,8 @@
 import type { PlausibleConfig, PlausibleRequestPayload } from '@plausible-analytics/tracker'
 
 /**
- * Turns `ignoredHostnames` into a list without duplicates.
- *
- * @remarks
  * Nitro parses an environment variable as JSON and keeps any other value as a string,
- * so `NUXT_PUBLIC_PLAUSIBLE_IGNORED_HOSTNAMES=staging.example.com` arrives as one.
+ * so `NUXT_PUBLIC_PLAUSIBLE_IGNORED_HOSTNAMES=staging.example.com` arrives as a string.
  */
 export function normalizeHostnames(hostnames: string | string[]): string[] {
   if (typeof hostnames === 'string')
