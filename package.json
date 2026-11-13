@@ -2,7 +2,7 @@
   "name": "@nuxtjs/plausible",
   "type": "module",
   "version": "4.0.0",
-  "packageManager": "pnpm@12.16.1",
+  "packageManager": "pnpm@12.18.0",
   "description": "Privacy-friendly web analytics for Nuxt, powered by Plausible",
   "author": "Johann Schopplich <hello@johannschopplich.com>",
   "license": "MIT",
@@ -40,22 +40,22 @@
     "release": "bumpp"
   },
   "dependencies": {
-    "@nuxt/kit": "^4.5.2",
-    "@plausible-analytics/tracker": "^0.4.5",
+    "@nuxt/kit": "^4.6.4",
+    "@plausible-analytics/tracker": "^0.4.7",
     "defu": "^6.1.7",
     "ufo": "^1.6.4"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^9.3.0",
-    "@nuxt/module-builder": "^1.0.3",
-    "@nuxt/schema": "^4.5.2",
-    "@nuxt/test-utils": "^4.1.0",
-    "@types/node": "^26.1.2",
-    "bumpp": "^12.2.0",
-    "eslint": "^10.8.0",
-    "nuxt": "^4.5.2",
-    "srvx": "^0.12.5",
+    "@antfu/eslint-config": "^10.0.0",
+    "@nuxt/module-builder": "^1.0.4",
+    "@nuxt/schema": "^4.6.4",
+    "@nuxt/test-utils": "^4.4.0",
+    "@types/node": "^26.6.6",
+    "bumpp": "^12.3.0",
+    "eslint": "^10.14.0",
+    "nuxt": "^4.6.4",
+    "srvx": "^1.0.8",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.10"
+    "vitest": "^5.1.0"
   }
 }
