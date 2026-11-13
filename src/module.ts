@@ -6,7 +6,7 @@ import {
   defineNuxtModule,
 } from '@nuxt/kit'
 import { defu } from 'defu'
-import { joinURL, withLeadingSlash } from 'ufo'
+import { joinURL, withLeadingSlash, withoutTrailingSlash } from 'ufo'
 import { name, version } from '../package.json'
 import { normalizeHostnames } from './runtime/utils'
 
@@ -178,11 +178,11 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.vite.optimizeDeps.include.push('@plausible-analytics/tracker')
 
     if (nuxt.options.runtimeConfig.public.plausible.enabled && nuxt.options.runtimeConfig.public.plausible.proxy) {
-      const proxyBaseEndpoint = withLeadingSlash(nuxt.options.runtimeConfig.public.plausible.proxyBaseEndpoint)
+      const proxyBaseEndpoint = withoutTrailingSlash(withLeadingSlash(nuxt.options.runtimeConfig.public.plausible.proxyBaseEndpoint))
       const hasUserProvidedProxyBase = [
         ...nuxt.options.serverHandlers,
         ...nuxt.options.devServerHandlers,
-      ].some(handler => handler.route?.startsWith(proxyBaseEndpoint))
+      ].some(handler => handler.route === proxyBaseEndpoint || handler.route?.startsWith(`${proxyBaseEndpoint}/`))
 
       if (hasUserProvidedProxyBase) {
         throw new Error(`The route \`${proxyBaseEndpoint}\` is already in use. Please use the \`proxyBaseEndpoint\` option to change the base URL of the proxy endpoint.`)

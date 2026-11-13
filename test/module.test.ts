@@ -17,6 +17,17 @@ describe('ignoredHostnames', () => {
   })
 })
 
+describe('proxy route check', () => {
+  it('accepts a handler whose route only shares the prefix of proxyBaseEndpoint', async () => {
+    await expect(resolvePlausibleConfig({
+      plausible: { proxy: true },
+      serverHandlers: [
+        { route: '/_plausible-other/x', handler: '~/server/x.ts' },
+      ],
+    })).resolves.toBeDefined()
+  })
+})
+
 async function resolvePlausibleConfig(overrides: NuxtConfig) {
   const nuxt = await loadNuxt({
     cwd: join(import.meta.dirname, 'fixture'),
