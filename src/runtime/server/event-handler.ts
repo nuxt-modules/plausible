@@ -26,7 +26,12 @@ export default defineEventHandler(async (event) => {
     throw payloadTooLargeError()
 
   // Checked again after reading, because a chunked request declares no length.
-  const body = await readRawBody(event, false).catch(() => undefined)
+  const body = await readRawBody(event, false).catch(() => {
+    throw createError({
+      statusCode: 400,
+      message: 'Event payload could not be read',
+    })
+  })
   if (body && body.length > MAX_BODY_SIZE)
     throw payloadTooLargeError()
 
