@@ -175,6 +175,9 @@ importers:
       defu:
         specifier: ^6.1.7
         version: 6.1.7
+      h3:
+        specifier: ^1.15.11
+        version: 1.15.11
       ufo:
         specifier: ^1.6.4
         version: 1.6.4

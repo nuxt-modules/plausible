@@ -43,6 +43,7 @@
     "@nuxt/kit": "^4.6.4",
     "@plausible-analytics/tracker": "^0.4.7",
     "defu": "^6.1.7",
+    "h3": "^1.15.11",
     "ufo": "^1.6.4"
   },
   "devDependencies": {
