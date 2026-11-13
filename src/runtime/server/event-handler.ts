@@ -1,10 +1,11 @@
 import type { H3Event } from 'h3'
+import type { Buffer } from 'node:buffer'
 import type { IncomingMessage } from 'node:http'
 import type { ModuleOptions } from '../../module'
-import { Buffer } from 'node:buffer'
 import { createError, defineEventHandler, getRequestHeader, getRequestIP, readRawBody, sendProxy } from 'h3'
 import { joinURL } from 'ufo'
 import { useRuntimeConfig } from '#imports'
+import { payloadTooLargeError, readBodyStream, unreadablePayloadError } from './utils'
 
 /** Allowlisted, not denylisted: the proxy answers on the site's own origin, so it receives the browser's first-party cookies. */
 const FORWARDED_HEADERS = ['user-agent', 'content-type']
@@ -65,10 +66,6 @@ export default defineEventHandler(async (event) => {
   }
 })
 
-/**
- * Reads the request body and stops at `MAX_BODY_SIZE`, because a chunked request
- * declares no length to turn it away by.
- */
 async function readBody(event: H3Event): Promise<Buffer | undefined> {
   const request = event.node.req as IncomingMessage & Record<PropertyKey, unknown>
 
@@ -83,53 +80,7 @@ async function readBody(event: H3Event): Promise<Buffer | undefined> {
     return body
   }
 
-  return new Promise((resolve, reject) => {
-    const chunks: Buffer[] = []
-    let size = 0
-
-    request.on('data', onData).on('end', onEnd).on('error', onError)
-
-    function onData(chunk: Buffer) {
-      size += chunk.length
-      if (size > MAX_BODY_SIZE) {
-        // The rest of the body flows on with no listener, so Node discards it.
-        removeListeners()
-        reject(payloadTooLargeError())
-        return
-      }
-      chunks.push(chunk)
-    }
-
-    function onEnd() {
-      removeListeners()
-      resolve(chunks.length > 0
-        ? Buffer.concat(chunks)
-        : undefined)
-    }
-
-    function onError() {
-      removeListeners()
-      reject(unreadablePayloadError())
-    }
-
-    function removeListeners() {
-      request.off('data', onData).off('end', onEnd).off('error', onError)
-    }
-  })
-}
-
-function payloadTooLargeError() {
-  return createError({
-    statusCode: 413,
-    message: 'Event payload too large',
-  })
-}
-
-function unreadablePayloadError() {
-  return createError({
-    statusCode: 400,
-    message: 'Event payload could not be read',
-  })
+  return readBodyStream(request, MAX_BODY_SIZE)
 }
 
 /** Prefers `x-forwarded-for` over `getRequestIP`, which reads `event.context.clientAddress` first and may land on a Docker-internal address. */
