@@ -211,8 +211,7 @@ export default defineNuxtModule<ModuleOptions>({
 
     if (!nuxt.options.runtimeConfig.public.plausible.proxy) {
       addPlugin({
-        src: resolve('runtime/plugin-preconnect.client'),
-        mode: 'client',
+        src: resolve('runtime/plugin-preconnect'),
         order: -1, // Run early to add preconnect before other resources.
       })
     }
