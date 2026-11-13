@@ -10,6 +10,8 @@ import { joinURL, withLeadingSlash, withoutTrailingSlash } from 'ufo'
 import { name, version } from '../package.json'
 import { normalizeHostnames } from './runtime/utils'
 
+export type { PlausibleEventOptions } from '@plausible-analytics/tracker'
+
 const DEFAULT_HOSTNAMES = ['localhost']
 
 export interface ModuleOptions {
