@@ -97,6 +97,25 @@ describe('event proxy', async () => {
     expect(upstreamBodies).toHaveLength(0)
   })
 
+  it('answers 413 for a chunked body over 8 KB before the body ends', async () => {
+    const status = await new Promise<number | undefined>((resolve) => {
+      const client = request(url('/_plausible/api/event'), { method: 'POST' })
+      client.on('error', () => {})
+      client.on('response', (response) => {
+        resolve(response.statusCode)
+        client.destroy()
+      })
+      // The body never ends, so only a handler that stops reading at the limit answers.
+      client.write('x'.repeat(9 * 1024))
+      setTimeout(() => {
+        resolve(undefined)
+        client.destroy()
+      }, 2000)
+    })
+
+    expect(status).toBe(413)
+  })
+
   it('forwards nothing when the client breaks off the body', async () => {
     await new Promise<void>((resolve) => {
       const client = request(url('/_plausible/api/event'), { method: 'POST' })

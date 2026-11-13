@@ -1,5 +1,7 @@
 import type { H3Event } from 'h3'
+import type { IncomingMessage } from 'node:http'
 import type { ModuleOptions } from '../../module'
+import { Buffer } from 'node:buffer'
 import { createError, defineEventHandler, getRequestHeader, getRequestIP, readRawBody, sendProxy } from 'h3'
 import { joinURL } from 'ufo'
 import { useRuntimeConfig } from '#imports'
@@ -9,6 +11,9 @@ const FORWARDED_HEADERS = ['user-agent', 'content-type']
 
 /** A Plausible event is a few hundred bytes. The route is unauthenticated, so anything larger is not an event. */
 const MAX_BODY_SIZE = 8 * 1024
+
+/** The key `readRawBody` caches a body it has read under. */
+const RAW_BODY_KEY = Symbol.for('h3RawBody')
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event)
@@ -25,15 +30,7 @@ export default defineEventHandler(async (event) => {
   if (contentLength > MAX_BODY_SIZE)
     throw payloadTooLargeError()
 
-  // Checked again after reading, because a chunked request declares no length.
-  const body = await readRawBody(event, false).catch(() => {
-    throw createError({
-      statusCode: 400,
-      message: 'Event payload could not be read',
-    })
-  })
-  if (body && body.length > MAX_BODY_SIZE)
-    throw payloadTooLargeError()
+  const body = await readBody(event)
 
   try {
     const target = joinURL(options.apiHost, 'api/event')
@@ -68,10 +65,70 @@ export default defineEventHandler(async (event) => {
   }
 })
 
+/**
+ * Reads the request body and stops at `MAX_BODY_SIZE`, because a chunked request
+ * declares no length to turn it away by.
+ */
+async function readBody(event: H3Event): Promise<Buffer | undefined> {
+  const request = event.node.req as IncomingMessage & Record<PropertyKey, unknown>
+
+  // Mirrors where `readRawBody` looks before the Node stream: a body an earlier handler
+  // has read, or one a non-Node runtime buffers before Nitro runs. Only the limit is left to check.
+  if (event._requestBody || event.web?.request?.body || request[RAW_BODY_KEY] || request.rawBody || request.body || '__unenv__' in request) {
+    const body = await readRawBody(event, false).catch(() => {
+      throw unreadablePayloadError()
+    })
+    if (body && body.length > MAX_BODY_SIZE)
+      throw payloadTooLargeError()
+    return body
+  }
+
+  return new Promise((resolve, reject) => {
+    const chunks: Buffer[] = []
+    let size = 0
+
+    request.on('data', onData).on('end', onEnd).on('error', onError)
+
+    function onData(chunk: Buffer) {
+      size += chunk.length
+      if (size > MAX_BODY_SIZE) {
+        // The rest of the body flows on with no listener, so Node discards it.
+        removeListeners()
+        reject(payloadTooLargeError())
+        return
+      }
+      chunks.push(chunk)
+    }
+
+    function onEnd() {
+      removeListeners()
+      resolve(chunks.length > 0
+        ? Buffer.concat(chunks)
+        : undefined)
+    }
+
+    function onError() {
+      removeListeners()
+      reject(unreadablePayloadError())
+    }
+
+    function removeListeners() {
+      request.off('data', onData).off('end', onEnd).off('error', onError)
+    }
+  })
+}
+
 function payloadTooLargeError() {
   return createError({
     statusCode: 413,
     message: 'Event payload too large',
+  })
+}
+
+function unreadablePayloadError() {
+  return createError({
+    statusCode: 400,
+    message: 'Event payload could not be read',
   })
 }
 
