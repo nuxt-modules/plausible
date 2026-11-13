@@ -14,7 +14,7 @@ Privacy-friendly web analytics for [Nuxt](https://nuxt.com), powered by [Plausib
 - 📯 Track events and page views manually with [composables](#composables)
 - 📊 Automatic tracking of outbound links, file downloads and form submissions
 - 🔀 Optional API proxy to avoid ad blockers
-- 📂 [`.env` file support](#runtime-config)
+- 📂 [`.env` file support](#set-options-from-environment-variables)
 - 🦾 SSR-ready
 
 ## Setup
@@ -34,14 +34,18 @@ export default defineNuxtConfig({
 })
 ```
 
-Done! Plausible will now run in your application's client.
+Done! Plausible now runs in your application's client.
 
 > [!TIP]
 > By default, `@nuxtjs/plausible` uses `window.location.hostname` as the Plausible `domain`. Set the [`domain` option](#module-options) to override it.
 
 ## Configuration
 
-All [supported module options](#module-options) can be configured using the `plausible` key in your Nuxt configuration:
+Set the [module options](#module-options) under the `plausible` key of your Nuxt configuration.
+
+### Ignore Hostnames
+
+Your `ignoredHostnames` list replaces the default `['localhost']`, so keep `localhost` in it:
 
 ```ts
 export default defineNuxtConfig({
@@ -53,20 +57,26 @@ export default defineNuxtConfig({
 ```
 
 > [!TIP]
-> To allow tracking events on localhost, set the `ignoredHostnames` option to an empty array.
+> To track events on localhost, set `ignoredHostnames` to an empty array. This also starts counting automated browsers on every hostname, your production one included.
 
-### Runtime Config
+### Set Options From Environment Variables
 
-Alternatively, set options in your project's `.env` file – Nuxt [replaces public runtime config values](https://nuxt.com/docs/api/nuxt-config#runtimeconfig) with matching environment variables at runtime:
+Set options in your project's `.env` file – Nuxt [replaces public runtime config values](https://nuxt.com/docs/api/nuxt-config#runtimeconfig) with matching environment variables at runtime:
 
 ```bash
 # Sets the `plausible.domain` option to `example.com`
 NUXT_PUBLIC_PLAUSIBLE_DOMAIN=example.com
 ```
 
-With this setup, you can omit the `plausible` key in your Nuxt configuration.
+The array and object options, `ignoredHostnames` and `fileDownloads`, take JSON:
 
-### Proxy Configuration
+```bash
+NUXT_PUBLIC_PLAUSIBLE_IGNORED_HOSTNAMES='["localhost","staging.example.com"]'
+```
+
+With this setup, you can omit the `plausible` key in your Nuxt configuration – except for `proxy` and `proxyBaseEndpoint`, which are read when the app is built.
+
+### Proxy Events Through Your Server
 
 The proxy routes Plausible events through your Nitro server instead of sending them straight to Plausible's servers, which keeps ad blockers from blocking requests to Plausible's domain.
 
@@ -80,17 +90,18 @@ export default defineNuxtConfig({
 })
 ```
 
-> [!NOTE]
-> The route is `/_plausible/api/event`. Setting `enabled` to `false` switches it off along with the tracker, so a build with tracking disabled exposes no forwarder.
+The route is `/_plausible/api/event`. A build with `enabled` set to `false` exposes no forwarder.
 
 Because the proxy answers on your own origin, the browser attaches the cookies your site has set. Only the headers Plausible reads travel on: the `user-agent`, which it attributes the visitor and their device by, the `content-type` of the event, and an `x-forwarded-for` carrying the visitor's IP address, which Plausible resolves the country from. Your cookies stay on your server.
+
+Behind a reverse proxy or load balancer, make sure it sets the `x-forwarded-for` header – without it, Plausible receives the reverse proxy's address for every visitor.
 
 The route answers `413` for a body over 8 KB. A Plausible event is a few hundred bytes, and the route takes no authentication.
 
 > [!IMPORTANT]
-> Up to v3 the proxy forwarded every header of the incoming request. If you counted on one beyond these three reaching Plausible, it no longer travels.
+> Up to v3 the proxy forwarded every header of the incoming request. If you counted on a header beyond those three reaching Plausible, it no longer travels.
 
-### Enhanced Tracking
+### Track Outbound Links, File Downloads and Form Submissions
 
 The [official Plausible tracker](https://github.com/plausible/analytics/tree/master/tracker) tracks outbound link clicks, file downloads and form submissions:
 
@@ -123,8 +134,8 @@ export default defineNuxtConfig({
 | ---------------------- | ------------------------------------ | ---------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | `enabled`              | `boolean`                            | `true`                       | Whether the tracker shall be enabled.                                                                                |
 | `hashMode`             | `boolean`                            | `false`                      | Whether page views shall be tracked when the URL hash changes. Enable this if your Nuxt app uses hash-based routing. |
-| `domain`               | `string`                             | `'window.location.hostname'` | The domain to bind tracking events to.                                                                               |
-| `ignoredHostnames`     | `string[]`                           | `['localhost']`              | Hostnames to ignore when tracking events.                                                                            |
+| `domain`               | `string`                             | `''`                         | The domain to bind tracking events to, `window.location.hostname` when empty.                                         |
+| `ignoredHostnames`     | `string[]`                           | `['localhost']`              | Hostnames to ignore when tracking events. See [Ignore Hostnames](#ignore-hostnames).                                 |
 | `ignoreSubDomains`     | `boolean`                            | `false`                      | Also ignore subdomains of `ignoredHostnames`. Has no effect on `localhost`, so it does nothing until you add a hostname of your own. |
 | `apiHost`              | `string`                             | `'https://plausible.io'`     | The API host to send events to.                                                                           |
 | `autoPageviews`        | `boolean`                            | `true`                       | Track page views automatically. Disable this if you want to manually manage pageview tracking.                       |
@@ -132,15 +143,12 @@ export default defineNuxtConfig({
 | `fileDownloads`        | `boolean \| { fileExtensions: string[] }` | `false`                      | Track file downloads automatically. Pass an object to customize tracked file extensions.                             |
 | `formSubmissions`      | `boolean`                            | `false`                      | Track form submissions automatically.                                                                                |
 | `logIgnoredEvents`     | `boolean`                            | `false`                      | Log ignored events to the console.                                                                                   |
-| `proxy`                | `boolean`                            | `false`                      | Route events through your own origin instead of the Plausible API host. See [Proxy Configuration](#proxy-configuration). |
+| `proxy`                | `boolean`                            | `false`                      | Route events through your own origin instead of the Plausible API host. See [Proxy Events Through Your Server](#proxy-events-through-your-server). |
 | `proxyBaseEndpoint`    | `string`                             | `'/_plausible'`              | Base path the proxy answers on. The event route sits below it, at `/_plausible/api/event`.                           |
 
 ## Composables
 
-The composables are auto-imported.
-
-> [!NOTE]
-> Since the Plausible instance is only available on the client, executing the composables on the server will have no effect.
+The composables are auto-imported. On the server, they do nothing, since the Plausible instance is only available on the client.
 
 ### `useTrackEvent`
 
@@ -186,8 +194,20 @@ function useTrackPageview(
 useTrackPageview()
 
 // Track with a custom URL
-useTrackPageview({ url: '/virtual-page' })
+useTrackPageview({ url: 'https://example.com/virtual-page' })
 ```
+
+### `PlausibleEventOptions`
+
+Both composables take the same options:
+
+| Option        | Type                                                          | Description                                                                                                      |
+| ------------- | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `props`       | `Record<string, string>`                                      | [Custom properties](https://plausible.io/docs/custom-props/introduction) of the event.                           |
+| `revenue`     | `{ amount: number \| string, currency: string }`              | [Revenue](https://plausible.io/docs/ecommerce-revenue-tracking) of the event, in an ISO 4217 `currency` such as `USD`. |
+| `interactive` | `boolean`                                                     | Defaults to `true`, and `false` keeps the event out of the bounce rate.                                           |
+| `url`         | `string`                                                      | The full page URL to record instead of the current one.                                                          |
+| `callback`    | `(result?: { status: number } \| { error: unknown }) => void` | Called with `{ status }` for a response, `{ error }` for a failed request, and no argument for an ignored event. |
 
 ## 💻 Development
 
