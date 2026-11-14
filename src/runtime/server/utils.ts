@@ -1,57 +1,54 @@
-import type { Readable } from 'node:stream'
-import { Buffer } from 'node:buffer'
-import { createError } from 'h3'
+import { createError } from 'nuxt/server'
 
 /**
  * Reads a body stream and stops at `limit`, because a chunked request declares no
  * length to turn it away by.
  */
-export function readBodyStream(stream: Readable, limit: number): Promise<Buffer | undefined> {
-  return new Promise((resolve, reject) => {
-    const chunks: Buffer[] = []
-    let size = 0
+export async function readBodyStream(stream: ReadableStream<Uint8Array> | null, limit: number): Promise<Uint8Array<ArrayBuffer> | undefined> {
+  if (!stream)
+    return
 
-    stream.on('data', onData).on('end', onEnd).on('error', onError)
+  const reader = stream.getReader()
+  const chunks: Uint8Array[] = []
+  let size = 0
 
-    function onData(chunk: Buffer) {
-      size += chunk.length
-      if (size > limit) {
-        // The rest of the body flows on with no listener, so Node discards it.
-        removeListeners()
-        reject(payloadTooLargeError())
-        return
-      }
-      chunks.push(chunk)
+  while (true) {
+    const result = await reader.read().catch(() => {
+      throw unreadablePayloadError()
+    })
+    if (result.done)
+      break
+
+    size += result.value.byteLength
+    if (size > limit) {
+      reader.cancel().catch(() => {})
+      throw payloadTooLargeError()
     }
+    chunks.push(result.value)
+  }
 
-    function onEnd() {
-      removeListeners()
-      resolve(chunks.length > 0
-        ? Buffer.concat(chunks)
-        : undefined)
-    }
+  if (chunks.length === 0)
+    return
 
-    function onError() {
-      removeListeners()
-      reject(unreadablePayloadError())
-    }
-
-    function removeListeners() {
-      stream.off('data', onData).off('end', onEnd).off('error', onError)
-    }
-  })
+  const body = new Uint8Array(size)
+  let offset = 0
+  for (const chunk of chunks) {
+    body.set(chunk, offset)
+    offset += chunk.byteLength
+  }
+  return body
 }
 
 export function payloadTooLargeError() {
   return createError({
-    statusCode: 413,
+    status: 413,
     message: 'Event payload too large',
   })
 }
 
-export function unreadablePayloadError() {
+function unreadablePayloadError() {
   return createError({
-    statusCode: 400,
+    status: 400,
     message: 'Event payload could not be read',
   })
 }

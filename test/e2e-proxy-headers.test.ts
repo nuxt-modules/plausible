@@ -1,5 +1,7 @@
+import type { IncomingMessage } from 'node:http'
 import { request } from 'node:http'
 import { join } from 'node:path'
+import { gzipSync } from 'node:zlib'
 import { setup, url } from '@nuxt/test-utils/e2e'
 import { serve } from 'srvx'
 import { afterAll, beforeEach, describe, expect, it } from 'vitest'
@@ -16,7 +18,11 @@ const upstream = serve({
   async fetch(request) {
     upstreamHeaders.push(request.headers)
     upstreamBodies.push(await request.text())
-    return new Response('ok', { status: 202 })
+    // Compressed, so a proxy that relays the encoding headers of a body `fetch` has already decoded fails to answer.
+    return new Response(gzipSync('ok'), {
+      status: 202,
+      headers: { 'content-encoding': 'gzip' },
+    })
   },
 })
 
@@ -87,6 +93,12 @@ describe('event proxy', async () => {
     expect(JSON.parse(upstreamBodies[0]!)).toMatchObject({ n: 'pageview', d: 'example.com' })
   })
 
+  it('relays the upstream response decoded', async () => {
+    const response = await postEvent()
+
+    expect(await response.text()).toBe('ok')
+  })
+
   it('answers 413 for a body over 8 KB and forwards nothing', async () => {
     const response = await postEvent({}, JSON.stringify({
       n: 'pageview',
@@ -97,8 +109,8 @@ describe('event proxy', async () => {
     expect(upstreamBodies).toHaveLength(0)
   })
 
-  it('answers 413 for a chunked body over 8 KB before the body ends', async () => {
-    const status = await new Promise<number | undefined>((resolve, reject) => {
+  it('answers 413 and closes the connection for a chunked body over 8 KB before the body ends', async () => {
+    const response = await new Promise<IncomingMessage | undefined>((resolve, reject) => {
       const client = request(url('/_plausible/api/event'), { method: 'POST' })
       const fallback = setTimeout(() => {
         resolve(undefined)
@@ -107,13 +119,14 @@ describe('event proxy', async () => {
       client.on('error', reject)
       client.on('response', (response) => {
         clearTimeout(fallback)
-        resolve(response.statusCode)
+        resolve(response)
         client.destroy()
       })
       // The body never ends, so only a handler that stops reading at the limit answers.
       client.write('x'.repeat(9 * 1024))
     })
 
-    expect(status).toBe(413)
+    expect(response?.statusCode).toBe(413)
+    expect(response?.headers.connection).toBe('close')
   })
 })
